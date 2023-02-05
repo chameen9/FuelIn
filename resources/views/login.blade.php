@@ -62,7 +62,7 @@
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="Username" class="form-control" id="Username" required minlength="1">
+                        <input type="email" name="Email" class="form-control" id="Username" required minlength="1">
                         <div class="invalid-feedback">Please enter your username.</div>
                       </div>
                     </div>

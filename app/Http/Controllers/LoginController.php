@@ -10,23 +10,23 @@ class LoginController extends Controller
 {
     function checklogin(Request $request){
         $this->validate($request, [
-            'Username'=>['required','string','max:100','min:1'],
+            'Email'=>['required','email','max:100','min:1'],
             'Password'=>['string', 'string','max:100','min:1'],
         ]);
 
-        $reqUsername = $request->input('Username');
+        $reqEmail = $request->input('Email');
         $reqPassword = $request->input('Password');
-        $gotUsername = DB::Table('users')->where('username',$reqUsername)->value('Username');
-        $gotPassword = DB::Table('users')->where('username',$reqUsername)->value('Password');
-        $userRole = DB::Table('users')->where('Username',$reqUsername)->value('Usertype');
+        $gotEmail = DB::Table('users')->where('email',$reqEmail)->value('email');
+        $gotPassword = DB::Table('users')->where('email',$reqEmail)->value('password');
+        $userRole = DB::Table('users')->where('email',$reqEmail)->value('user_type_id');
 
-        if($gotUsername==$reqUsername){
+        if($gotEmail==$reqEmail){
             if($gotPassword==$reqPassword){
 
                 return view('index',[
-                    'username'=>$reqUsername,
-                    'userLastName'=>$reqUsername,
-                    'userFirstName'=>$reqUsername,
+                    'username'=>$reqEmail,
+                    'userLastName'=>$reqEmail,
+                    'userFirstName'=>$reqEmail,
                     'userRole'=>$userRole,
                     'userLevel'=>null,
                     'userLevelName'=>null,
