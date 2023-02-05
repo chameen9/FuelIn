@@ -2,63 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Delivery;
+use App\FuelRequest;
+use App\Models\HeadOfficeLogin;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
     public function showLoginForm()
     {
-        $user = new User();
-        $user->setName("Ashen");
-        $user->setEmail("ashen@coffee.com");
-        echo $user->getName();
-        echo '\n';
-        echo $user->getEmail();
-
-
-
-
-        
         return view('headoffice.login');
     }
-
+    public function dashboard()
+    {
+        // Retrieve all deliveries and fuel requests from the database
+        $deliveries = Delivery::all();
+        $fuel_requests = FuelRequest::all();
+    
+        return view('headoffice.dashboard', compact('deliveries', 'fuel_requests'));
+    }
+    
     public function login(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+      // $credentials = $request->only(['username', 'password']);
+       $username = $request["username"];
+       $password = $request["password"];
+        //return $username;
+        $head_office_login = HeadOfficeLogin::where('Username', $username)->first();
+        if(!empty($head_office_login)) {
+            // echo "success";
+            if ($head_office_login["Password"] == $request["password"]) {
+           
+            session(['user' => ['type' => 'admin', 'id' => $head_office_login["ID"]] ]);
+           // $user = User::find($head_office_login["ID"]);
+           $user = session('user', false);
+                if ($user) {
+                    echo "authentication success";
+                }
+            
+            } else {
+                echo "Password incorrect";
+            }
+        } else {
+            echo "Invalid login";
+        }
+        //echo $head_office_login["Username"];
+        // if (!$head_office_login || !Hash::check($password, $head_office_login->password)) {
+        //     echo "error";
+        //    // return back()->withErrors(['message' => 'Incorrect login details']);
 
-        // validate the credentials against the database
-        // and log the user in if successful
-
-        // return to the dashboard if successful
-        //return redirect()->route('headoffice.dashboard');
-
-        // return back to the login page with errors if unsuccessful
-        return back()->withErrors(['message' => 'Incorrect login details']);
-    }
-}
-class User
-{
-    private $name;
-    private $email;
-    // public function __construct($name, $email)
-    // {
-    //     $this->name = $name;
-    //     $this->email = $email;
-    // }
-    public function getName()
-    {
-        return $this->name;
-    }
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    public function setEmail($email)
-    {
-        $this->email = $email;
+        // } else {
+        //     echo "success";
+        // }
+      //   return redirect()->route('headoffice.dashboard');
     }
 }
