@@ -16,7 +16,3 @@ use App\Http\Controllers\AdminLoginController;
 Route::get('/', function () {
     return view('welcome');
 });
-//routes/web.php
-Route::get('/headoffice/login', [App\Http\Controllers\AdminLoginController::class,'showLoginForm'])->name('headoffice.login');
-Route::post('/headoffice/login',  [App\Http\Controllers\AdminLoginController::class,'login']);
-
