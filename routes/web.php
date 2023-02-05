@@ -22,3 +22,10 @@ Route::get('/index', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::post('/checklogin','App\http\controllers\LoginController@checkLogin');
+
+ Route::get('/signout', function () {
+    Session::flush();
+    Auth::logout();
+    return redirect('/login');
+});

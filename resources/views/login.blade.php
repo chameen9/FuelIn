@@ -62,14 +62,14 @@
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="Username" required minlength="1">
+                        <input type="text" name="Username" class="form-control" id="Username" required minlength="1">
                         <div class="invalid-feedback">Please enter your username.</div>
                       </div>
                     </div>
 
                     <div class="col-12 position-relative">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="Password" required minlength="8">
+                      <input type="password" name="Password" class="form-control" id="Password" required minlength="8">
                       <div class="invalid-feedback">Please enter a proper password!</div>
                     </div>
 
