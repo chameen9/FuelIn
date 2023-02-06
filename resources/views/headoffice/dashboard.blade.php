@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head></head>
 <body>
+@include('headoffice._navigation')
+
 <table class="table table-striped">
     <thead>
         <tr>

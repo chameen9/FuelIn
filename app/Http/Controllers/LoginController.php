@@ -31,15 +31,30 @@ class LoginController extends Controller
         $password = $request["password"];
          //return $username;
          $user = User::where('email', $email)->first();
+     
          if(!empty($user)) {
-             // echo "success";
+             
             if ($user["password"] == $password) {
                 $user_type = DB::table('user_types')->select('type')->where('id', '=', $user['user_type_id'])->get();
                 //UserType::where('id', $user['user_type_id']);
                if (!empty($user_type)) {
                 $decoded = json_decode($user_type);
                $type = $decoded[0]->type;
-                echo $type; 
+                    if ($type == 'head_office_user') {
+                        
+                        Auth::login($user);
+                        Auth::user()->userType()->associate($user->userType);
+                        Auth::user()->save();
+                        
+                        if (Auth::check()) {
+                            $userType = $user->userType->type;
+                            //echo Auth::user()->userType->type;
+                            return redirect()->route('head_office.dashboard');
+                            // The user is logged in...
+                        }
+                                    //return redirect()->route('head_office.dashboard');
+                    }
+               // echo $type; 
                    // echo json_decode($user_type)->type;
                    // echo $user_type;
                     // if ($user_type["type"] == 'head_office_user') {
@@ -60,11 +75,13 @@ class LoginController extends Controller
                 //  } else {
                 //      echo "Password incorrect";
                 //  }
+            } else {
+                echo "Email or password is incorrect";
             }
-            else {
-                echo "Invalid login";
-            }
-         } 
+            
+         } else {
+            echo "Invalid login";
+        }
 
         //return back()->withInput()->withErrors(['email' => 'The provided credentials are incorrect.']);
     }
