@@ -24,7 +24,8 @@ Route::post('/login', [App\Http\Controllers\LoginController::class, 'login'])->n
 Route::get('/login', [App\Http\Controllers\LoginController::class,'showLoginForm'])->name('login');
 Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/head_office_dashboard', [App\Http\Controllers\HeadOfficeDashboardController::class, 'index'])->name('head_office.dashboard');
-   
+    Route::get('/head_office_dashboard/vehicles/create', [VehicleController::class, 'create'])->name('head_office.vehicles.create');
+
 });
 
 Route::get('/register_new_vehicle_type', [HeadOfficeDashboardController::class, 'registerNewVehicleType'])->name('register_new_vehicle_type');
