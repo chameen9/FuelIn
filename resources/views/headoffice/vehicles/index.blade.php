@@ -67,8 +67,8 @@ body {
 <body>
 
 <div class="topnav" id="myTopnav">
-  <a href="/head_office_dashboard" class="active">Home</a>
-  <a href="/vehicles">Vehicles</a>
+  <a href="/head_office_dashboard" >Home</a>
+  <a href="/vehicles" class="active">Vehicles</a>
   <a href="#contact">Contact</a>
   <a href="/logout_admin">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -87,7 +87,38 @@ function myFunction() {
   }
 }
 </script>
+<br>
+<button type="button" class="btn btn-success"  style="
+  background-color: green;
+  border: 1px solid green;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;" onclick="location.href='/login'">Register a New Vehicle</button>
+
+<div class="table-responsive" style="margin:8px">
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Registration Number</th>
+            <th>Customer ID</th>
+            <th>Vehicle Type ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($vehicles as $vehicle)
+        <tr>
+            <td>{{ $vehicle->registration_number }}</td>
+            <td>{{ $vehicle->Customer_ID }}</td>
+            <td>{{ $vehicle->Vehicle_Type_ID }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
+</div>
 
 </body>
 </html>
-

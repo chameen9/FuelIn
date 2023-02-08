@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Vehicle;
 class VehicleController extends Controller
 {
+    
     public function store(Request $request)
     {
         $vehicle = new Vehicle;
@@ -15,6 +16,12 @@ class VehicleController extends Controller
         $vehicle->save();
     
         return redirect()->route('vehicles.index');
+    }
+    public function index()
+    {
+        $vehicles = Vehicle::all();
+    
+        return view('headoffice.vehicles.index', compact('vehicles'));
     }
     
 }
