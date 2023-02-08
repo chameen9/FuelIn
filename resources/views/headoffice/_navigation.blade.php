@@ -70,6 +70,7 @@ body {
   <a href="/head_office_dashboard" class="active">Home</a>
   <a href="/vehicles">Vehicles</a>
   <a href="#contact">Contact</a>
+  <a href="/fuelstations">Fuel Station</a>
   <a href="/logout_admin">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
