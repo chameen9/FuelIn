@@ -31,86 +31,179 @@
         <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
     </head>
-    <body>
+    <body style="overflow-x: hidden;">
         @include('headoffice._navigation')
      
-        <br>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aaa">
-           Add new Fuel Station
-        </button>
-     
-        <div class="table-responsive" style="margin:8px">
-           <table class="table table-striped table-hover">
-              <thead class="thead-secondary">
-                 <tr>
-                    <th>Station ID</th>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Scheduled Delivery Date</th>
-                    <th>Scheduled Delivery Time</th>
-                    <th>Population</th>
-                 </tr>
-              </thead>
-              <tbody>
-                 @foreach ($fuelstations as $fuelstation)
-                 <tr>
-                    <td>{{ $fuelstation->Fuel_Station_ID }}</td>
-                    <td>{{ $fuelstation->Fuel_Station_Name }}</td>
-                    <td>{{ $fuelstation->Fuel_Station_Location	 }}</td>
-                    <td>{{ $fuelstation->Scheduled_Delivery_Date }}</td>
-                    <td>{{ $fuelstation->Scheduled_Delivery_Time }}</td>
-                    <td>{{ $fuelstation->Population_density	 }}</td>
-                 </tr>
-                 @endforeach
-              </tbody>
-           </table>
-        </div>
-     
-        <!-- Modal -->
-        <div class="modal fade" id="aaa" tabindex="-1" role="dialog" aria-labelledby="fuelstationregmodalTitle" aria-hidden="true">
-           <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                 <div class="modal-header">
-                    <h5 class="modal-title" id="fuelstationregmodalTitle">Add new Fuel Station</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                    </button>
-                 </div>
-                 <div class="modal-body">
-                    <form action="{{route('fuelstations.addnew')}}" method="post">
-                    {{csrf_field()}}
-                        <label>Station ID</label>
-                        <input type="text" name="Fuel_Station_ID" class="form-control" required>
-                        <br>
-                        <label>Station Name</label>
-                        <input type="text" name="Fuel_Station_Name" class="form-control" required>
-                        <br>
-                        <label>Location</label>
-                        <input type="text" name="Fuel_Station_Location" class="form-control" required>
-                        <br>
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Scheduled Delivery Date</label>
-                                <input type="date" name="Scheduled_Delivery_Date" class="form-control" required>
+        <div class="container">
+            <br>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aaa">
+               Add new Fuel Station
+            </button>
+         
+            <div class="table-responsive" style="margin:8px">
+               <table class="table table-striped table-hover">
+                  <thead class="thead-secondary">
+                     <tr>
+                        <th>Station ID</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Scheduled Delivery Date</th>
+                        <th>Scheduled Delivery Time</th>
+                        <th>Population</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($fuelstations as $fuelstation)
+                     <tr>
+                        <td>{{ $fuelstation->Fuel_Station_ID }}</td>
+                        <td>{{ $fuelstation->Fuel_Station_Name }}</td>
+                        <td>{{ $fuelstation->Fuel_Station_Location	 }}</td>
+                        <td>{{ $fuelstation->Scheduled_Delivery_Date }}</td>
+                        <td>{{ $fuelstation->Scheduled_Delivery_Time }}</td>
+                        <td>{{ $fuelstation->Population_density	 }}</td>
+                     </tr>
+                     @endforeach
+                  </tbody>
+               </table>
+            </div>
+         
+            <!-- Add new Modal -->
+            <div class="modal fade" id="aaa" tabindex="-1" role="dialog" aria-labelledby="fuelstationregmodalTitle" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="fuelstationregmodalTitle">Add new Fuel Station</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <form action="{{route('fuelstations.addnew')}}" method="post">
+                        {{csrf_field()}}
+                            <label>Station ID</label>
+                            <input type="number" name="Fuel_Station_ID" class="form-control" required min="1">
+                            <br>
+                            <label>Station Name</label>
+                            <input type="text" name="Fuel_Station_Name" class="form-control" required>
+                            <br>
+                            <label>Location</label>
+                            <input type="text" name="Fuel_Station_Location" class="form-control" required>
+                            <br>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Scheduled Delivery Date</label>
+                                    <input type="date" name="Scheduled_Delivery_Date" class="form-control" required>
+                                </div>
+                                <div class="col-6">
+                                    <label>Scheduled Delivery Time</label>
+                                    <input type="time" name="Scheduled_Delivery_Time" class="form-control" required>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <label>Scheduled Delivery Time</label>
-                                <input type="time" name="Scheduled_Delivery_Time" class="form-control" required>
+                            <br>
+                            <label>Population Density</label>
+                            <input type="number" name="Population_density" class="form-control" required>
+                            <br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            @if ($message = Session::get('success'))
+                <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-success">
+                                    {{ $message }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
-                        <br>
-                        <label>Population Density</label>
-                        <input type="number" name="Population_density" class="form-control" required>
-                        <br>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                <script>
+                    $(document).ready(function() {
+                        $('#successModal').modal('show');
+                    });
+                </script>
+            @endif
+
+            @if ($msg = Session::get('error'))
+                <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-danger">
+                                    {{ $msg }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
-                    </form>
-                 </div>
-              </div>
-           </div>
+                    </div>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                <script>
+                    $(document).ready(function() {
+                        $('#errorModal').modal('show');
+                    });
+                </script>
+            @endif
+
+            @if (count($errors)>0)
+                <div class="modal fade" id="valModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        <a href="#"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></a></button>
+                                    @endforeach
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                <script>
+                    $(document).ready(function() {
+                        $('#valModal').modal('show');
+                    });
+                </script>
+            @endif
+
+
         </div>
+        
      
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
