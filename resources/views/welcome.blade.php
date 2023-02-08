@@ -24,6 +24,6 @@
 
     </head>
     <body>
-        
+        <a href="{{url('/login')}}">login</a>
     </body>
 </html>

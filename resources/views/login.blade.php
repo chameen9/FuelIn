@@ -27,6 +27,11 @@
   <!-- Template Main CSS File -->
   <link href="/css/style.css" rel="stylesheet">
 
+  <!-- Javascript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" integrity="sha384-aMk7v90ZgPWxgK5x5xzD5kvry8Wyj4/lQbKzm5fvh8Wm7OMz/MnHx9XtLk2c1Nj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-e/ai8Z5fKQCMgj/nLhZpvAv0dh/FZjmS48NDx5jv+X9NM/8mOh4KjfncJgvBmK5" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -40,9 +45,8 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <img src="{{URL::asset('/images/logo.png')}}" alt="FeulIn">
-                  <span class="d-none d-lg-block">FuelIn</span>
+                <a href="{{url('/login')}}" class="logo d-flex align-items-center w-auto">
+                  <img src="{{URL::asset('/images/Logo&Text.png')}}" alt="FeulIn" style="width: auto; height: 300px;">
                 </a>
               </div><!-- End Logo -->
 
@@ -52,24 +56,24 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your username & password to login</p>
+                    <p class="text-center small">Enter your email & password to login</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="post" novalidate action="{{ url('/checklogin') }}">
+                  <form class="row g-3 needs-validation" method="post"  action="{{ route('login') }}">
                     {{csrf_field()}}
 
                     <div class="col-12 position-relative">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="yourUsername" class="form-label">Email</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="email" name="Email" class="form-control" id="Username" required minlength="1">
-                        <div class="invalid-feedback">Please enter your username.</div>
+                        <input type="email" name="email" class="form-control" id="email" required minlength="1">
+                        <div class="invalid-feedback">Please enter your email.</div>
                       </div>
                     </div>
 
                     <div class="col-12 position-relative">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="Password" class="form-control" id="Password" required minlength="8">
+                      <input type="password" name="password" class="form-control" id="Password" required minlength="1">
                       <div class="invalid-feedback">Please enter a proper password!</div>
                     </div>
 
@@ -124,19 +128,6 @@
   </main><!-- End #main -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="Assets/apexcharts/apexcharts.min.js"></script>
-  <script src="Assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="Assets/chart.js/chart.umd.js"></script>
-  <script src="Assets/echarts/echarts.min.js"></script>
-  <script src="Assets/quill/quill.min.js"></script>
-  <script src="Assets/simple-datatables/simple-datatables.js"></script>
-  <script src="Assets/tinymce/tinymce.min.js"></script>
-  <script src="Assets/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="/js/main.js"></script>
 
 </body>
 

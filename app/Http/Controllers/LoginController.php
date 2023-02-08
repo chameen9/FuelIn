@@ -2,54 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\UserType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    function checklogin(Request $request){
+    public function showLoginForm()
+    {
+        return view('login');
+    }
+    public function login(Request $request)
+    {
         $this->validate($request, [
-            'Email'=>['required','email','max:100','min:1'],
-            'Password'=>['string', 'string','max:100','min:1'],
+            'email'=>['required','email','max:100','min:1'],
+            'password'=>['string','max:100','min:1'],
         ]);
 
-        $reqEmail = $request->input('Email');
-        $reqPassword = $request->input('Password');
-        $gotEmail = DB::Table('users')->where('email',$reqEmail)->value('email');
-        $gotPassword = DB::Table('users')->where('email',$reqEmail)->value('password');
-        $userRole = DB::Table('users')->where('email',$reqEmail)->value('user_type_id');
-
-        if($gotEmail==$reqEmail){
-            if($gotPassword==$reqPassword){
-
-                return view('index',[
-                    'username'=>$reqEmail,
-                    'userLastName'=>$reqEmail,
-                    'userFirstName'=>$reqEmail,
-                    'userRole'=>$userRole,
-                    'userLevel'=>null,
-                    'userLevelName'=>null,
-                    'todokanbancards'=>[],
-                    'activekanbancards'=>[],
-                    'inreviewkanbancards'=>[],
-                    'userdepartment'=>null,
-                ]); 
-                   
+        $email = $request["email"];
+        $password = $request["password"];
+        $user = User::where('email', $email)->first();
+     
+        if(!empty($user)) {
+             
+            if ($user["password"] == $password) {
+                $user_type = DB::table('user_types')->select('type')->where('id', '=', $user['user_type_id'])->get();
+                if (!empty($user_type)) {
+                $decoded = json_decode($user_type);
+                $type = $decoded[0]->type;
+                    if ($type == 'head_office_user') {
+                        
+                        Auth::login($user);
+                        Auth::user()->userType()->associate($user->userType);
+                        Auth::user()->save();
+                        
+                        if (Auth::check()) {
+                            $userType = $user->userType->type;
+                            return redirect()->route('head_office.dashboard');
+                            // The user is logged in...
+                        }
+                    }
+                } 
+                else {
+                    return back()->with('error','Error !');
+                }
+            } 
+            else {
+                return back()->with('error','Email or password is incorrect !');
             }
-            else{
-                return back()->with('error','Invalid Password. Try again !');
-            }
+        } 
+        else {
+            return back()->with('error','Invalid login !');
         }
-        else{
-            return back()->with('error','Unkonown user !');
-        }
-    }
-    function signout(Request $request){
-        Session::flush();
-        
-        Auth::logout();
-
-        return view('login');
     }
 }
