@@ -50,7 +50,9 @@ class VehicleTypeController extends Controller
         $vehicleType->update($request->all());
         $vehicleTypes = VehicleType::all();
 
-        return view('headoffice.vehicles.types.index', compact('vehicleTypes'));
+        return redirect()->route('vehicle_types.index');
+
+     //   return view('headoffice.vehicles.types.index', compact('vehicleTypes'));
        
 
        // return redirect()->route('vehicle_types')
