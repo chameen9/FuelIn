@@ -20,6 +20,8 @@ class HeadOfficeDashboardController extends Controller
         $fuelRequests = FuelRequest::all();
         $deliveries = Delivery::all();
 
+        $email = Auth::user()->email;
+        
         return view('headoffice.dashboard', compact('fuelRequests', 'deliveries'));
     }
     public function logout()

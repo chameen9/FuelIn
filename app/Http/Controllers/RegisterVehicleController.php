@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Vehicle;
+use App\Models\VehicleType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class RegisterVehicleController extends Controller
+{
+    public function create()
+    {
+     
+       
+    }
+    public function index()
+    {
+        $vehicleTypes = VehicleType::all();
+        return view('headoffice.vehicles.create', compact('vehicleTypes'));
+        //return view('headoffice.vehicles.create');
+    }
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'registration_number' => 'required|unique:vehicles',
+            'Vehicle_Type_ID' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        Vehicle::create([
+            'registration_number' => $request->input('registration_number'),
+            'Vehicle_Type_ID' => $request->input('Vehicle_Type_ID'),
+        ]);
+
+        return redirect()->route('vehicles.index');
+    }
+}

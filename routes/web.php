@@ -26,7 +26,15 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/head_office_dashboard', [App\Http\Controllers\HeadOfficeDashboardController::class, 'index'])->name('head_office.dashboard');
     Route::get('/head_office_dashboard/vehicles/create', [VehicleController::class, 'create'])->name('head_office.vehicles.create');
     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/register-vehicle', [App\Http\Controllers\RegisterVehicleController::class, 'index'])->name('vehicles.create');
 
+    Route::get('vehicle_types', [App\Http\Controllers\VehicleTypeController::class, 'index']);
+    Route::get('vehicle_types/create', [App\Http\Controllers\VehicleTypeController::class, 'create']);
+    Route::post('vehicle_types', [App\Http\Controllers\VehicleTypeController::class, 'store']);
+    Route::get('vehicle_types/{vehicleType}/edit', [App\Http\Controllers\VehicleTypeController::class, 'edit']);
+    Route::post('vehicle_types/{vehicleType}', [App\Http\Controllers\VehicleTypeController::class, 'update']);
+    Route::delete('vehicle_types/{vehicleType}', [App\Http\Controllers\VehicleTypeController::class, 'destroy']);
+    
 
 });
 

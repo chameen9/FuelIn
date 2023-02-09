@@ -96,7 +96,7 @@ function myFunction() {
   padding: 10px 20px;
   margin: 8px;
   font-size: 16px;
-  margin-bottom: 10px;" onclick="location.href='/login'">Register a New Vehicle</button>
+  margin-bottom: 10px;" onclick="location.href='/register-vehicle'">Register a New Vehicle</button>
 
 <div class="table-responsive" style="margin:8px">
 <table class="table table-striped table-hover">
