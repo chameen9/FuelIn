@@ -44,4 +44,27 @@ class FuelStationController extends Controller
             }    
         }
     }
+
+    public function viewupdate($station_id){
+        $uptodatestation = FuelStation::Where('Fuel_Station_ID',$station_id)->get();
+        return view('headoffice.fuelstations.updatestation', compact('uptodatestation'));
+        
+    }
+    public function update(Request $request){
+        $uptodatestation = FuelStation::Where('Fuel_Station_ID',$request->input('Fuel_Station_ID'))
+        ->update([
+            'Fuel_Station_Name'=>$request->input('Fuel_Station_Name'),
+            'Fuel_Station_Location'=>$request->input('Fuel_Station_Location'),
+            'Scheduled_Delivery_Date'=>$request->input('Scheduled_Delivery_Date'),
+            'Scheduled_Delivery_Time'=>$request->input('Scheduled_Delivery_Time'),
+            'Population_density'=>$request->input('Population_density'),
+        ]);
+        return back()->with('success', 'Successfully updated...');
+    }
+
+    public function delete($station_id){
+        $station = FuelStation::Where('Fuel_Station_ID',$station_id);
+        $station->delete();
+        return back()->with('success', 'Data has been deleted successfully!');
+    }
 }

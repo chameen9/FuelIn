@@ -1,122 +1,57 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>FuelIn | Fuel Stations</title>
+        <title>FuelIn | Update Fuel Stations</title>
         <link rel = "icon" href = "{{URL::asset('/images/Xicon.ico')}}" type = "image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-
-        <!-- Google Fonts -->
-        <!-- <link href="https://fonts.gstatic.com" rel="preconnect">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> -->
-
-        <!-- Vendor CSS Files -->
-        <!-- <link href="Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="Assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-        <link href="Assets/boxicons/css/boxicons.min.css" rel="stylesheet">
-        <link href="Assets/quill/quill.snow.css" rel="stylesheet">
-        <link href="Assets/quill/quill.bubble.css" rel="stylesheet">
-        <link href="Assets/remixicon/remixicon.css" rel="stylesheet">
-        <link href="Assets/simple-datatables/style.css" rel="stylesheet"> -->
-
-        <!-- Template Main CSS File -->
-        <!-- <link href="/css/style.css" rel="stylesheet"> -->
-
-        <!-- Javascript -->
-        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" integrity="sha384-aMk7v90ZgPWxgK5x5xzD5kvry8Wyj4/lQbKzm5fvh8Wm7OMz/MnHx9XtLk2c1Nj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-e/ai8Z5fKQCMgj/nLhZpvAv0dh/FZjmS48NDx5jv+X9NM/8mOh4KjfncJgvBmK5" crossorigin="anonymous"></script> -->
-
-        <!-- Latest compiled JavaScript -->
-        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
     </head>
     <body style="overflow-x: hidden;">
         @include('headoffice._navigation')
-     
+        <br><br>
+        
         <div class="container">
-            <br>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aaa">
-               Add new Fuel Station
-            </button>
-         
-            <div class="table-responsive" style="margin:8px">
-               <table class="table table-striped table-hover">
-                  <thead class="thead-secondary">
-                     <tr>
-                        <th>Station ID</th>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Scheduled Delivery Date</th>
-                        <th>Scheduled Delivery Time</th>
-                        <th>Population</th>
-                        <th>Action</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($fuelstations as $fuelstation)
-                     <tr>
-                        <td>{{ $fuelstation->Fuel_Station_ID }}</td>
-                        <td>{{ $fuelstation->Fuel_Station_Name }}</td>
-                        <td>{{ $fuelstation->Fuel_Station_Location	 }}</td>
-                        <td>{{ $fuelstation->Scheduled_Delivery_Date }}</td>
-                        <td>{{ $fuelstation->Scheduled_Delivery_Time }}</td>
-                        <td>{{ $fuelstation->Population_density	 }}</td>
-                        <td>
-                            <a type="button" href="{{url('/station/viewupdate/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-success">Update</a>
-                            <a type="button" href="{{url('/station/delete/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-danger">Delete</a>
-                        </td>
-                     </tr>
-                     @endforeach
-                  </tbody>
-               </table>
-            </div>
-         
-            <!-- Add new Modal -->
-            <div class="modal fade" id="aaa" tabindex="-1" role="dialog" aria-labelledby="fuelstationregmodalTitle" aria-hidden="true">
-               <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="fuelstationregmodalTitle">Add new Fuel Station</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                        </button>
-                     </div>
-                     <div class="modal-body">
-                        <form action="{{route('fuelstations.addnew')}}" method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Update Fuel Station</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{{route('fuelstations.update')}}" method="post">
+                        @foreach ($uptodatestation as $fuelstation)
                         {{csrf_field()}}
                             <label>Station ID</label>
-                            <input type="number" name="Fuel_Station_ID" class="form-control" required min="1">
+                            <input type="number" name="Fuel_Station_ID" class="form-control" required min="1" value="{{ $fuelstation->Fuel_Station_ID }}" readonly>
                             <br>
                             <label>Station Name</label>
-                            <input type="text" name="Fuel_Station_Name" class="form-control" required>
+                            <input type="text" name="Fuel_Station_Name" class="form-control" required value="{{ $fuelstation->Fuel_Station_Name }}">
                             <br>
                             <label>Location</label>
-                            <input type="text" name="Fuel_Station_Location" class="form-control" required>
+                            <input type="text" name="Fuel_Station_Location" class="form-control" required value="{{ $fuelstation->Fuel_Station_Location	 }}">
                             <br>
                             <div class="row">
                                 <div class="col-6">
                                     <label>Scheduled Delivery Date</label>
-                                    <input type="date" name="Scheduled_Delivery_Date" class="form-control" required>
+                                    <input type="date" name="Scheduled_Delivery_Date" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Date }}">
                                 </div>
                                 <div class="col-6">
                                     <label>Scheduled Delivery Time</label>
-                                    <input type="time" name="Scheduled_Delivery_Time" class="form-control" required>
+                                    <input type="time" name="Scheduled_Delivery_Time" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Time }}">
                                 </div>
                             </div>
                             <br>
                             <label>Population Density</label>
-                            <input type="number" name="Population_density" class="form-control" required>
+                            <input type="number" name="Population_density" class="form-control" min="1" required value="{{ $fuelstation->Population_density	 }}">
                             <br>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <a type="button" class="btn btn-secondary" href="{{route('fuelstations.index')}}">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
-                        </form>
-                     </div>
-                  </div>
-               </div>
+                        @endforeach
+                    </form>
+                </div>
             </div>
+        </div>
+            
 
             @if ($message = Session::get('success'))
                 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
