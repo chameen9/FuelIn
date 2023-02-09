@@ -69,6 +69,7 @@ body {
 <div class="topnav" id="myTopnav">
   <a href="/head_office_dashboard" >Home</a>
   <a href="/vehicles" class="active">Vehicles</a>
+  <a href="/fuelstations">Fuel Station</a>
   <a href="#contact">Contact</a>
   <a href="/logout_admin">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
