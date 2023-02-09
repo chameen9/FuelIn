@@ -69,7 +69,6 @@ body {
 <div class="topnav" id="myTopnav">
   <a href="/head_office_dashboard" >Home</a>
   <a href="/vehicles" class="active">Vehicles</a>
-  <a href="/fuelstations">Fuel Station</a>
   <a href="#contact">Contact</a>
   <a href="/logout_admin">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -88,31 +87,20 @@ function myFunction() {
   }
 }
 </script>
-<br> 
-<h1>New Vehicle Registration</h1>
+<br>
+<form action="{{ route('vehicle_types.update', $vehicleType->Vehicle_Type_ID) }}" method="POST">
+  @csrf
+  @method('PATCH')
 
-<form action="{{ route('vehicles.create') }}" method="POST">
-    @csrf
+  <div class="form-group">
+    <label for="Type_Name">Type Name</label>
+    <input type="text" name="Type_Name" id="Type_Name" class="form-control" value="{{ $vehicleType->Type_Name }}">
+  </div>
 
-    <div class="form-group">
-        <label for="registration_number">Registration Number</label>
-        <input type="text" name="registration_number" id="registration_number" class="form-control">
-    </div>
+  <div class="form-group">
+    <label for="Description">Description</label>
+    <input type="text" name="Description" id="Description" class="form-control" value="{{ $vehicleType->Description }}">
+  </div>
 
-    <div class="form-group">
-        <label for="Vehicle_Type_ID">Vehicle Type</label>
-        <select name="Vehicle_Type_ID_Title" id="Vehicle_Type_ID_Title" class="form-control">
-            @foreach ($vehicleTypes as $vehicleType)
-                <option name="{{$vehicleType->Vehicle_Type_ID}}" id="{{$vehicleType->Vehicle_Type_ID}}" value="{{ $vehicleType->Vehicle_Type_ID }}">{{ $vehicleType->Type_Name }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
+  <button type="submit" class="btn btn-primary">Update Vehicle Type</button>
 </form>
-<div class="form-group">
-  <a href="{{ route('vehicle_types.index') }}" class="btn btn-info">Manage Vehicle Types</a>
-</div>
-
-</body>
-</html>

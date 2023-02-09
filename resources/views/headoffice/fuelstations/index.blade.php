@@ -59,8 +59,16 @@
                         <td>{{ $fuelstation->Fuel_Station_ID }}</td>
                         <td>{{ $fuelstation->Fuel_Station_Name }}</td>
                         <td>{{ $fuelstation->Fuel_Station_Location	 }}</td>
-                        <td>{{ $fuelstation->Scheduled_Delivery_Date }}</td>
-                        <td>{{ $fuelstation->Scheduled_Delivery_Time }}</td>
+                        @if ($fuelstation->Scheduled_Delivery_Date == null)
+                            <td><span class="badge badge-pill badge-info">Not Set</span></td>
+                        @else
+                            <td>{{ $fuelstation->Scheduled_Delivery_Date }}</td>
+                        @endif
+                        @if ($fuelstation->Scheduled_Delivery_Time == null)
+                            <td><span class="badge badge-pill badge-info">Not Set</span></td>
+                        @else
+                            <td>{{ $fuelstation->Scheduled_Delivery_Time }}</td>
+                        @endif
                         <td>{{ $fuelstation->Population_density	 }}</td>
                         <td>
                             <a type="button" href="{{url('/station/viewupdate/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-success">Update</a>
@@ -85,25 +93,11 @@
                      <div class="modal-body">
                         <form action="{{route('fuelstations.addnew')}}" method="post">
                         {{csrf_field()}}
-                            <label>Station ID</label>
-                            <input type="number" name="Fuel_Station_ID" class="form-control" required min="1">
-                            <br>
                             <label>Station Name</label>
                             <input type="text" name="Fuel_Station_Name" class="form-control" required>
                             <br>
                             <label>Location</label>
                             <input type="text" name="Fuel_Station_Location" class="form-control" required>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <label>Scheduled Delivery Date</label>
-                                    <input type="date" name="Scheduled_Delivery_Date" class="form-control" required>
-                                </div>
-                                <div class="col-6">
-                                    <label>Scheduled Delivery Time</label>
-                                    <input type="time" name="Scheduled_Delivery_Time" class="form-control" required>
-                                </div>
-                            </div>
                             <br>
                             <label>Population Density</label>
                             <input type="number" name="Population_density" class="form-control" required>

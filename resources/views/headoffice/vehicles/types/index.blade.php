@@ -69,7 +69,6 @@ body {
 <div class="topnav" id="myTopnav">
   <a href="/head_office_dashboard" >Home</a>
   <a href="/vehicles" class="active">Vehicles</a>
-  <a href="/fuelstations">Fuel Station</a>
   <a href="#contact">Contact</a>
   <a href="/logout_admin">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -88,31 +87,33 @@ function myFunction() {
   }
 }
 </script>
-<br> 
-<h1>New Vehicle Registration</h1>
+<br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Type Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($vehicleTypes as $vehicleType)
+      <tr>
+        <th scope="row">{{ $vehicleType->Vehicle_Type_ID }}</th>
+        <td>{{ $vehicleType->Type_Name }}</td>
+        <td>{{ $vehicleType->Description }}</td>
+        <td>
+          <a href="{{ route('vehicle_types.edit', $vehicleType->Vehicle_Type_ID) }}" class="btn btn-primary">Edit</a>
+          <form action="{{ route('vehicle_types.destroy', $vehicleType->Vehicle_Type_ID) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+    @endforeach
+  </tbody>
+</table>
 
-<form action="{{ route('vehicles.create') }}" method="POST">
-    @csrf
-
-    <div class="form-group">
-        <label for="registration_number">Registration Number</label>
-        <input type="text" name="registration_number" id="registration_number" class="form-control">
-    </div>
-
-    <div class="form-group">
-        <label for="Vehicle_Type_ID">Vehicle Type</label>
-        <select name="Vehicle_Type_ID_Title" id="Vehicle_Type_ID_Title" class="form-control">
-            @foreach ($vehicleTypes as $vehicleType)
-                <option name="{{$vehicleType->Vehicle_Type_ID}}" id="{{$vehicleType->Vehicle_Type_ID}}" value="{{ $vehicleType->Vehicle_Type_ID }}">{{ $vehicleType->Type_Name }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
-<div class="form-group">
-  <a href="{{ route('vehicle_types.index') }}" class="btn btn-info">Manage Vehicle Types</a>
-</div>
-
-</body>
-</html>
+<a href="{{ route('vehicle_types.create') }}" class="btn btn-success">Add New Vehicle Type</a>
