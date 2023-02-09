@@ -101,9 +101,9 @@ function myFunction() {
 
     <div class="form-group">
         <label for="Vehicle_Type_ID">Vehicle Type</label>
-        <select name="Vehicle_Type_ID" id="Vehicle_Type_ID" class="form-control">
+        <select name="Vehicle_Type_ID_Title" id="Vehicle_Type_ID_Title" class="form-control">
             @foreach ($vehicleTypes as $vehicleType)
-                <option value="{{ $vehicleType->id }}">{{ $vehicleType->Type_Name }}</option>
+                <option name="{{$vehicleType->Vehicle_Type_ID}}" id="{{$vehicleType->Vehicle_Type_ID}}" value="{{ $vehicleType->Vehicle_Type_ID }}">{{ $vehicleType->Type_Name }}</option>
             @endforeach
         </select>
     </div>

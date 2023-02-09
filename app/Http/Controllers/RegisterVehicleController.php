@@ -22,20 +22,38 @@ class RegisterVehicleController extends Controller
     }
     public function store(Request $request)
     {
+
+
+        
+
+
+
+
+
+
+
+
         $validator = Validator::make($request->all(), [
             'registration_number' => 'required|unique:vehicles',
-            'Vehicle_Type_ID' => 'required',
+           // 'Vehicle_Type_ID' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+       // $vehicleType = VehicleType::where('Type_Name', '=', $request->input('Vehicle_Type_ID'))->first();
+       // $vehicleTypeId = $vehicleType->Vehicle_Type_ID;
+      
+
+        //dd($request->all());
+     //  $Vehicle_Type_ID = $request->Vehicle_Type_ID;
+       // echo $Vehicle_Type_ID;
         Vehicle::create([
             'registration_number' => $request->input('registration_number'),
-            'Vehicle_Type_ID' => $request->input('Vehicle_Type_ID'),
+            'Vehicle_Type_ID' => $request->Vehicle_Type_ID,
         ]);
-
+    
         return redirect()->route('vehicles.index');
     }
 }

@@ -71,8 +71,9 @@ body {
   <a href="/vehicles" class="active">Vehicles</a>
   <a href="/fuelstations">Fuel Station</a>
   <a href="#contact">Contact</a>
-  <a href="/logout_admin">Logout</a>
   <a href="/fuelstations">Fuel Station</a>
+  <a href="/logout_admin">Logout</a>
+ 
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>
@@ -100,7 +101,38 @@ function myFunction() {
   font-size: 16px;
   margin-bottom: 10px;" onclick="location.href='/register-vehicle'">Register a New Vehicle</button>
 
-<div class="table-responsive" style="margin:8px">
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Registration Number</th>
+            <th>Customer ID</th>
+            <th>Vehicle Type ID</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($vehicles as $vehicle)
+        <tr>
+            <td>{{ $vehicle->id }}</td>
+            <td>{{ $vehicle->registration_number }}</td>
+            <td>{{ $vehicle->Customer_ID }}</td>
+            <td>{{ $vehicle->Vehicle_Type_ID }}</td>
+            <td>
+                <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-primary">Edit</a>
+                <form action="{{ route('vehicles.destroy', $vehicle->id) }}" method="POST" style="display: inline-block;">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
+
+<!-- <div class="table-responsive" style="margin:8px">
 <table class="table table-striped table-hover">
     <thead class="thead-dark">
         <tr>
@@ -120,7 +152,7 @@ function myFunction() {
     </tbody>
 </table>
 
-</div>
+</div> -->
 
 </body>
 </html>

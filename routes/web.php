@@ -26,7 +26,14 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/head_office_dashboard', [App\Http\Controllers\HeadOfficeDashboardController::class, 'index'])->name('head_office.dashboard');
     Route::get('/head_office_dashboard/vehicles/create', [VehicleController::class, 'create'])->name('head_office.vehicles.create');
     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/vehicles/create', [App\Http\Controllers\VehicleController::class, 'create'])->name('vehicles.create');
+  //  Route::post('/vehicles', 'VehicleController@store')->name('vehicles.store');
+    Route::get('/vehicles/{id}/edit', [App\Http\Controllers\VehicleController::class, 'edit'])->name('vehicles.edit');
+    Route::patch('/vehicles/{id}',[App\Http\Controllers\VehicleController::class, 'update'])->name('vehicles.update');
+    Route::delete('/vehicles/{id}', [App\Http\Controllers\VehicleController::class, 'destroy'])->name('vehicles.destroy');
+    
     Route::get('/register-vehicle', [App\Http\Controllers\RegisterVehicleController::class, 'index'])->name('vehicles.create');
+    Route::post('/register-vehicle', [App\Http\Controllers\RegisterVehicleController::class, 'store'])->name('vehicles.store');
 
     Route::get('vehicle_types', [App\Http\Controllers\VehicleTypeController::class, 'index'])->name('vehicle_types.index');
     Route::get('vehicle_types/create', [App\Http\Controllers\VehicleTypeController::class, 'create'])->name('vehicle_types.create');
@@ -38,6 +45,8 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
         Route::get('/head_office_dashboard', [App\Http\Controllers\HeadOfficeDashboardController::class, 'index'])->name('head_office.dashboard');
     Route::get('/head_office_dashboard/vehicles/create', [VehicleController::class, 'create'])->name('head_office.vehicles.create');
     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
+    
+    
     
     
     //sandeepa
