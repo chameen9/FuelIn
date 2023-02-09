@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 use App\Models\FuelStation;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class FuelStationController extends Controller
 {
     public function index()
     {
+        $email = Auth::user()->email;
         $fuelstations = FuelStation::all();
     
-        return view('headoffice.fuelstations.index', compact('fuelstations'));
+        return view('headoffice.fuelstations.index', compact('fuelstations','email'));
     }
     public function addnew(Request $request){
         $this->validate($request, [
