@@ -109,6 +109,9 @@ function myFunction() {
 
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
+<div class="form-group">
+  <a href="{{ route('vehicle_types.index') }}" class="btn btn-info">Manage Vehicle Types</a>
+</div>
 
 </body>
 </html>
