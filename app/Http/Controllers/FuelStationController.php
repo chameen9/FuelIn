@@ -37,8 +37,9 @@ class FuelStationController extends Controller
     }
 
     public function viewupdate($station_id){
+        $email = Auth::user()->email;
         $uptodatestation = FuelStation::Where('Fuel_Station_ID',$station_id)->get();
-        return view('headoffice.fuelstations.updatestation', compact('uptodatestation'));
+        return view('headoffice.fuelstations.updatestation', compact('uptodatestation','email'));
         
     }
     public function update(Request $request){

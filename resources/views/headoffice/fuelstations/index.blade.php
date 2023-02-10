@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>FuelIn | Dashboard</title>
+  <title>FuelIn | Fuel Station</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -262,8 +262,13 @@
                                      @endif
                                      <td>{{ $fuelstation->Population_density	 }}</td>
                                      <td>
-                                         <a type="button" href="{{url('/station/viewupdate/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-success">Update</a>
-                                         <a type="button" href="{{url('/station/delete/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-danger">Delete</a>
+                                      <div class="btn-group" role="group">
+                                        <a type="button" href="{{url('/station/viewupdate/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-success" title="Update"><i class="bi bi-arrow-repeat"></i></a>
+                                        <a type="button" href="{{url('/station/delete/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></a>
+                                      </div>
+                                        
+                                         
+                                         
                                      </td>
                                   </tr>
                                   @endforeach

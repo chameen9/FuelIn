@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Delivery extends Model
 {
+    public $timestamps = FALSE;
     protected $table = 'deliveries';
 
     protected $fillable = [

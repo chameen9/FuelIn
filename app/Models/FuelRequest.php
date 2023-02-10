@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FuelRequest extends Model
 {
+    public $timestamps = FALSE;
     protected $table = 'Fuel_Request';
 
     protected $fillable = [
