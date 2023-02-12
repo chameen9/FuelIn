@@ -34,7 +34,7 @@ class VehicleTypeController extends Controller
         $vehicleType->updated_at = Carbon::Now('Asia/Colombo');
         $vehicleType->created_at = Carbon::Now('Asia/Colombo');
         $vehicleType->save();
-        
+
         //VehicleType::create($request->all());
 
         //$vehicleTypes = VehicleType::all();
@@ -45,7 +45,8 @@ class VehicleTypeController extends Controller
 
     public function edit(VehicleType $vehicleType)
     {
-        return view('headoffice.vehicles.types.edit', compact('vehicleType'));
+        //return view('headoffice.vehicles.types.edit', compact('vehicleType'));
+        return back()->with('vehicleType',$vehicleType);
     }
 
     public function update(Request $request, VehicleType $vehicleType)
@@ -58,7 +59,8 @@ class VehicleTypeController extends Controller
         $vehicleType->update($request->all());
         $vehicleTypes = VehicleType::all();
 
-        return redirect()->route('vehicle_types.index');
+        return back()->with('success','Vehicle Type updated !');
+        //return redirect()->route('vehicle_types.index');
 
      //   return view('headoffice.vehicles.types.index', compact('vehicleTypes'));
        
@@ -70,7 +72,8 @@ class VehicleTypeController extends Controller
     public function destroy(VehicleType $vehicleType)
     {
         $vehicleType->delete();
-        return redirect()->route('vehicle_types.index');
+        return back()->with('success','Vehicle Type deleted !');
+        //return redirect()->route('vehicle_types.index');
 
      //   return redirect()->route('vehicle_types')
                      //   ->with('success','Vehicle type deleted successfully.');

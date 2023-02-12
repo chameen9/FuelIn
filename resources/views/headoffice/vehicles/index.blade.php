@@ -246,9 +246,6 @@
                           </div>
                         </div>
                       </div>
-                        <button type="button" class="btn btn-success" onclick="location.href='/register-vehicle'">
-                            Register a New Vehicle
-                         </button>
 
                          <div class="table-responsive" style="margin:8px">
                             <table class="table table-striped table-hover">
@@ -411,12 +408,52 @@
                 <input type="text" name="Description" id="Description" class="form-control" required>
               </div>
               <br>
-              <button type="submit" class="btn btn-primary">Create Vehicle Type</button>
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <button type="submit" class="btn btn-primary">Create Vehicle Type</button>
+              </div>
             </form>
           </div>
         </div>
       </div>
   </div>
+
+  @if ($type = Session::get('vehicleType'))
+        <div class="modal fade" id="typeeditmodal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Update Vehicle Type</h5>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{{ route('vehicle_types.update', $type->Vehicle_Type_ID) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                      
+                        <div class="form-group">
+                          <label for="Type_Name">Type Name</label>
+                          <input type="text" name="Type_Name" id="Type_Name" class="form-control" value="{{ $type->Type_Name }}" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <input type="text" name="Description" id="Description" class="form-control" value="{{ $type->Description }}" required>
+                        </div>
+                        <br>
+                        <div class="d-grid gap-2 col-12 mx-auto">
+                          <button type="submit" class="btn btn-primary">Update Vehicle Type</button>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+              $('#typeeditmodal').modal('show');
+            });
+        </script> 
+    @endif
 
     @if ($message = Session::get('success'))
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
