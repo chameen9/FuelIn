@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 class Driver extends Model
 {
-    protected $table = 'Driver';
+    protected $table = 'driver';
     protected $primaryKey = 'driver_id';
     public $timestamps = false;
 
