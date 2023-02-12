@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>FuelIn | Vehicle</title>
+  <title>FuelIn | Drivers</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -184,7 +184,7 @@
       </li><!-- End Dashboard Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link" href="/vehicles">
+        <a class="nav-link collapsed" href="/vehicles">
             <i class="bi bi-truck"></i>
             <span>Vehicle</span>
         </a>
@@ -198,7 +198,7 @@
       </li><!-- End fuelstations Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/drivers">
+        <a class="nav-link" href="/drivers">
             <i class="bi bi-person-workspace"></i>
             <span>Drivers</span>
         </a>
@@ -218,11 +218,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Vehicle</h1>
+      <h1>Drivers</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/head_office_dashboard" style="text-decoration: none;">Home</a></li>
-          <li class="breadcrumb-item active"><a href="/vehicles" style="text-decoration: none;">Vehicle</a></li>
+          <li class="breadcrumb-item active"><a href="/drivers" style="text-decoration: none;">Drivers</a></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -232,60 +232,58 @@
 
             <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <div class="card border-white" style="padding: 20px;">
-                    <h3 class="card-title">Vehicles<span> </span></h3>
+                    <h3 class="card-title">Drivers<span> </span></h3>
                     <hr>
                     <div class="card-body">
                       <div class="row">
                         <div class="col-lg-3 col-xl-3 col-md-5 col-sm-5 mb-3">
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newvehiclereg">
-                            Register a New Vehicle
+                          <!-- <a href="{{ route('drivers.create') }}" class="btn btn-primary">Add a New Driver</a> -->
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addnewdriver">
+                            Add a New Driver
                           </button>
-                        </div>
-                        <div class="col-lg-3 col-xl-3 col-md-7 col-sm-7">
-                          <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="" readonly value="Vehicle Types :" disabled>
-                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addnewvehicletype">
-                              Add New
-                            </button>
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#managevehicletype">
-                              Manage
-                            </button>
-                          </div>
                         </div>
                       </div>
 
                          <div class="table-responsive" style="margin:8px">
-                            <table class="table table-striped table-hover">
-                              <thead>
+                         <table class="table table-striped table-hover">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Driver License Number</th>
+                                <th>Phone Number</th>
+                                <th>Address</th>
+                                <th>Date of Birth</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($drivers as $driver)
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Registration Number</th>
-                                    <th>Customer ID</th>
-                                    <th>Vehicle Type ID</th>
-                                    <th>Actions</th>
+                                  <td>{{ $driver->driver_id }}</td>
+                                  <td>{{ $driver->first_name }}</td>
+                                  <td>{{ $driver->last_name }}</td>
+                                  <td>{{ $driver->driver_license_number }}</td>
+                                  <td>{{ $driver->phone_number }}</td>
+                                  <td>{{ $driver->address }}</td>
+                                  <td>{{ $driver->date_of_birth }}</td>
+                                  <td>
+                                    
+                                    <form action="{{ route('drivers.destroy', $driver->driver_id) }}" method="POST" style="display:inline-block;">
+                                      @method('DELETE')
+                                      @csrf
+                                      <div class="btn-group" role="group">
+                                        <a href="{{ route('drivers.show', $driver->driver_id) }}" class="btn btn-secondary btn-sm" title="View"><i class="bi bi-eye"></i></a>
+                                        <a href="{{ route('drivers.edit', $driver->driver_id) }}" class="btn btn-success btn-sm" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
+                                      </div>
+                                    </form>
+                                  </td>
                                 </tr>
-                              </thead>
-                              <tbody>
-                                  @foreach($vehicles as $vehicle)
-                                  <tr>
-                                      <td>{{ $vehicle->id }}</td>
-                                      <td>{{ $vehicle->registration_number }}</td>
-                                      <td>{{ $vehicle->Customer_ID }}</td>
-                                      <td>{{ $vehicle->Vehicle_Type_ID }}</td>
-                                      <td>
-                                          <form action="{{ route('vehicles.destroy', $vehicle->id) }}" method="POST" style="display: inline-block;">
-                                              @method('DELETE')
-                                              @csrf
-                                              <div class="btn-group" role="group">
-                                                <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-success btn-sm" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
-                                              </div>
-                                          </form>
-                                      </td>
-                                  </tr>
-                                  @endforeach
-                              </tbody>
-                            </table>
+                              @endforeach
+                            </tbody>
+                          </table>
                          </div>
                     </div>
                 </div>
@@ -305,42 +303,58 @@
   </footer><!-- End Footer -->
 
 
-  <!-- Add new vehicle Modal -->
-    <div class="modal fade" id="newvehiclereg" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <!-- Add a new driver Modal -->
+    <div class="modal fade" id="addnewdriver" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="fuelstationregmodalTitle">Register a New Vehicle</h5>
+                <h5 class="modal-title" id="fuelstationregmodalTitle">Add a New Driver</h5>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
             </div>
             <div class="modal-body">
-              <form action="{{ route('vehicles.create') }}" method="POST">
-                {{csrf_field()}}
-            
-                <div class="row">
-                  <div class="col-7">
-                    <div class="form-group">
-                      <label for="registration_number">Registration Number</label>
-                      <input type="text" name="registration_number" id="registration_number" class="form-control" required>
+              <form action="{{ route('drivers.store') }}" method="POST">
+                  @csrf
+                  <div class="row">
+                    <div class="col-6">
+                      <label for="first_name">First Name:</label>
+                      <input type="text" class="form-control" id="first_name" name="first_name" required>
+                    </div>
+                    <div class="col-6">
+                      <label for="last_name">Last Name:</label>
+                      <input type="text" class="form-control" id="last_name" name="last_name" required>
                     </div>
                   </div>
-                  <div class="col-5">
-                    <div class="form-group">
-                      <label for="Vehicle_Type_ID">Vehicle Type</label>
-                      <select name="Vehicle_Type_ID" id="Vehicle_Type_ID_Title" class="form-control" required>
-                          @foreach ($vehicleTypes as $vehicleType)
-                              <option name="{{$vehicleType->Vehicle_Type_ID}}" id="{{$vehicleType->Vehicle_Type_ID}}" value="{{ $vehicleType->Vehicle_Type_ID }}">{{ $vehicleType->Type_Name }}</option>
-                          @endforeach
-                      </select>
+                  <br>
+                  <div class="row">
+                    <div class="col-6">
+                      <label for="phone_number">Phone Number:</label>
+                      <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
+                    </div>
+                    <div class="col-6">
+                      <label for="date_of_birth">Date of Birth:</label>
+                      <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
                     </div>
                   </div>
-                </div>
-                <br>
-                <div class="d-grid gap-2 col-12 mx-auto">
-                  <button type="submit" class="btn btn-primary">Register</button>
-                </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="driver_license_number">Driver's License Number:</label>
+                      <input type="text" class="form-control" id="driver_license_number" name="driver_license_number" required>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="address">Address:</label>
+                      <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
               </form>
             </div>
           </div>
@@ -358,34 +372,7 @@
                 </button>
             </div>
             <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Type Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($vehicleTypes as $vehicleType)
-                    <tr>
-                      <th scope="row">{{ $vehicleType->Vehicle_Type_ID }}</th>
-                      <td>{{ $vehicleType->Type_Name }}</td>
-                      <td>{{ $vehicleType->Description }}</td>
-                      <td>
-                        <form action="{{ route('vehicle_types.destroy', $vehicleType->Vehicle_Type_ID) }}" method="POST" class="d-inline">
-                          @csrf
-                          @method('DELETE')
-                          <div class="btn-group" role="group">
-                            <a href="{{ route('vehicle_types.edit', $vehicleType->Vehicle_Type_ID) }}" class="btn btn-success btn-sm" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
-                          </div>
-                        </form>
-                      </td>
-                    </tr>
-                  @endforeach
-                </tbody>
+              
               </table>
               
               <!-- <a href="{{ route('vehicle_types.create') }}" class="btn btn-success">Add New Vehicle Type</a> -->
@@ -395,75 +382,130 @@
         </div>
     </div>
 
-    <!-- Add new vehicle types Modal -->
-    <div class="modal fade" id="addnewvehicletype" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="fuelstationregmodalTitle">Manage Vehicle Types</h5>
-              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-              </button>
-          </div>
-          <div class="modal-body">
-            <form action="{{ route('vehicle_types.store') }}" method="POST">
-              @csrf
-            
-              <div class="form-group">
-                <label for="Type_Name">Type Name</label>
-                <input type="text" name="Type_Name" id="Type_Name" class="form-control" required>
-              </div>
-              <br>
-              <div class="form-group">
-                <label for="Description">Description</label>
-                <input type="text" name="Description" id="Description" class="form-control" required>
-              </div>
-              <br>
-              <div class="d-grid gap-2 col-12 mx-auto">
-                <button type="submit" class="btn btn-primary">Create Vehicle Type</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-  </div>
-
-  @if ($type = Session::get('vehicleType'))
-        <div class="modal fade" id="typeeditmodal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">Update Vehicle Type</h5>
-                    </div>
-                    <div class="modal-body">
-                      <form action="{{ route('vehicle_types.update', $type->Vehicle_Type_ID) }}" method="POST">
+    <!--View driver modal-->
+    @if (Session::get('driver'))
+      <input type="hidden" name="hidden" value="{{$driver = Session::get('driver')}}">
+      <div class="modal fade" id="viewdriver" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-center" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="successModalLabel">View Driver {{$driver->driver_id}}</h5>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{ route('drivers.store') }}" method="POST">
                         @csrf
-                        @method('PATCH')
-                      
-                        <div class="form-group">
-                          <label for="Type_Name">Type Name</label>
-                          <input type="text" name="Type_Name" id="Type_Name" class="form-control" value="{{ $type->Type_Name }}" required>
+                        <div class="row">
+                          <div class="col-6">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" readonly value="{{$driver->first_name}}">
+                          </div>
+                          <div class="col-6">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" readonly value="{{$driver->last_name}}">
+                          </div>
                         </div>
                         <br>
-                        <div class="form-group">
-                          <label for="Description">Description</label>
-                          <input type="text" name="Description" id="Description" class="form-control" value="{{ $type->Description }}" required>
+                        <div class="row">
+                          <div class="col-6">
+                            <label for="phone_number">Phone Number:</label>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number" readonly value="{{$driver->phone_number}}">
+                          </div>
+                          <div class="col-6">
+                            <label for="date_of_birth">Date of Birth:</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" readonly value="{{$driver->date_of_birth}}">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="driver_license_number">Driver's License Number:</label>
+                            <input type="text" class="form-control" id="driver_license_number" name="driver_license_number" readonly value="{{$driver->driver_license_number}}">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="address">Address:</label>
+                            <input type="text" class="form-control" id="address" name="address" readonly value="{{$driver->address}}">
+                          </div>
+                        </div>
+                        <br>
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>
+          $(document).ready(function() {
+            $('#viewdriver').modal('show');
+          });
+      </script> 
+    @endif
+
+    <!--Update driver modal-->
+    @if (Session::get('updatedriver'))
+      <input type="hidden" name="hidden" value="{{$driver = Session::get('updatedriver')}}">
+      <div class="modal fade" id="updatedriver" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-center" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="successModalLabel">Update Driver {{$driver->driver_id}}</h5>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{ route('drivers.update', $driver->driver_id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                          <div class="col-6">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required value="{{$driver->first_name}}">
+                          </div>
+                          <div class="col-6">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required value="{{$driver->last_name}}">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-6">
+                            <label for="phone_number">Phone Number:</label>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number" required value="{{$driver->phone_number}}">
+                          </div>
+                          <div class="col-6">
+                            <label for="date_of_birth">Date of Birth:</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required value="{{$driver->date_of_birth}}">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="driver_license_number">Driver's License Number:</label>
+                            <input type="text" class="form-control" id="driver_license_number" name="driver_license_number" required value="{{$driver->driver_license_number}}">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="address">Address:</label>
+                            <input type="text" class="form-control" id="address" name="address" required value="{{$driver->address}}">
+                          </div>
                         </div>
                         <br>
                         <div class="d-grid gap-2 col-12 mx-auto">
-                          <button type="submit" class="btn btn-primary">Update Vehicle Type</button>
+                          <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-                      </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script>
-            $(document).ready(function() {
-              $('#typeeditmodal').modal('show');
-            });
-        </script> 
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>
+          $(document).ready(function() {
+            $('#updatedriver').modal('show');
+          });
+      </script> 
     @endif
 
     @if ($message = Session::get('success'))

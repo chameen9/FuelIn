@@ -41,8 +41,10 @@ class FuelStationController extends Controller
 
     public function viewupdate($station_id){
         $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $uptodatestation = FuelStation::Where('Fuel_Station_ID',$station_id)->get();
-        return view('headoffice.fuelstations.updatestation', compact('uptodatestation','email'));
+        return view('headoffice.fuelstations.updatestation', compact('uptodatestation','email','FirstName','LastName'));
         
     }
     public function update(Request $request){
@@ -54,7 +56,7 @@ class FuelStationController extends Controller
             'Scheduled_Delivery_Time'=>$request->input('Scheduled_Delivery_Time'),
             'Population_density'=>$request->input('Population_density'),
         ]);
-        return back()->with('success', 'Successfully updated...');
+        return redirect()->route('fuelstations.index')->with('success', 'Successfully updated...');
     }
 
     public function delete($station_id){

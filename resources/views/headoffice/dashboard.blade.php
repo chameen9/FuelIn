@@ -198,6 +198,13 @@
       </li><!-- End fuelstations Nav -->
       <li><br></li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="/drivers">
+            <i class="bi bi-person-workspace"></i>
+            <span>Drivers</span>
+        </a>
+      </li><!-- End Driver Nav -->
+      <li><br></li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="/contact">
             <i class="bi bi-send"></i>
             <span>Contact</span>

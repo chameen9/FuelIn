@@ -49,6 +49,14 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/head_office_dashboard/vehicles/create', [VehicleController::class, 'create'])->name('head_office.vehicles.create');
     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
 
+    Route::get('/drivers', [App\Http\Controllers\DriverController::class, 'index'])->name('drivers.index');
+    Route::get('/drivers/create',  [App\Http\Controllers\DriverController::class, 'create'])->name('drivers.create');
+    Route::post('/drivers', [App\Http\Controllers\DriverController::class, 'store'])->name('drivers.store');
+    Route::get('/drivers/{driver_id}', [App\Http\Controllers\DriverController::class, 'show'])->name('drivers.show');
+    Route::get('/drivers/{driver_id}/edit', [App\Http\Controllers\DriverController::class, 'edit'])->name('drivers.edit');
+    Route::put('/drivers/{driver_id}', [App\Http\Controllers\DriverController::class, 'update'])->name('drivers.update');
+    Route::delete('/drivers/{driver_id}',[App\Http\Controllers\DriverController::class, 'destroy'])->name('drivers.destroy');
+
     //end ashen new
 
     //sandeepa
@@ -58,8 +66,8 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
 
     Route::post('/add_new_fuel_station', [App\Http\Controllers\FuelStationController::class, 'addnew'])->name('fuelstations.addnew');
 
-    Route::post('/station/viewupdate/{station_id}', [App\Http\Controllers\FuelStationController::class, 'viewupdate'])->name('fuelstations.viewupdate');
-    Route::get('/station/viewupdate/{station_id}', [App\Http\Controllers\FuelStationController::class, 'viewupdate'])->name('fuelstations.viewupdate');
+    Route::post('/station/{station_id}/viewupdate', [App\Http\Controllers\FuelStationController::class, 'viewupdate'])->name('fuelstations.viewupdate');
+    Route::get('/station/{station_id}/viewupdate', [App\Http\Controllers\FuelStationController::class, 'viewupdate'])->name('fuelstations.viewupdate');
 
     Route::post('/station/delete/{station_id}', [App\Http\Controllers\FuelStationController::class, 'delete'])->name('fuelstations.delete');
     Route::get('/station/delete/{station_id}', [App\Http\Controllers\FuelStationController::class, 'delete'])->name('fuelstations.delete');
