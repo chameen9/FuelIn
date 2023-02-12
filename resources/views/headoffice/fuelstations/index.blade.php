@@ -198,6 +198,13 @@
       </li><!-- End fuelstations Nav -->
       <li><br></li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="/drivers">
+            <i class="bi bi-person-workspace"></i>
+            <span>Drivers</span>
+        </a>
+      </li><!-- End Driver Nav -->
+      <li><br></li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="/contact">
             <i class="bi bi-send"></i>
             <span>Contact</span>
@@ -264,12 +271,9 @@
                                      <td>{{ $fuelstation->Population_density	 }}</td>
                                      <td>
                                       <div class="btn-group" role="group">
-                                        <a type="button" href="{{url('/station/viewupdate/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-success" title="Update"><i class="bi bi-arrow-repeat"></i></a>
-                                        <a type="button" href="{{url('/station/delete/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></a>
+                                        <a type="button" href="{{url('/station/'.$fuelstation->Fuel_Station_ID.'/viewupdate')}}" class="btn btn-success btn-sm" title="Update"><i class="bi bi-arrow-repeat"></i></a>
+                                        <a type="button" href="{{url('/station/delete/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></a>
                                       </div>
-                                        
-                                         
-                                         
                                      </td>
                                   </tr>
                                   @endforeach
@@ -329,6 +333,7 @@
           </div>
         </div>
     </div>
+    
 
     @if ($message = Session::get('success'))
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">

@@ -46,9 +46,11 @@
 
               <div class="d-flex justify-content-center py-4">
                 <a href="{{url('/login')}}" class="logo d-flex align-items-center w-auto">
-                  <img src="{{URL::asset('/images/Logo&Text.png')}}" alt="FeulIn" style="width: auto; height: 300px;">
+                  <img src="{{URL::asset('/images/Logo.png')}}" alt="FeulIn" style="width: auto; height: auto;">
+                  <span>FuelIn</span>
                 </a>
-              </div><!-- End Logo -->
+              </div>
+              <!-- End Logo -->
 
               <div class="card mb-3">
 

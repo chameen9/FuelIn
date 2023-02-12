@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DriverController extends Controller
 {
@@ -14,8 +17,11 @@ class DriverController extends Controller
      */
     public function index()
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $drivers = Driver::all();
-        return view('headoffice.drivers.index', compact('drivers'));
+        return view('headoffice.drivers.index', compact('drivers','email','FirstName','LastName'));
     }
 
     /**
@@ -26,6 +32,7 @@ class DriverController extends Controller
     public function create()
     {
         return view('headoffice.drivers.create');
+        //no need handle by modal
     }
 
     /**
@@ -45,14 +52,15 @@ class DriverController extends Controller
             'date_of_birth' => 'required',
         ]);
 
-        $driver = new Driver([
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'driver_license_number' => $request->get('driver_license_number'),
-            'phone_number' => $request->get('phone_number'),
-            'address' => $request->get('address'),
-            'date_of_birth' => $request->get('date_of_birth'),
-        ]);
+        $driver = new Driver();
+        $driver->first_name = $request->get('first_name');
+        $driver->last_name = $request->get('last_name');
+        $driver->driver_license_number = $request->get('driver_license_number');
+        $driver->phone_number = $request->get('phone_number');
+        $driver->address = $request->get('address');
+        $driver->date_of_birth = $request->get('date_of_birth');
+        $driver->created_at = Carbon::Now('Asia/Colombo');
+        $driver->updated_at = Carbon::Now('Asia/Colombo');
         $driver->save();
         return redirect('/drivers')->with('success', 'Driver has been added');
     }
@@ -66,7 +74,7 @@ class DriverController extends Controller
     public function show($id)
     {
         $driver = Driver::find($id);
-        return view('headoffice.drivers.show', compact('driver'));
+        return redirect()->route('drivers.index')->with(['driver' => $driver]);
     }
 
     /**
@@ -78,7 +86,7 @@ class DriverController extends Controller
     public function edit($id)
     {
         $driver = Driver::find($id);
-        return view('headoffice.drivers.edit', compact('driver'));
+        return redirect()->route('drivers.index')->with(['updatedriver' => $driver]);
     }
 
     /**
@@ -97,6 +105,7 @@ class DriverController extends Controller
         $driver->phone_number = $request->input('phone_number');
         $driver->address = $request->input('address');
         $driver->date_of_birth = $request->input('date_of_birth');
+        $driver->updated_at = Carbon::Now('Asia/Colombo');
         $driver->save();
         return redirect()->route('drivers.index')->with('success', 'Driver information updated successfully.');
     }

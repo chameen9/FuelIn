@@ -198,6 +198,13 @@
       </li><!-- End fuelstations Nav -->
       <li><br></li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="/drivers">
+            <i class="bi bi-person-workspace"></i>
+            <span>Drivers</span>
+        </a>
+      </li><!-- End Driver Nav -->
+      <li><br></li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="/contact">
             <i class="bi bi-send"></i>
             <span>Contact</span>
@@ -215,7 +222,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/head_office_dashboard" style="text-decoration: none;">Home</a></li>
-          <li class="breadcrumb-item active"><a href="/fuelstations" style="text-decoration: none;">Vehicle</a></li>
+          <li class="breadcrumb-item active"><a href="/vehicles" style="text-decoration: none;">Vehicle</a></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -229,17 +236,16 @@
                     <hr>
                     <div class="card-body">
                       <div class="row">
-                        <div class="col-lg-2 col-xl-2 col-md-5 col-sm-5 mb-3">
+                        <div class="col-lg-3 col-xl-3 col-md-5 col-sm-5 mb-3">
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newvehiclereg">
                             Register a New Vehicle
                           </button>
                         </div>
                         <div class="col-lg-3 col-xl-3 col-md-7 col-sm-7">
                           <div class="input-group mb-3">
-                            
-                            <input type="text" class="form-control" placeholder="" readonly value="Vehicle Types">
+                            <input type="text" class="form-control" placeholder="" readonly value="Vehicle Types :" disabled>
                             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addnewvehicletype">
-                              Add
+                              Add New
                             </button>
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#managevehicletype">
                               Manage
@@ -267,14 +273,14 @@
                                       <td>{{ $vehicle->Customer_ID }}</td>
                                       <td>{{ $vehicle->Vehicle_Type_ID }}</td>
                                       <td>
-                                        <div class="btn-group" role="group">
-                                          <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-success" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
                                           <form action="{{ route('vehicles.destroy', $vehicle->id) }}" method="POST" style="display: inline-block;">
                                               @method('DELETE')
                                               @csrf
-                                              <button type="submit" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                                              <div class="btn-group" role="group">
+                                                <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-success btn-sm" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
+                                              </div>
                                           </form>
-                                        </div>
                                       </td>
                                   </tr>
                                   @endforeach
@@ -368,11 +374,13 @@
                       <td>{{ $vehicleType->Type_Name }}</td>
                       <td>{{ $vehicleType->Description }}</td>
                       <td>
-                        <a href="{{ route('vehicle_types.edit', $vehicleType->Vehicle_Type_ID) }}" class="btn btn-success" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
                         <form action="{{ route('vehicle_types.destroy', $vehicleType->Vehicle_Type_ID) }}" method="POST" class="d-inline">
                           @csrf
                           @method('DELETE')
-                          <button type="submit" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                          <div class="btn-group" role="group">
+                            <a href="{{ route('vehicle_types.edit', $vehicleType->Vehicle_Type_ID) }}" class="btn btn-success btn-sm" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
+                          </div>
                         </form>
                       </td>
                     </tr>

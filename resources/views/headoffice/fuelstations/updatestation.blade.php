@@ -134,12 +134,13 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{URL::asset('/images/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{$email}}</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{$LastName}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>{{$email}}</h6>
+              <h6>{{$FirstName}} {{$LastName}}</h6>
+              <h7>{{$email}}</h7>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -197,6 +198,13 @@
       </li><!-- End fuelstations Nav -->
       <li><br></li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="/drivers">
+            <i class="bi bi-person-workspace"></i>
+            <span>Drivers</span>
+        </a>
+      </li><!-- End Driver Nav -->
+      <li><br></li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="/contact">
             <i class="bi bi-send"></i>
             <span>Contact</span>
@@ -230,34 +238,55 @@
                     <div class="card-body">
                         <form action="{{route('fuelstations.update')}}" method="post">
                             @foreach ($uptodatestation as $fuelstation)
-                            {{csrf_field()}}
-                                <label>Station ID</label>
-                                <input type="number" name="Fuel_Station_ID" class="form-control" required min="1" value="{{ $fuelstation->Fuel_Station_ID }}" readonly>
-                                <br>
-                                <label>Station Name</label>
-                                <input type="text" name="Fuel_Station_Name" class="form-control" required value="{{ $fuelstation->Fuel_Station_Name }}">
-                                <br>
-                                <label>Location</label>
-                                <input type="text" name="Fuel_Station_Location" class="form-control" required value="{{ $fuelstation->Fuel_Station_Location	 }}">
-                                <br>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label>Scheduled Delivery Date</label>
-                                        <input type="date" name="Scheduled_Delivery_Date" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Date }}">
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Scheduled Delivery Time</label>
-                                        <input type="time" name="Scheduled_Delivery_Time" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Time }}">
-                                    </div>
+                              {{csrf_field()}}
+                              <div class="row">
+                                <div class="col-6">
+                                  <label>Station ID</label>
+                                  <input type="number" name="Fuel_Station_ID" class="form-control" required min="1" value="{{ $fuelstation->Fuel_Station_ID }}" readonly>
                                 </div>
-                                <br>
-                                <label>Population Density</label>
-                                <input type="number" name="Population_density" class="form-control" min="1" required value="{{ $fuelstation->Population_density	 }}">
-                                <br>
-                                <div class="modal-footer">
-                                    <a type="button" class="btn btn-secondary" href="{{route('fuelstations.index')}}">Cancel</a>
+                                <div class="col-6">
+                                  <label>Station Name</label>
+                                  <input type="text" name="Fuel_Station_Name" class="form-control" required value="{{ $fuelstation->Fuel_Station_Name }}">
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col-6">
+                                  <label>Location</label>
+                                  <input type="text" name="Fuel_Station_Location" class="form-control" required value="{{ $fuelstation->Fuel_Station_Location	 }}">
+                                </div>
+                                <div class="col-6">
+                                  <label>Population Density</label>
+                                  <input type="number" name="Population_density" class="form-control" min="1" required value="{{ $fuelstation->Population_density	 }}">
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col-6">
+                                  <label>Scheduled Delivery Date</label>
+                                  <input type="date" name="Scheduled_Delivery_Date" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Date }}">
+                                </div>
+                                <div class="col-6">
+                                  <label>Scheduled Delivery Time</label>
+                                  <input type="time" name="Scheduled_Delivery_Time" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Time }}">
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col-4">
+                                  <div class="d-grid gap-2 col-8 mx-auto">
                                     <button type="submit" class="btn btn-primary">Save</button>
+                                  </div>
                                 </div>
+                                <div class="col-4">
+                                  <br>
+                                </div>
+                                <div class="col-4">
+                                  <div class="d-grid gap-2 col-8 mx-auto">
+                                    <a type="button" class="btn btn-secondary" href="{{route('fuelstations.index')}}">Cancel</a>
+                                  </div>
+                                </div>
+                              </div>
                             @endforeach
                         </form>
                     </div>
