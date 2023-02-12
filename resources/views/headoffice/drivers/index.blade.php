@@ -1,4 +1,5 @@
 <table class="table">
+<a href="{{ route('drivers.create') }}" class="btn btn-success">Create New Driver</a>
   <thead>
     <tr>
       <th>ID</th>
