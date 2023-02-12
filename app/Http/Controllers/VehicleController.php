@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VehicleType;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
@@ -12,11 +15,18 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $vehicles = Vehicle::all();
-        return view('headoffice.vehicles.index', compact('vehicles'));
+        //$vehicles = Vehicle::join('')
+        $vehicleTypes = VehicleType::all();
+    
+        return view('headoffice.vehicles.index', compact('vehicles','vehicleTypes','email','FirstName','LastName'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
