@@ -210,7 +210,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Fuel Station</h1>
       <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/head_office_dashboard"></a>Home</li>

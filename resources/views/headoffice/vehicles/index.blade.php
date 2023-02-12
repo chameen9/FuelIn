@@ -210,7 +210,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Vehicle</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/head_office_dashboard" style="text-decoration: none;">Home</a></li>
@@ -228,7 +228,7 @@
                     <hr>
                     <div class="card-body">
                       <div class="row">
-                        <div class="col-lg-2 col-xl-2 col-md-5 col-sm-5">
+                        <div class="col-lg-2 col-xl-2 col-md-5 col-sm-5 mb-3">
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newvehiclereg">
                             Register a New Vehicle
                           </button>
@@ -266,12 +266,14 @@
                                       <td>{{ $vehicle->Customer_ID }}</td>
                                       <td>{{ $vehicle->Vehicle_Type_ID }}</td>
                                       <td>
+                                        <div class="btn-group" role="group">
                                           <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-success" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
                                           <form action="{{ route('vehicles.destroy', $vehicle->id) }}" method="POST" style="display: inline-block;">
                                               @method('DELETE')
                                               @csrf
                                               <button type="submit" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></button>
                                           </form>
+                                        </div>
                                       </td>
                                   </tr>
                                   @endforeach
