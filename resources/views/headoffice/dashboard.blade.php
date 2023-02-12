@@ -235,30 +235,32 @@
                     <h3 class="card-title">Fuel Requests<span> </span></h3>
                     <hr>
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Driver</th>
-                                    <th>Vehicle</th>
-                                    <th>Fuel Requested</th>
-                                    <th>Filling Station</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($deliveries as $delivery)
-                                <tr>
-                                    <td>{{ $delivery->id }}</td>
-                                    <td>{{ $delivery->driver->name }}</td>
-                                    <td>{{ $delivery->vehicle->number_plate }}</td>
-                                    <td>{{ $delivery->fuel_request->liters }} liters</td>
-                                    <td>{{ $delivery->fuel_request->filling_station->name }}</td>
-                                    <td>{{ $delivery->status }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive" style="margin:8px">
+                          <table class="table table-striped table-hover">
+                              <thead>
+                                  <tr>
+                                      <th>ID</th>
+                                      <th>Driver</th>
+                                      <th>Vehicle</th>
+                                      <th>Fuel Requested</th>
+                                      <th>Filling Station</th>
+                                      <th>Status</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach ($deliveries as $delivery)
+                                  <tr>
+                                      <td>{{ $delivery->id }}</td>
+                                      <td>{{ $delivery->driver->name }}</td>
+                                      <td>{{ $delivery->vehicle->number_plate }}</td>
+                                      <td>{{ $delivery->fuel_request->liters }} liters</td>
+                                      <td>{{ $delivery->fuel_request->filling_station->name }}</td>
+                                      <td>{{ $delivery->status }}</td>
+                                  </tr>
+                                  @endforeach
+                              </tbody>
+                          </table>
+                        </div>
                     </div>
                 </div>
             </div>

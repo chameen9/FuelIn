@@ -361,32 +361,11 @@
         </div>
     </div>
 
-    <!-- Manage vehicle types Modal -->
-    <div class="modal fade" id="managevehicletype" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="fuelstationregmodalTitle">Manage Vehicle Types</h5>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
-            </div>
-            <div class="modal-body">
-              
-              </table>
-              
-              <!-- <a href="{{ route('vehicle_types.create') }}" class="btn btn-success">Add New Vehicle Type</a> -->
-              
-            </div>
-          </div>
-        </div>
-    </div>
-
     <!--View driver modal-->
     @if (Session::get('driver'))
       <input type="hidden" name="hidden" value="{{$driver = Session::get('driver')}}">
       <div class="modal fade" id="viewdriver" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-center" role="document">
+          <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                   <div class="modal-header">
                       <h5 class="modal-title" id="successModalLabel">View Driver {{$driver->driver_id}}</h5>
@@ -447,7 +426,7 @@
     @if (Session::get('updatedriver'))
       <input type="hidden" name="hidden" value="{{$driver = Session::get('updatedriver')}}">
       <div class="modal fade" id="updatedriver" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-center" role="document">
+          <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                   <div class="modal-header">
                       <h5 class="modal-title" id="successModalLabel">Update Driver {{$driver->driver_id}}</h5>
