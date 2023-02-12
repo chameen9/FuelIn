@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class VehicleTypeController extends Controller
 {
@@ -27,11 +28,18 @@ class VehicleTypeController extends Controller
             'Description' => 'required',
         ]);
 
-        VehicleType::create($request->all());
+        $vehicleType = new VehicleType;
+        $vehicleType->Type_Name = $request->input('Type_Name');
+        $vehicleType->Description = $request->input('Description');
+        $vehicleType->updated_at = Carbon::Now('Asia/Colombo');
+        $vehicleType->created_at = Carbon::Now('Asia/Colombo');
+        $vehicleType->save();
+        
+        //VehicleType::create($request->all());
 
-        $vehicleTypes = VehicleType::all();
+        //$vehicleTypes = VehicleType::all();
 
-        return view('headoffice.vehicles.types.index', compact('vehicleTypes'));
+        return back()->with('success','Vehicle type added !');
        
     }
 

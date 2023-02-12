@@ -32,7 +32,7 @@ class RegisterVehicleController extends Controller
 
         Vehicle::create([
             'registration_number' => $request->input('registration_number'),
-            'Vehicle_Type_ID' => $request->Vehicle_Type_ID,
+            'Vehicle_Type_ID' => $request->input('Vehicle_Type_ID'),
         ]);
     
         return redirect()->route('vehicles.index')->with('success','Vehicle added !');

@@ -134,12 +134,12 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{URL::asset('/images/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">email</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{$email}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>email</h6>
+              <h6>{{$email}}</h6>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -227,16 +227,29 @@
                     <h3 class="card-title">Vehicles<span> </span></h3>
                     <hr>
                     <div class="card-body">
-                        <button type="button" class="btn btn-success" onclick="location.href='/register-vehicle'">
-                            Register a New Vehicle
-                         </button>
+                      <div class="row">
+                        <div class="col-lg-2 col-xl-2 col-md-5 col-sm-5">
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newvehiclereg">
                             Register a New Vehicle
                           </button>
-                          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#newvehicletypereg">
-                            Manage Vehicle types
-                          </button>
-                      
+                        </div>
+                        <div class="col-lg-3 col-xl-3 col-md-7 col-sm-7">
+                          <div class="input-group mb-3">
+                            
+                            <input type="text" class="form-control" placeholder="" readonly value="Vehicle Types">
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addnewvehicletype">
+                              Add
+                            </button>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#managevehicletype">
+                              Manage
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                        <button type="button" class="btn btn-success" onclick="location.href='/register-vehicle'">
+                            Register a New Vehicle
+                         </button>
+
                          <div class="table-responsive" style="margin:8px">
                             <table class="table table-striped table-hover">
                               <thead>
@@ -256,11 +269,11 @@
                                       <td>{{ $vehicle->Customer_ID }}</td>
                                       <td>{{ $vehicle->Vehicle_Type_ID }}</td>
                                       <td>
-                                          <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-primary">Edit</a>
+                                          <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-success" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
                                           <form action="{{ route('vehicles.destroy', $vehicle->id) }}" method="POST" style="display: inline-block;">
                                               @method('DELETE')
                                               @csrf
-                                              <button type="submit" class="btn btn-danger">Delete</button>
+                                              <button type="submit" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></button>
                                           </form>
                                       </td>
                                   </tr>
@@ -291,35 +304,119 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="fuelstationregmodalTitle">New Vehicle Registration</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <h5 class="modal-title" id="fuelstationregmodalTitle">Register a New Vehicle</h5>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
             </div>
             <div class="modal-body">
               <form action="{{ route('vehicles.create') }}" method="POST">
                 {{csrf_field()}}
             
-                <div class="form-group">
-                    <label for="registration_number">Registration Number</label>
-                    <input type="text" name="registration_number" id="registration_number" class="form-control" required>
-                </div>
-            
-                <div class="form-group">
-                    <label for="Vehicle_Type_ID">Vehicle Type</label>
-                    <select name="Vehicle_Type_ID_Title" id="Vehicle_Type_ID_Title" class="form-control">
-                        @foreach ($vehicleTypes as $vehicleType)
-                            <option name="{{$vehicleType->Vehicle_Type_ID}}" id="{{$vehicleType->Vehicle_Type_ID}}" value="{{ $vehicleType->Vehicle_Type_ID }}">{{ $vehicleType->Type_Name }}</option>
-                        @endforeach
-                    </select>
+                <div class="row">
+                  <div class="col-7">
+                    <div class="form-group">
+                      <label for="registration_number">Registration Number</label>
+                      <input type="text" name="registration_number" id="registration_number" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="col-5">
+                    <div class="form-group">
+                      <label for="Vehicle_Type_ID">Vehicle Type</label>
+                      <select name="Vehicle_Type_ID" id="Vehicle_Type_ID_Title" class="form-control" required>
+                          @foreach ($vehicleTypes as $vehicleType)
+                              <option name="{{$vehicleType->Vehicle_Type_ID}}" id="{{$vehicleType->Vehicle_Type_ID}}" value="{{ $vehicleType->Vehicle_Type_ID }}">{{ $vehicleType->Type_Name }}</option>
+                          @endforeach
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary">Register</button>
+                <div class="d-grid gap-2 col-12 mx-auto">
+                  <button type="submit" class="btn btn-primary">Register</button>
+                </div>
               </form>
             </div>
-        </div>
+          </div>
         </div>
     </div>
+
+    <!-- Manage vehicle types Modal -->
+    <div class="modal fade" id="managevehicletype" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fuelstationregmodalTitle">Manage Vehicle Types</h5>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Type Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($vehicleTypes as $vehicleType)
+                    <tr>
+                      <th scope="row">{{ $vehicleType->Vehicle_Type_ID }}</th>
+                      <td>{{ $vehicleType->Type_Name }}</td>
+                      <td>{{ $vehicleType->Description }}</td>
+                      <td>
+                        <a href="{{ route('vehicle_types.edit', $vehicleType->Vehicle_Type_ID) }}" class="btn btn-success" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
+                        <form action="{{ route('vehicle_types.destroy', $vehicleType->Vehicle_Type_ID) }}" method="POST" class="d-inline">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+              
+              <!-- <a href="{{ route('vehicle_types.create') }}" class="btn btn-success">Add New Vehicle Type</a> -->
+              
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Add new vehicle types Modal -->
+    <div class="modal fade" id="addnewvehicletype" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="fuelstationregmodalTitle">Manage Vehicle Types</h5>
+              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('vehicle_types.store') }}" method="POST">
+              @csrf
+            
+              <div class="form-group">
+                <label for="Type_Name">Type Name</label>
+                <input type="text" name="Type_Name" id="Type_Name" class="form-control" required>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="Description">Description</label>
+                <input type="text" name="Description" id="Description" class="form-control" required>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary">Create Vehicle Type</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
 
     @if ($message = Session::get('success'))
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
@@ -378,12 +475,14 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        <h5 class="modal-title" id="errorModalLabel">Warning</h5>
                     </div>
                     <div class="modal-body">
+                      <div class="alert alert-warning">
                         @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
+                          <li>{{ $error }}</li>
+                        @endforeach
+                      </div>
                     </div>
                     <div class="modal-footer">
                     </div>

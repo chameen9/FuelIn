@@ -299,8 +299,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="fuelstationregmodalTitle">Add new Fuel Station</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
             </div>
             <div class="modal-body">
@@ -315,13 +315,17 @@
                     <label>Population Density</label>
                     <input type="number" name="Population_density" class="form-control" required>
                     <br>
-                    <div class="modal-footer">
+                    <div class="row">
+                      <div class="d-grid gap-2 col-4 mx-auto">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                      <div class="d-grid gap-2 col-8 mx-auto">
                         <button type="submit" class="btn btn-primary">Add</button>
+                      </div>
                     </div>
                 </form>
             </div>
-        </div>
+          </div>
         </div>
     </div>
 

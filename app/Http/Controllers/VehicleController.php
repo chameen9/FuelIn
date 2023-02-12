@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
+use Illuminate\Support\Facades\Auth;
 class VehicleController extends Controller
 {
     
@@ -20,10 +21,12 @@ class VehicleController extends Controller
     }
     public function index()
     {
+        $email = Auth::user()->email;
         $vehicles = Vehicle::all();
+        //$vehicles = Vehicle::join('')
         $vehicleTypes = VehicleType::all();
     
-        return view('headoffice.vehicles.index', compact('vehicles','vehicleTypes'));
+        return view('headoffice.vehicles.index', compact('vehicles','vehicleTypes','email'));
     }
     
 }
