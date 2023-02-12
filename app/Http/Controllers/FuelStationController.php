@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\FuelStation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,11 @@ class FuelStationController extends Controller
     public function index()
     {
         $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $fuelstations = FuelStation::all();
     
-        return view('headoffice.fuelstations.index', compact('fuelstations','email'));
+        return view('headoffice.fuelstations.index', compact('fuelstations','email','FirstName','LastName'));
     }
     public function addnew(Request $request){
         $this->validate($request, [
