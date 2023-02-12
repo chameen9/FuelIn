@@ -54,6 +54,20 @@ class LoginController extends Controller
                         }
                                     //return redirect()->route('head_office.dashboard');
                     }
+                    if ($type == 'end_customer') {
+                        
+                        Auth::login($user);
+                        Auth::user()->userType()->associate($user->userType);
+                        Auth::user()->save();
+                        
+                        if (Auth::check()) {
+                            $userType = $user->userType->type;
+                            //echo Auth::user()->userType->type;
+                            return redirect()->route('customer_dashboard');
+                            // The user is logged in...
+                        }
+                                    //return redirect()->route('head_office.dashboard');
+                    }
                // echo $type; 
                    // echo json_decode($user_type)->type;
                    // echo $user_type;

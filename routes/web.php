@@ -35,6 +35,15 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/register-vehicle', [App\Http\Controllers\RegisterVehicleController::class, 'index'])->name('vehicles.create');
     Route::post('/register-vehicle', [App\Http\Controllers\RegisterVehicleController::class, 'store'])->name('vehicles.store');
 
+    Route::get('/drivers', [App\Http\Controllers\DriverController::class, 'index'])->name('drivers.index');
+    Route::get('/drivers/create',  [App\Http\Controllers\DriverController::class, 'create'])->name('drivers.create');
+    Route::post('/drivers', [App\Http\Controllers\DriverController::class, 'store'])->name('drivers.store');
+    Route::get('/drivers/{driver_id}', [App\Http\Controllers\DriverController::class, 'show'])->name('drivers.show');
+    Route::get('/drivers/{driver_id}/edit', [App\Http\Controllers\DriverController::class, 'edit'])->name('drivers.edit');
+    Route::put('/drivers/{driver_id}', [App\Http\Controllers\DriverController::class, 'update'])->name('drivers.update');
+    Route::delete('/drivers/{driver_id}',[App\Http\Controllers\DriverController::class, 'destroy'])->name('drivers.destroy');
+    
+
     Route::get('vehicle_types', [App\Http\Controllers\VehicleTypeController::class, 'index'])->name('vehicle_types.index');
     Route::get('vehicle_types/create', [App\Http\Controllers\VehicleTypeController::class, 'create'])->name('vehicle_types.create');
     Route::post('vehicle_types', [App\Http\Controllers\VehicleTypeController::class, 'store'])->name('vehicle_types.store');
