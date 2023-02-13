@@ -93,4 +93,6 @@ Route::post('/signup',[App\Http\Controllers\CustomerController::class, 'store'])
 
 Route::group(['middleware' => ['auth', 'end_customer']],function () {
     Route::get('/dashboard', [App\Http\Controllers\CustomerController::class, 'dashboard'])->name('customer_dashboard');
+    Route::get('/dashboard/vehicles', [App\Http\Controllers\CustomerVehiclesController::class, 'index'])->name('customers.vehicles.index');
+
 });
