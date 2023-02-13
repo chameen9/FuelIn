@@ -90,3 +90,7 @@ Route::get('/logout_admin', [App\Http\Controllers\HeadOfficeDashboardController:
 Route::get('/signup', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer_signup_form');
 
 Route::post('/signup',[App\Http\Controllers\CustomerController::class, 'store'])->name('customers.store');
+
+Route::group(['middleware' => ['auth', 'end_customer']],function () {
+    Route::get('/dashboard', [App\Http\Controllers\CustomerController::class, 'dashboard'])->name('customer_dashboard');
+});

@@ -12,6 +12,17 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
+
+//all methods after customer sigin
+
+    public function dashboard()
+    {
+        return view('customers.dashboard');
+    }
+
+
+//end after customer sigin
+
     public function create()
     {
         return view('customers.create');
