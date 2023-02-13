@@ -232,7 +232,7 @@
 
             <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <div class="card border-white" style="padding: 20px;">
-                    <h3 class="card-title">Fuel Requests<span> </span></h3>
+                    <h3 class="card-title">Fuel Stations<span> </span></h3>
                     <hr>
                     <div class="card-body">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aaa">
@@ -333,7 +333,71 @@
           </div>
         </div>
     </div>
-    
+
+    <!--Update Fuel station modal-->
+    @if (Session::get('uptodatestation'))
+      <input type="hidden" name="hidden" value="{{$fuelstation = Session::get('uptodatestation')}}">
+      <div class="modal fade" id="viewdriver" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="successModalLabel">Updadte Fuel Station {{$fuelstation->Fuel_Station_ID}}</h5>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{route('fuelstations.update')}}" method="post">
+                      {{csrf_field()}}
+                      <div class="row">
+                        <div class="col-6">
+                          <label>Station ID</label>
+                          <input type="number" name="Fuel_Station_ID" class="form-control" required min="1" value="{{ $fuelstation->Fuel_Station_ID }}" readonly>
+                        </div>
+                        <div class="col-6">
+                          <label>Station Name</label>
+                          <input type="text" name="Fuel_Station_Name" class="form-control" required value="{{ $fuelstation->Fuel_Station_Name }}">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-6">
+                          <label>Location</label>
+                          <input type="text" name="Fuel_Station_Location" class="form-control" required value="{{ $fuelstation->Fuel_Station_Location	 }}">
+                        </div>
+                        <div class="col-6">
+                          <label>Population Density</label>
+                          <input type="number" name="Population_density" class="form-control" min="1" required value="{{ $fuelstation->Population_density	 }}">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-6">
+                          <label>Scheduled Delivery Date</label>
+                          <input type="date" name="Scheduled_Delivery_Date" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Date }}">
+                        </div>
+                        <div class="col-6">
+                          <label>Scheduled Delivery Time</label>
+                          <input type="time" name="Scheduled_Delivery_Time" class="form-control" required value="{{ $fuelstation->Scheduled_Delivery_Time }}">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="d-grid gap-2 col-12 mx-auto">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>
+          $(document).ready(function() {
+            $('#viewdriver').modal('show');
+          });
+      </script> 
+    @endif
 
     @if ($message = Session::get('success'))
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
