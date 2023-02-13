@@ -5,7 +5,8 @@
         <title>List of Vehicles</title>
     </head>
     <body>
-        <h1>List of Vehicles</h1>
+        <h1>List of My Vehicles</h1>
+        <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Add New</a>
 
         <table>
             <thead>
