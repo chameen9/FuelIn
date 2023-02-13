@@ -6,7 +6,7 @@
     </head>
     <body>
         <h1>List of My Vehicles</h1>
-        <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Add New</a>
+        <a href="{{ route('customers.vehicles.create') }}" class="btn btn-primary">Add New</a>
 
         <table>
             <thead>
