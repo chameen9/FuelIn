@@ -276,6 +276,8 @@
                                       <div class="btn-group" role="group">
                                         <a href="{{ route('drivers.show', $driver->driver_id) }}" class="btn btn-secondary btn-sm" title="View"><i class="bi bi-eye"></i></a>
                                         <a href="{{ route('drivers.edit', $driver->driver_id) }}" class="btn btn-success btn-sm" title="Edit"><i class="bi bi-arrow-repeat"></i></a>
+                                        <a href="#" class="btn btn-success btn-sm"> Manage Driver Account </a>
+          
                                         <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
                                       </div>
                                     </form>

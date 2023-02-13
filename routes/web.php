@@ -85,3 +85,8 @@ Route::get('/logout_admin', [App\Http\Controllers\HeadOfficeDashboardController:
 
 });
 
+
+//customers signup route
+Route::get('/signup', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer_signup_form');
+
+Route::post('/signup',[App\Http\Controllers\CustomerController::class, 'store'])->name('customers.store');
