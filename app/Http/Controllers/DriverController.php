@@ -62,7 +62,21 @@ class DriverController extends Controller
         $driver->created_at = Carbon::Now('Asia/Colombo');
         $driver->updated_at = Carbon::Now('Asia/Colombo');
         $driver->save();
-        return redirect('/drivers')->with('success', 'Driver has been added');
+        
+
+        $user = new User();
+        $user->first_name = $request->get('first_name');
+        $user->last_name = $request->get('last_name');
+        $user->email = strtolower($request->get('first_name')).''.strtolower($request->get('last_name')).'@fuelin.lk';
+        $user->password = $request->get('driver_license_number');
+        $user->user_type_id = 2;
+        $saved = $user->save();
+        if  ($saved){
+            return redirect('/drivers')->with('success', 'Driver & user has been added');
+        }
+        else{
+            return redirect('/drivers')->with('success', 'Driver has been added add this driver as an user manually.');
+        }
     }
 
     /**

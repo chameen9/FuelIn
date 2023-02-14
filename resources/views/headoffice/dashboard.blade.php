@@ -251,10 +251,7 @@
                                   @foreach ($deliveries as $delivery)
                                   <tr>
                                       <td>{{ $delivery->id }}</td>
-                                      <td>{{ $delivery->driver->name }}</td>
-                                      <td>{{ $delivery->vehicle->number_plate }}</td>
-                                      <td>{{ $delivery->fuel_request->liters }} liters</td>
-                                      <td>{{ $delivery->fuel_request->filling_station->name }}</td>
+                                      <td>{{ $delivery->driver_id }}</td>
                                       <td>{{ $delivery->status }}</td>
                                   </tr>
                                   @endforeach

@@ -44,6 +44,19 @@ class LoginController extends Controller
                             // The user is logged in...
                         }
                     }
+                    elseif ($type == 'driver') {
+                        
+                        Auth::login($user);
+                        Auth::user()->userType()->associate($user->userType);
+                        Auth::user()->save();
+                        
+                        if (Auth::check()) {
+                            $userType = $user->userType->type;
+                            //echo "Driver";
+                            return redirect()->route('defaultdriver.index');
+                            // The user is logged in...
+                        }
+                    }
                 } 
                 else {
                     return back()->with('error','Error !');

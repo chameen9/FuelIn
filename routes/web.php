@@ -80,5 +80,11 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
         return  route('fuelstations.index');
     });
     //end sandeepa
-});
 
+
+});
+    // driver login routes
+    Route::get('/defaultdriver', [App\Http\Controllers\DefaultDriver::class, 'index'])->name('defaultdriver.index');
+    Route::post('/updatelocation', [App\Http\Controllers\DefaultDriver::class, 'updatelocation'])->name('defaultdriver.updatelocation');
+
+    // end driver login routes
