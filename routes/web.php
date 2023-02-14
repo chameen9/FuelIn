@@ -103,3 +103,14 @@ Route::group(['middleware' => ['auth', 'end_customer']],function () {
 
     
 });
+Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
+    Route::get('/orders',  [App\Http\Controllers\OrdersController::class, 'index'])->name('orders.index');
+    Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'] )->name('orders.create');
+    Route::post('/orders',  [App\Http\Controllers\OrdersController::class, 'store'] )->name('orders.store');
+    Route::get('/orders/{order}',  [App\Http\Controllers\OrdersController::class, 'show'] )->name('orders.show');
+    Route::get('/orders/{order}/edit', [App\Http\Controllers\OrdersController::class, 'edit'] )->name('orders.edit');
+    Route::put('/orders/{order}',  [App\Http\Controllers\OrdersController::class, 'update'] )->name('orders.update');
+    Route::delete('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'destroy'])->name('orders.destroy');
+    
+    
+});
