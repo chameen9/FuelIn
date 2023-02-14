@@ -21,7 +21,7 @@
         <td>{{ $order->Request_Date }}</td>
         <td>{{ $order->Approval_Status }}</td>
         <td>
-          <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm">Edit</a>
+          <!-- <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm">Edit</a> -->
           <form action="{{ route('orders.destroy', $order->order_id) }}" method="POST" class="d-inline-block">
             @csrf
             @method('DELETE')
