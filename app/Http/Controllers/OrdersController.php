@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FuelStation;
+use App\Models\FuelType;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
@@ -15,7 +18,16 @@ class OrdersController extends Controller
 
     public function create()
     {
-        return view('orders.create');
+        $fuelTypes = FuelType::all();
+        $user = Auth::user();
+        $fuelStations = FuelStation::where('owner_id', $user->id)->get();
+       // return view('fuel_stations.select', compact('fuelStations'));
+        return view('fuel_station.orders.create', [
+            'fuelTypes' => $fuelTypes,
+            'fuelStations' => $fuelStations,
+
+        ]);
+       
     }
 
     public function store(Request $request)

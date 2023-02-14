@@ -14,15 +14,15 @@
   <tbody>
     @foreach ($orders as $order)
       <tr>
-        <th scope="row">{{ $order->Fuel_Request_ID }}</th>
+        <th scope="row">{{ $order->order_id }}</th>
 
-        <td>{{ $order->fuelType->Fuel_Type_Name }}</td>
+        <td>{{ $order->fuelType->Type_Name }}</td>
         <td>{{ $order->liters_quantity }}</td>
         <td>{{ $order->Request_Date }}</td>
         <td>{{ $order->Approval_Status }}</td>
         <td>
-          <a href="{{ route('orders.edit', $order->Fuel_Request_ID) }}" class="btn btn-primary btn-sm">Edit</a>
-          <form action="{{ route('orders.destroy', $order->Fuel_Request_ID) }}" method="POST" class="d-inline-block">
+          <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm">Edit</a>
+          <form action="{{ route('orders.destroy', $order->order_id) }}" method="POST" class="d-inline-block">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
