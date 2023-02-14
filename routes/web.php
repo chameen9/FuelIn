@@ -98,8 +98,8 @@ Route::group(['middleware' => ['auth', 'end_customer']],function () {
     Route::get('/vehicles/create', [App\Http\Controllers\CustomerVehiclesController::class, 'create'])->name('customers.vehicles.create');
     Route::post('/vehicles', [App\Http\Controllers\CustomerVehiclesController::class, 'store'])->name('customers.vehicles.store');
     Route::get('/vehicles/{id}/edit',[App\Http\Controllers\CustomerVehiclesController::class, 'edit'] )->name('customers.vehicles.edit');
-    Route::put('/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'update'])->name('customers.vehicles.update');
-    Route::delete('/customers/vehicles/{id}', 'CustomerVehiclesController@destroy')->name('customers.vehicles.destroy');
+    Route::patch('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'update'])->name('customers.vehicles.update');
+    Route::delete('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'destroy'])->name('customers.vehicles.destroy');
 
     
 });

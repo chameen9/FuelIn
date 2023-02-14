@@ -55,16 +55,18 @@ class CustomerVehiclesController extends Controller
     {
         $vehicle = Vehicle::find($id);
 
-        return view('customers.vehicles.edit', [
-            'vehicle' => $vehicle
-        ]);
+        $vehicleTypes = VehicleType::all();
+
+
+        return view('customers.vehicles.edit', compact('vehicle', 'vehicleTypes'));
     }
 
     public function update(Request $request, $id)
     {
+     //   echo "hi";
         $vehicle = Vehicle::find($id);
-        $vehicle->registration_number = $request->registration_number;
-        $vehicle->Customer_ID = $request->Customer_ID;
+        $vehicle->registration_number = $request->Vehicle_Number;
+      //  $vehicle->Customer_ID = $request->Customer_ID;
         $vehicle->Vehicle_Type_ID = $request->Vehicle_Type_ID;
         $vehicle->save();
 
