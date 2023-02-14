@@ -12,15 +12,12 @@
                 <label for="registration_number">Registration Number:</label>
                 <input type="text" id="registration_number" name="registration_number">
             </div>
-            <div>
-                <label for="customer_id">Customer ID:</label>
-                <input type="text" id="customer_id" name="customer_id">
-            </div>
+          
             <div>
             <label for="vehicle_type_id">Vehicle Type:</label>
             <select id="vehicle_type_id" name="vehicle_type_id">
                 @foreach ($vehicleTypes as $vehicleType)
-                    <option value="{{ $vehicleType->id }}">{{ $vehicleType->type }}</option>
+                    <option value="{{ $vehicleType->Vehicle_Type_ID }}">{{ $vehicleType->Type_Name }}</option>
                 @endforeach
             </select>
             </div>
