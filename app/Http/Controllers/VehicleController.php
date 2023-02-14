@@ -81,7 +81,8 @@ class VehicleController extends Controller
     public function edit($id)
     {
         $vehicle = Vehicle::find($id);
-        return view('headoffice.vehicles.edit', compact('vehicle'));
+        $vehicleType = VehicleType::where('Vehicle_Type_ID','=',$vehicle->Vehicle_Type_ID)->value('Type_Name');
+        return redirect()->route('vehicles.index')->with(['uptodatevehicle'=>$vehicle,'VehicleType'=>$vehicleType]);
     }
 
     /**

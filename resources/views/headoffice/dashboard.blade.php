@@ -210,7 +210,14 @@
             <span>Contact</span>
         </a>
       </li><!-- End contact Nav -->
-
+      <li><br></li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/quota">
+            <i class="bi bi-card-checklist"></i>
+            <span>Manage Fuel Qouta</span>
+        </a>
+      </li><!-- End Fuel quota management Nav -->
+      <li><br></li>
     </ul>
 
   </aside><!-- End Sidebar-->

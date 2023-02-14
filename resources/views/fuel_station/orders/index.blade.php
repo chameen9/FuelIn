@@ -18,7 +18,7 @@
 
         <td>{{ $order->fuelType->Type_Name }}</td>
         <td>{{ $order->liters_quantity }}</td>
-        <td>{{ $order->Request_Date }}</td>
+        <td>{{ $order->created_at }}</td>
         <td>{{ $order->Approval_Status }}</td>
         <td>
           <!-- <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm">Edit</a> -->

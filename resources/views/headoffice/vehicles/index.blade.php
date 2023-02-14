@@ -261,7 +261,7 @@
                                     <th>ID</th>
                                     <th>Registration Number</th>
                                     <th>Customer ID</th>
-                                    <th>Vehicle Type ID</th>
+                                    <th>Vehicle Type</th>
                                     <th>Actions</th>
                                 </tr>
                               </thead>
@@ -270,8 +270,19 @@
                                   <tr>
                                       <td>{{ $vehicle->id }}</td>
                                       <td>{{ $vehicle->registration_number }}</td>
-                                      <td>{{ $vehicle->Customer_ID }}</td>
-                                      <td>{{ $vehicle->Vehicle_Type_ID }}</td>
+                                      @if ($vehicle->Customer_ID == null)
+                                        <td><span class="badge badge-pill badge-info">Not Set</span></td>
+                                      @else
+                                        <td>{{ $vehicle->Customer_ID }}</td>
+                                      @endif
+                                      <td>
+                                  
+                                      @if ($vehicle->vehicleType)
+                                        {{ $vehicle->vehicleType->Type_Name }}
+                                      
+                                      
+                                      @endif
+                                      </td>
                                       <td>
                                           <form action="{{ route('vehicles.destroy', $vehicle->id) }}" method="POST" style="display: inline-block;">
                                               @method('DELETE')
@@ -427,6 +438,50 @@
         </div>
       </div>
   </div>
+
+  <!--Update Vehicle modal-->
+  @if (Session::get('uptodatevehicle'))
+    <input type="hidden" name="hidden" value="{{$vehicle = Session::get('uptodatevehicle')}}">
+    <input type="hidden" name="hidden" value="{{$type = Session::get('VehicleType')}}">
+    <div class="modal fade" id="viewdriver" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Updadte Vehicle Details</h5>
+                </div>
+                <div class="modal-body">
+                  <form action="{{ route('vehicles.update', $vehicle->id) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                
+                    <div class="row">
+                      <div class="col-12">
+                        <label for="Vehicle_Number">Vehicle Number:</label>
+                        <input type="text" name="registration_number" id="registration_number" class="form-control" required value="{{ $vehicle->registration_number }}">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-12">
+                        <label for="Vehicle_Type_ID">Vehicle Type</label>
+                        <input type="text" name="Vehicle_Type_Name" id="Vehicle_Type_Name" value="{{ $type }}" class="form-control" disabled>
+                        <p class="text-muted" style="font-size: 13px;">* This type cannot change.</p>
+                      </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+          $('#viewdriver').modal('show');
+        });
+    </script> 
+  @endif
 
   @if ($type = Session::get('vehicleType'))
         <div class="modal fade" id="typeeditmodal" tabindex="-1" role="dialog" aria-hidden="true">
