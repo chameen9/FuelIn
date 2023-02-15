@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FuelQuota;
 use App\Models\VehicleType;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 class FuelQuotaController extends Controller
 {
     /**
@@ -14,9 +16,12 @@ class FuelQuotaController extends Controller
      */
     public function index()
     {
-        //return "dfgdf";
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $fuelquotas = FuelQuota::all();
-        return view('headoffice.fuelquotas.index', compact('fuelquotas'));
+        $vehicle_types = VehicleType::all();
+        return view('headoffice.fuelquotas.index', compact('fuelquotas','email','FirstName','LastName','vehicle_types'));
     }
 
     /**
@@ -28,7 +33,7 @@ class FuelQuotaController extends Controller
     {
         $vehicle_types = VehicleType::all();
         return view('headoffice.fuelquotas.create', compact('vehicle_types'));
-        
+        // no need this
     }
 
     /**
@@ -50,11 +55,8 @@ class FuelQuotaController extends Controller
             return redirect()->route('fuelquotas.index')
             ->with('success','Fuel Quota created successfully.');
         } catch (\Exception $e) {
-            echo "You can't assign quota twice for same vehicle type";
-            // Handle the exception here, for example:
-          //  return redirect()->back()->with('error', 'Failed to create fuel quota: ' . $e->getMessage());
+            return redirect()->back()->with('error', "You can't assign quota twice for same vehicle type");
         }
-        
     }
 
     /**
@@ -79,7 +81,8 @@ class FuelQuotaController extends Controller
     {
         $fuel_quota = FuelQuota::find($id);
         $vehicle_types = VehicleType::all();
-        return view('headoffice.fuelquotas.edit', compact('fuel_quota', 'vehicle_types'));
+        //return view('headoffice.fuelquotas.edit', compact('fuel_quota', 'vehicle_types'));
+        return redirect()->route('fuelquotas.index')->with(['fuel_quota' => $fuel_quota,'vehicle_types'=>$vehicle_types]);
     }
     /**
      * Update the specified resource in storage.
