@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\FuelQuota;
+use App\Models\FuelQuota;
 
 class FuelQuotaController extends Controller
 {
@@ -14,8 +14,9 @@ class FuelQuotaController extends Controller
      */
     public function index()
     {
-        $fuelQuotas = FuelQuota::all();
-        return view('fuelQuotas.index', compact('fuelQuotas'));
+        return "dfgdf";
+        // $fuelQuotas = FuelQuota::all();
+        // return view('headoffice.fuelquotas.index', compact('fuelQuotas'));
     }
 
     /**
@@ -56,7 +57,7 @@ class FuelQuotaController extends Controller
     public function show($id)
     {
         $fuelQuota = FuelQuota::find($id);
-        return view('fuelQuotas.show', compact('fuelQuota'));
+        return view('headoffice.fuelquotas.show', compact('fuelQuota'));
     }
 
     /**
@@ -68,7 +69,7 @@ class FuelQuotaController extends Controller
     public function edit($id)
     {
         $fuelQuota = FuelQuota::find($id);
-        return view('fuelQuotas.edit', compact('fuelQuota'));
+        return view('headoffice.fuelquotas.edit', compact('fuelQuota'));
     }
 
     /**
