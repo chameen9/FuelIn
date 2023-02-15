@@ -8,7 +8,7 @@ class Vehicle extends Model
 {
     protected $table = 'vehicles';
     protected $fillable = [
-        'registration_number', 'Customer_ID', 'Vehicle_Type_ID'
+        'registration_number', 'Customer_ID', 'Vehicle_Type_ID', 'fuel_reset_date'
     ];
 
     public function customer()

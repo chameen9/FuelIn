@@ -253,6 +253,7 @@
                                         <th>ID</th>
                                         <th>Vehicle Type</th>
                                         <th>Liters Amount</th>
+                                        <th>Fuel Reset Day</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -266,6 +267,7 @@
                                             @endif
                                             </td>
                                             <td>{{ $fuelquota->liters_amount }}</td>
+                                            <td>{{ $fuelquota->fuel_reset_day }}</td>
                                             <td>
                                                 <!-- <a href="{{ route('fuelquotas.show', $fuelquota->Fuel_Quota_ID) }}" class="btn btn-sm btn-info">Show</a> -->
                                                 
@@ -313,29 +315,37 @@
             </div>
             <div class="modal-body">
                 <form action="{{ route('fuelquotas.store') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="vehicle_type_id">Vehicle Type</label>
-                        <select class="form-control" id="Vehicle_Type_ID" name="Vehicle_Type_ID">
-                            @foreach ($vehicle_types as $vehicle_type)
-                                <option value="{{ $vehicle_type->Vehicle_Type_ID }}">{{ $vehicle_type->Type_Name }}</option>
-                            @endforeach
-                        </select>
-                        <br>
-                    </div>
-                    <div class="form-group">
-                        <label for="liters_amount">Liters Amount</label>
-                        <input type="text" class="form-control" id="liters_amount" name="liters_amount">
-                        <br>
-                    </div>
-                    <div class="row">
-                      <div class="d-grid gap-2 col-4 mx-auto">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      </div>
-                      <div class="d-grid gap-2 col-8 mx-auto">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                      </div>
-                    </div>
+                  @csrf
+                  <div class="form-group">
+                      <label for="vehicle_type_id">Vehicle Type</label>
+                      <select class="form-control" id="Vehicle_Type_ID" name="Vehicle_Type_ID">
+                          @foreach ($vehicle_types as $vehicle_type)
+                              <option value="{{ $vehicle_type->Vehicle_Type_ID }}">{{ $vehicle_type->Type_Name }}</option>
+                          @endforeach
+                      </select>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="fuel_reset_day">Fuel Reset Day:</label>
+                    <select name="fuel_reset_day" id="fuel_reset_day" class="form-control">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                      <label for="liters_amount">Liters Amount</label>
+                      <input type="number" class="form-control" id="liters_amount" required name="liters_amount" min="1" max="100">
+                  </div>
+                  <br>
+                  <div class="d-grid gap-2 col-12 mx-auto">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                  </div>
                 </form>
             </div>
           </div>
@@ -353,26 +363,36 @@
                   </div>
                   <div class="modal-body">
                     <form method="POST" action="{{ route('fuelquotas.update', ['id' => $fuel_quota->Fuel_Quota_ID]) }}">
-                        @csrf
-                        @method('PUT')
-                        <!-- <div class="form-group">
-                            <label for="vehicle_type_id">Vehicle Type</label>
-                            <select name="vehicle_type_id" id="vehicle_type_id" class="form-control">
-                                @foreach ($vehicle_types as $vehicle_type)
-                                    <option value="{{ $vehicle_type->Vehicle_Type_ID }}" {{ $fuel_quota->Vehicle_Type_ID == $vehicle_type->Vehicle_Type_ID ? 'selected' : '' }}>
-                                        {{ $vehicle_type->Type_Name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div> -->
-                        <div class="form-group">
-                            <label for="liters_amount">Liters Amount</label>
-                            <input type="text" name="liters_amount" id="liters_amount" class="form-control" value="{{ $fuel_quota->liters_amount }}">
-                        </div>
-                        <br>
-                        <div class="d-grid gap-2 col-12 mx-auto">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
+                      @csrf
+                      @method('PUT')
+                      <!-- <div class="form-group">
+                          <label for="vehicle_type_id">Vehicle Type</label>
+                          <select name="vehicle_type_id" id="vehicle_type_id" class="form-control">
+                              @foreach ($vehicle_types as $vehicle_type)
+                                  <option value="{{ $vehicle_type->Vehicle_Type_ID }}" {{ $fuel_quota->Vehicle_Type_ID == $vehicle_type->Vehicle_Type_ID ? 'selected' : '' }}>
+                                      {{ $vehicle_type->Type_Name }}
+                                  </option>
+                              @endforeach
+                          </select>
+                      </div> -->
+                      <div class="form-group">
+                        <label for="fuel_reset_day">Fuel Reset Day</label>
+                        <select name="fuel_reset_day" id="fuel_reset_day" class="form-control">
+                            <option value="Monday" @if($fuel_quota->fuel_reset_day === 'Monday') selected @endif>Monday</option>
+                            <option value="Tuesday" @if($fuel_quota->fuel_reset_day === 'Tuesday') selected @endif>Tuesday</option>
+                            <option value="Wednesday" @if($fuel_quota->fuel_reset_day === 'Wednesday') selected @endif>Wednesday</option>
+                            <option value="Thursday" @if($fuel_quota->fuel_reset_day === 'Thursday') selected @endif>Thursday</option>
+                            <option value="Friday" @if($fuel_quota->fuel_reset_day === 'Friday') selected @endif>Friday</option>
+                            <option value="Saturday" @if($fuel_quota->fuel_reset_day === 'Saturday') selected @endif>Saturday</option>
+                            <option value="Sunday" @if($fuel_quota->fuel_reset_day === 'Sunday') selected @endif>Sunday</option>
+                        </select>
+                      </div>
+                      <br>
+                      <div class="form-group">
+                          <label for="liters_amount">Liters Amount</label>
+                          <input type="text" name="liters_amount" id="liters_amount" class="form-control" value="{{ $fuel_quota->liters_amount }}">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                   </div>
               </div>

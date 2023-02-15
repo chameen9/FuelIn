@@ -13,4 +13,8 @@ class VehicleType extends Model
     protected $fillable = [
         'Vehicle_Type_ID', 'Type_Name', 'Description'
     ];
+    public function fuelQuota()
+    {
+        return $this->hasOne(FuelQuota::class, 'Vehicle_Type_ID');
+    }
 }

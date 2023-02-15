@@ -97,11 +97,12 @@ class FuelQuotaController extends Controller
     
         $this->validate($request, [
            
-            'liters_amount' => 'required|numeric'
+            'liters_amount' => 'required|numeric',
+            'fuel_reset_day' => 'required'
         ]);
     
-      
         $fuelQuota->liters_amount = $request->liters_amount;
+        $fuelQuota->fuel_reset_day = $request->fuel_reset_day;
         $fuelQuota->save();
     
         return redirect()->route('fuelquotas.index')->with('success', 'Fuel quota updated successfully');
