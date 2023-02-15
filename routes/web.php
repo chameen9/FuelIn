@@ -57,14 +57,14 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     
     Route::get('/logout_admin', [App\Http\Controllers\HeadOfficeDashboardController::class, 'logout'])->name('logout_admin');
 
-    Route::get('/register_new_vehicle_type', [HeadOfficeDashboardController::class, 'registerNewVehicleType'])->name('register_new_vehicle_type');
-    Route::get('/head_office_dashboard/fuel_quotas', [FuelQuotaController::class, 'index'])->name('fuelquotas.index');
-    Route::get('/head_office_dashboard/fuelquotas/create', [FuelQuotaController::class, 'create'])->name('fuelquotas.create');
-    Route::post('/head_office_dashboard/fuelquotas', [FuelQuotaController::class, 'store'])->name('fuelquotas.store');
-    Route::get('/head_office_dashboard/fuelquotas/{id}', [FuelQuotaController::class, 'show'])->name('fuelquotas.show');
-    Route::get('/head_office_dashboard/fuelquotas/{id}/edit', [FuelQuotaController::class, 'edit'])->name('fuelquotas.edit');
-    Route::put('/head_office_dashboard/fuelquotas/{id}', [FuelQuotaController::class, 'update'])->name('fuelquotas.update');
-    Route::delete('/head_office_dashboard/fuelquotas/{id}', [FuelQuotaController::class, 'destroy'])->name('fuelquotas.destroy');
+    Route::get('/register_new_vehicle_type', [App\Http\Controllers\HeadOfficeDashboardController::class, 'registerNewVehicleType'])->name('register_new_vehicle_type');
+    Route::get('/head_office_dashboard/fuel_quotas', [App\Http\Controllers\FuelQuotaController::class, 'index'])->name('fuelquotas.index');
+    Route::get('/head_office_dashboard/fuelquotas/create', [App\Http\Controllers\FuelQuotaController::class, 'create'])->name('fuelquotas.create');
+    Route::post('/head_office_dashboard/fuelquotas', [App\Http\Controllers\FuelQuotaController::class, 'store'])->name('fuelquotas.store');
+    Route::get('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'show'])->name('fuelquotas.show');
+    Route::get('/head_office_dashboard/fuelquotas/{id}/edit', [App\Http\Controllers\FuelQuotaController::class, 'edit'])->name('fuelquotas.edit');
+    Route::put('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'update'])->name('fuelquotas.update');
+    Route::delete('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'destroy'])->name('fuelquotas.destroy');
     
 
     //end ashen
