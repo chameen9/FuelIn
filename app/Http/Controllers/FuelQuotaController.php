@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FuelQuota;
-
+use App\Models\VehicleType;
 class FuelQuotaController extends Controller
 {
     /**
@@ -14,19 +14,22 @@ class FuelQuotaController extends Controller
      */
     public function index()
     {
-        return "dfgdf";
-        // $fuelQuotas = FuelQuota::all();
-        // return view('headoffice.fuelquotas.index', compact('fuelQuotas'));
+
+        $fuelquotas = FuelQuota::all();
+
+        return view('headoffice.fuelquotas.index', compact('fuelquotas'));
     }
 
-    /**
+    /**s
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('fuelQuotas.create');
+        $vehicle_types = VehicleType::all();
+        return view('headoffice.fuelquotas.create', compact('vehicle_types'));
+        
     }
 
     /**
@@ -42,10 +45,17 @@ class FuelQuotaController extends Controller
             'liters_amount' => 'required'
         ]);
   
-        FuelQuota::create($request->all());
+        try {
+            FuelQuota::create($request->all());
+
+            return redirect()->route('fuelQuotas.index')
+            ->with('success','Fuel Quota created successfully.');
+        } catch (\Exception $e) {
+            // Handle the exception here, for example:
+            return redirect()->back()->with('error', 'Failed to create fuel quota: ' . $e->getMessage());
+        }
+        
    
-        return redirect()->route('fuelQuotas.index')
-                        ->with('success','Fuel Quota created successfully.');
     }
 
     /**
