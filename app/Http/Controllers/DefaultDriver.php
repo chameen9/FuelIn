@@ -23,8 +23,8 @@ class DefaultDriver extends Controller
         $fuel_station_id = Delivery::where('id',$DeliveryId)->value('fuel_station_id');
         $fuel_station_name = FuelStation::where('Fuel_Station_ID',$fuel_station_id)->value('Fuel_Station_Name');
         $fuel_station_location = FuelStation::where('Fuel_Station_ID',$fuel_station_id)->value('Fuel_Station_Location');
-        $liters_requested = Delivery::where('id',$DeliveryId)->value('liters_requested');
-        $fuel_type_id = Delivery::where('id',$DeliveryId)->value('fuel_type');
+        $liters_requested = Delivery::where('id',$DeliveryId)->value('liters');
+        $fuel_type_id = Delivery::where('id',$DeliveryId)->value('Fuel_Type_ID');
         $fuel_type = DB::table('fuel_type')->where('Fuel_Type_ID',$fuel_type_id)->value('Type_Name');
         $status = DB::table('delivery_status')->where('delivery_id',$DeliveryId)->value('status');
         $current_location = DB::table('delivery_status')->where('delivery_id',$DeliveryId)->value('current_location');

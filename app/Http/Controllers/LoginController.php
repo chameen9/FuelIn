@@ -16,20 +16,28 @@ class LoginController extends Controller
     }
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'email'=>['required','email','max:100','min:1'],
-            'password'=>['string','max:100','min:1'],
-        ]);
+       // echo "hi";
+      //  $credentials = $request->only(['email', 'password']);
+
+       
+        // if (Auth::attempt($request->only($credentials['email'],$credentials['password']))) {
+        //     // Authentication was successful...
+        //     echo "hi";
+        // } else {
+        //     echo "bad";
+        // }
 
         $email = $request["email"];
         $password = $request["password"];
-        $user = User::where('email', $email)->first();
+         //return $username;
+         $user = User::where('email', $email)->first();
      
-        if(!empty($user)) {
+         if(!empty($user)) {
              
             if ($user["password"] == $password) {
                 $user_type = DB::table('user_types')->select('type')->where('id', '=', $user['user_type_id'])->get();
-                if (!empty($user_type)) {
+                //UserType::where('id', $user['user_type_id']);
+               if (!empty($user_type)) {
                 $decoded = json_decode($user_type);
                 $type = $decoded[0]->type;
                     if ($type == 'head_office_user') {
@@ -40,9 +48,11 @@ class LoginController extends Controller
                         
                         if (Auth::check()) {
                             $userType = $user->userType->type;
+                            //echo Auth::user()->userType->type;
                             return redirect()->route('head_office.dashboard');
                             // The user is logged in...
                         }
+                                    //return redirect()->route('head_office.dashboard');
                     }
                     elseif ($type == 'driver') {
                         
@@ -57,17 +67,63 @@ class LoginController extends Controller
                             // The user is logged in...
                         }
                     }
-                } 
-                else {
-                    return back()->with('error','Error !');
-                }
-            } 
-            else {
-                return back()->with('error','Email or password is incorrect !');
+                    elseif ($type == 'end_customer') {
+                        
+                        Auth::login($user);
+                        Auth::user()->userType()->associate($user->userType);
+                        Auth::user()->save();
+                        
+                        if (Auth::check()) {
+                            $userType = $user->userType->type;
+                            //echo Auth::user()->userType->type;
+                            return redirect()->route('customer_dashboard');
+                            // The user is logged in...
+                        }
+                                    //return redirect()->route('head_office.dashboard');
+                    }
+                    elseif ($type == 'petrol_station_manager') {
+                        
+                        Auth::login($user);
+                        Auth::user()->userType()->associate($user->userType);
+                        Auth::user()->save();
+                        
+                        if (Auth::check()) {
+                            $userType = $user->userType->type;
+                            //echo Auth::user()->userType->type;
+                            return redirect()->route('fuel_station_dashboard');
+                            // The user is logged in...
+                        }
+                                    //return redirect()->route('head_office.dashboard');
+                    }
+               // echo $type; 
+                   // echo json_decode($user_type)->type;
+                   // echo $user_type;
+                    // if ($user_type["type"] == 'head_office_user') {
+                    //     echo "is admin";
+                    // } else {
+                    //     echo "not admin";
+                    // }
+                 } else {
+                     echo "error";
+                 }
+                // session(['user' => ['type' => 'admin', 'id' => $user["ID"]] ]);
+                // $user = User::find($head_office_login["ID"]);
+                // $user = session('user', false);
+                //      if ($user) {
+                //          echo "authentication success";
+                //      }
+
+                //  } else {
+                //      echo "Password incorrect";
+                //  }
+            } else {
+                echo "Email or password is incorrect";
             }
-        } 
-        else {
-            return back()->with('error','Invalid login !');
+            
+         } else {
+            echo "Invalid login";
         }
+
+        //return back()->withInput()->withErrors(['email' => 'The provided credentials are incorrect.']);
     }
 }

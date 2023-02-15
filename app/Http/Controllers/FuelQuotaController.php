@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FuelQuota;
-
+use App\Models\VehicleType;
 class FuelQuotaController extends Controller
 {
     /**
@@ -26,7 +26,9 @@ class FuelQuotaController extends Controller
      */
     public function create()
     {
-        return view('headoffice.fuelquotas.create');
+        $vehicle_types = VehicleType::all();
+        return view('headoffice.fuelquotas.create', compact('vehicle_types'));
+        
     }
 
     /**
@@ -38,14 +40,21 @@ class FuelQuotaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Vehicle_Type_ID' => 'required',
+         //   'Vehicle_Type_ID' => 'required',
             'liters_amount' => 'required'
         ]);
   
-        FuelQuota::create($request->all());
-   
-        return redirect()->route('fuelquotas.index')
-                        ->with('success','Fuel Quota created successfully.');
+        try {
+            FuelQuota::create($request->all());
+
+            return redirect()->route('fuelquotas.index')
+            ->with('success','Fuel Quota created successfully.');
+        } catch (\Exception $e) {
+            echo "You can't assign quota twice for same vehicle type";
+            // Handle the exception here, for example:
+          //  return redirect()->back()->with('error', 'Failed to create fuel quota: ' . $e->getMessage());
+        }
+        
     }
 
     /**
@@ -68,10 +77,10 @@ class FuelQuotaController extends Controller
      */
     public function edit($id)
     {
-        $fuelQuota = FuelQuota::find($id);
-        return view('headoffice.fuelquotas.edit', compact('fuelQuota'));
+        $fuel_quota = FuelQuota::find($id);
+        $vehicle_types = VehicleType::all();
+        return view('headoffice.fuelquotas.edit', compact('fuel_quota', 'vehicle_types'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -84,11 +93,11 @@ class FuelQuotaController extends Controller
         $fuelQuota = FuelQuota::findOrFail($id);
     
         $this->validate($request, [
-            'Vehicle_Type_ID' => 'required',
+           
             'liters_amount' => 'required|numeric'
         ]);
     
-        $fuelQuota->Vehicle_Type_ID = $request->Vehicle_Type_ID;
+      
         $fuelQuota->liters_amount = $request->liters_amount;
         $fuelQuota->save();
     
@@ -99,7 +108,7 @@ class FuelQuotaController extends Controller
         $fuelQuota = FuelQuota::find($id);
         $fuelQuota->delete();
     
-        return redirect()->route('fuelQuotas.index')
+        return redirect()->route('fuelquotas.index')
             ->with('success','Fuel Quota deleted successfully');
     }
     

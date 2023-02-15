@@ -4,7 +4,7 @@
         <form method="POST" action="{{ route('fuelquotas.update', ['id' => $fuel_quota->Fuel_Quota_ID]) }}">
             @csrf
             @method('PUT')
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="vehicle_type_id">Vehicle Type</label>
                 <select name="vehicle_type_id" id="vehicle_type_id" class="form-control">
                     @foreach ($vehicle_types as $vehicle_type)
@@ -13,7 +13,7 @@
                         </option>
                     @endforeach
                 </select>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="liters_amount">Liters Amount</label>
                 <input type="text" name="liters_amount" id="liters_amount" class="form-control" value="{{ $fuel_quota->liters_amount }}">

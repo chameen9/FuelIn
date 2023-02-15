@@ -14,11 +14,15 @@
             <tbody>
                 @foreach ($fuelquotas as $fuelquota)
                     <tr>
-                        <td>{{ $fuelquota->Fuel_Quota_ID }}</td>
-                        <td>s</td>
-                        <td>d</td>
+                    <td>{{ $fuelquota->Fuel_Quota_ID }}</td>
                         <td>
-                            <a href="{{ route('fuelquotas.show', $fuelquota->Fuel_Quota_ID) }}" class="btn btn-sm btn-info">Show</a>
+                        @if ($fuelquota->vehicleType)
+                        {{ $fuelquota->vehicleType->Type_Name }}
+                        @endif
+                        </td>
+                        <td>{{ $fuelquota->liters_amount }}</td>
+                        <td>
+                            <!-- <a href="{{ route('fuelquotas.show', $fuelquota->Fuel_Quota_ID) }}" class="btn btn-sm btn-info">Show</a> -->
                             <a href="{{ route('fuelquotas.edit', $fuelquota->Fuel_Quota_ID) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ route('fuelquotas.destroy', $fuelquota->Fuel_Quota_ID) }}" method="POST" style="display: inline-block;">
                                 @csrf

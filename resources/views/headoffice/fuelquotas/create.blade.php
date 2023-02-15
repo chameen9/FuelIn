@@ -5,7 +5,7 @@
             @csrf
             <div class="form-group">
                 <label for="vehicle_type_id">Vehicle Type</label>
-                <select class="form-control" id="vehicle_type_id" name="vehicle_type_id">
+                <select class="form-control" id="Vehicle_Type_ID" name="Vehicle_Type_ID">
                     @foreach ($vehicle_types as $vehicle_type)
                         <option value="{{ $vehicle_type->Vehicle_Type_ID }}">{{ $vehicle_type->Type_Name }}</option>
                     @endforeach
