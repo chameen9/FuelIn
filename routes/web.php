@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return view('login');
 });
 
 Route::post('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/vehicles/create', [App\Http\Controllers\VehicleController::class, 'create'])->name('vehicles.create');
     //  Route::post('/vehicles', 'VehicleController@store')->name('vehicles.store');
     Route::get('/vehicles/{id}/edit', [App\Http\Controllers\VehicleController::class, 'edit'])->name('vehicles.edit');
+    Route::post('/vehicles/{id}/edit', [App\Http\Controllers\VehicleController::class, 'edit'])->name('vehicles.edit');
     Route::patch('/vehicles/{id}',[App\Http\Controllers\VehicleController::class, 'update'])->name('vehicles.update');
     Route::delete('/vehicles/{id}', [App\Http\Controllers\VehicleController::class, 'destroy'])->name('vehicles.destroy');
     
@@ -59,6 +61,15 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/logout_admin', [App\Http\Controllers\HeadOfficeDashboardController::class, 'logout'])->name('logout_admin');
 
     Route::get('/register_new_vehicle_type', [HeadOfficeDashboardController::class, 'registerNewVehicleType'])->name('register_new_vehicle_type');
+
+    Route::get('/head_office_dashboard/fuel_quotas', [App\Http\Controllers\FuelQuotaController::class, 'index'])->name('fuelquotas.index');
+    Route::get('/head_office_dashboard/fuelquotas/create', [App\Http\Controllers\FuelQuotaController::class, 'create'])->name('fuelquotas.create');
+    Route::post('/head_office_dashboard/fuelquotas', [App\Http\Controllers\FuelQuotaController::class, 'store'])->name('fuelquotas.store');
+    Route::get('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'show'])->name('fuelquotas.show');
+    Route::get('/head_office_dashboard/fuelquotas/{id}/edit', [App\Http\Controllers\FuelQuotaController::class, 'edit'])->name('fuelquotas.edit');
+    Route::put('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'update'])->name('fuelquotas.update');
+    Route::delete('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'destroy'])->name('fuelquotas.destroy');
+
     //end ashen new
 
     //sandeepa
@@ -81,10 +92,39 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     });
     //end sandeepa
 
-
 });
-    // driver login routes
-    Route::get('/defaultdriver', [App\Http\Controllers\DefaultDriver::class, 'index'])->name('defaultdriver.index');
-    Route::post('/updatelocation', [App\Http\Controllers\DefaultDriver::class, 'updatelocation'])->name('defaultdriver.updatelocation');
 
-    // end driver login routes
+
+// driver login routes
+Route::get('/defaultdriver', [App\Http\Controllers\DefaultDriver::class, 'index'])->name('defaultdriver.index');
+Route::post('/updatelocation', [App\Http\Controllers\DefaultDriver::class, 'updatelocation'])->name('defaultdriver.updatelocation');
+
+// end driver login routes
+
+
+//customers signup route
+Route::get('/signup', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer_signup_form');
+
+Route::post('/signup',[App\Http\Controllers\CustomerController::class, 'store'])->name('customers.store');
+
+Route::group(['middleware' => ['auth', 'end_customer']],function () {
+    Route::get('/dashboard', [App\Http\Controllers\CustomerController::class, 'dashboard'])->name('customer_dashboard');
+    Route::get('/dashboard/vehicles', [App\Http\Controllers\CustomerVehiclesController::class, 'index'])->name('customers.vehicles.index');
+    // Route::get('/vehicles', 'CustomerVehiclesController@index')->name('customers.vehicles.index');
+    Route::get('/vehicles/create', [App\Http\Controllers\CustomerVehiclesController::class, 'create'])->name('customers.vehicles.create');
+    Route::post('/vehicles', [App\Http\Controllers\CustomerVehiclesController::class, 'store'])->name('customers.vehicles.store');
+    Route::get('/vehicles/{id}/edit',[App\Http\Controllers\CustomerVehiclesController::class, 'edit'] )->name('customers.vehicles.edit');
+    Route::patch('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'update'])->name('customers.vehicles.update');
+    Route::delete('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'destroy'])->name('customers.vehicles.destroy');
+    
+});
+Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
+    Route::get('/orders',  [App\Http\Controllers\OrdersController::class, 'index'])->name('orders.index');
+    Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'] )->name('orders.create');
+    Route::post('/orders',  [App\Http\Controllers\OrdersController::class, 'store'] )->name('orders.store');
+    Route::get('/orders/{order}',  [App\Http\Controllers\OrdersController::class, 'show'] )->name('orders.show');
+    Route::get('/orders/{order}/edit', [App\Http\Controllers\OrdersController::class, 'edit'] )->name('orders.edit');
+    Route::put('/orders/{order}',  [App\Http\Controllers\OrdersController::class, 'update'] )->name('orders.update');
+    Route::delete('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'destroy'])->name('orders.destroy'); 
+    
+});

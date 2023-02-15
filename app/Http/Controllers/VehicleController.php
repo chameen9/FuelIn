@@ -31,7 +31,7 @@ class VehicleController extends Controller
         $email = Auth::user()->email;
         $FirstName = User::where('email',$email)->value('first_name');
         $LastName = User::where('email',$email)->value('last_name');
-        $vehicles = Vehicle::all();
+        //$vehicles = Vehicle::all();
         $vehicles = Vehicle::join('vehicle_type','vehicle_type.Vehicle_Type_ID','=','vehicles.Vehicle_Type_ID')
                             ->select(
                                 'vehicles.id',

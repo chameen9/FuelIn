@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
 {
-    public $timestamps = FALSE;
     protected $table = 'vehicles';
     protected $fillable = [
         'registration_number', 'Customer_ID', 'Vehicle_Type_ID'
@@ -19,6 +18,6 @@ class Vehicle extends Model
 
     public function vehicleType()
     {
-        return $this->belongsTo(VehicleType::class);
+        return $this->belongsTo(VehicleType::class, 'Vehicle_Type_ID', 'Vehicle_Type_ID');
     }
-}
+}   
