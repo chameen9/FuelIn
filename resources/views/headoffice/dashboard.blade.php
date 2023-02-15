@@ -212,9 +212,9 @@
       </li><!-- End contact Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/quota">
+        <a class="nav-link collapsed" href="/fuel_quotas">
             <i class="bi bi-card-checklist"></i>
-            <span>Manage Fuel Qouta</span>
+            <span>Manage Fuel Quota</span>
         </a>
       </li><!-- End Fuel quota management Nav -->
       <li><br></li>

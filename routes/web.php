@@ -58,8 +58,17 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/logout_admin', [App\Http\Controllers\HeadOfficeDashboardController::class, 'logout'])->name('logout_admin');
 
     Route::get('/register_new_vehicle_type', [HeadOfficeDashboardController::class, 'registerNewVehicleType'])->name('register_new_vehicle_type');
-
+    Route::get('/fuel_quotas', [FuelQuotaController::class, 'index'])->name('fuelquotas.index');
+    Route::get('/fuelquotas/create', [FuelQuotaController::class, 'create'])->name('fuelquotas.create');
+    Route::post('/fuelquotas', [FuelQuotaController::class, 'store'])->name('fuelquotas.store');
+    Route::get('/fuelquotas/{id}', [FuelQuotaController::class, 'show'])->name('fuelquotas.show');
+    Route::get('/fuelquotas/{id}/edit', [FuelQuotaController::class, 'edit'])->name('fuelquotas.edit');
+    Route::put('/fuelquotas/{id}', [FuelQuotaController::class, 'update'])->name('fuelquotas.update');
+    Route::delete('/fuelquotas/{id}', [FuelQuotaController::class, 'destroy'])->name('fuelquotas.destroy');
     
+
+    //end ashen
+
     //sandeepa
     Route::get('/fuelstations', [App\Http\Controllers\FuelStationController::class, 'index'])->name('fuelstations.index');
   
