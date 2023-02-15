@@ -239,27 +239,56 @@
 
             <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <div class="card" style="padding: 20px;">
-                    <h3 class="card-title">Fuel Requests<span> </span></h3>
+                    <h3 class="card-title">Fuel Orders<span> </span></h3>
                     <hr>
                     <div class="card-body">
                         <div class="table-responsive" style="margin:8px">
                           <table class="table table-striped table-hover">
                               <thead>
                                   <tr>
-                                      <th>ID</th>
-                                      <th>Driver</th>
-                                      <th>Vehicle</th>
-                                      <th>Fuel Requested</th>
-                                      <th>Filling Station</th>
+                                      <th>#</th>
+                                      <th>Fuel Station</th>
+                                      <th>Fuel Type</th>
+                                      <th>Liters</th>
+                                      <th>Created At</th>
                                       <th>Status</th>
+                                      <th>Approved Date</th>
+                                      <th>Approved By</th>
+                                      <th style="text-align: center;">Actions</th>
                                   </tr>
                               </thead>
                               <tbody>
-                                  @foreach ($deliveries as $delivery)
+                                  @foreach ($orders as $order)
                                   <tr>
-                                      <td>{{ $delivery->id }}</td>
-                                      <td>{{ $delivery->driver_id }}</td>
-                                      <td>{{ $delivery->status }}</td>
+                                      <th>{{ $order->order_id }}</th>
+                                      <td>{{ $order->Fuel_Station_ID }}</td>
+                                      <td>{{ $order->Fuel_Type_ID }}</td>
+                                      <td>{{ $order->liters_quantity }}</td>
+                                      <td>{{ $order->created_at }}</td>
+                                      <td>
+                                        @if($order->Approval_Status == 'pending')
+                                          <span class="badge badge-primary">{{ $order->Approval_Status }}</span>
+                                        @elseif($order->Approval_Status == 'approved')
+                                          <span class="badge badge-success">{{ $order->Approval_Status }}</span>
+                                        @else
+                                          <span class="badge badge-danger">{{ $order->Approval_Status }}</span>
+                                        @endif
+                                        
+                                      </td>
+                                      <td>{{ $order->Approval_Date }}</td>
+                                      <td>{{ $order->Approval_By }}</td>
+                                      <td style="text-align: center;">
+                                        @if($order->Approval_Status == 'pending')
+                                          <a href="{{ route('head_office_orders.edit', $order->order_id) }}" class="btn btn-sm btn-primary">Approve</a>
+                                          <a href="{{ route('head_office_orders.edit.decline', $order->order_id) }}" class="btn btn-sm btn-warning">Decline</a>
+                                        @else
+                                          <form action="{{ route('head_office_orders.destroy', $order->order_id) }}" method="POST" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                          </form>
+                                        @endif
+                                      </td>
                                   </tr>
                                   @endforeach
                               </tbody>
@@ -281,6 +310,239 @@
       &copy; Copyright <strong><span>FuelIn</span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
+
+  <!--Confirm modal-->
+  @if (Session::get('order'))
+  <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-body">
+                <h3 style="text-align: center;">Confirm</h3>
+                <hr>
+                <form method="POST" action="{{ route('head_office_orders.update', ['id' => $order->order_id]) }}">
+                  @csrf
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="">Order ID:</label>
+                        <input type="text" class="form-control" name="order_id" id="order_id" value="{{$order->order_id}}" readonly>
+                      </div>
+                      <div class="col-6">
+                        <label for="">Filling Station ID:</label>
+                        <input type="text" class="form-control" name="Fuel_Station_ID" id="Fuel_Station_ID" value="{{$order->Fuel_Station_ID}}" readonly>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <br>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="">Liters:</label>
+                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$order->liters_quantity}}" readonly>
+                      </div>
+                      <div class="col-6">
+                        <label for="">Fuel Type ID:</label>
+                        <input type="text" class="form-control" name="Fuel_Type_ID" id="Fuel_Type_ID" value="{{$order->Fuel_Type_ID}}" readonly>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <br>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="driver_id">Driver:</label>
+                        <select name="driver_id" id="driver_id" class="form-control" required>
+                          @foreach ($drivers as $driver)
+                              <option name="{{$driver->driver_id}}" id="{{$driver->driver_id}}" value="{{ $driver->driver_id }}">{{ $driver->first_name }}</option>
+                          @endforeach
+                      </select>
+                      <input type="hidden" name="ordered_date" value="{{$order->created_at}}">
+                      </div>
+                    </div>
+                    
+                    <br>
+                    <div class="row">
+                      <div class="d-grid gap-0 col-6 mx-auto">
+                       <br>
+                      </div>
+                      <div class="d-grid gap-0 col-6 mx-auto">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script>
+      $(document).ready(function() {
+        $('#confirm').modal('show');
+      });
+  </script> 
+  @endif
+
+  <!--Decline modal-->
+  @if (Session::get('order'))
+  <div class="modal fade" id="decline" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-body">
+                <h3 style="text-align: center;">Confirm</h3>
+                <hr>
+                <form method="POST" action="{{ route('head_office_orders.decline', ['id' => $order->order_id]) }}">
+                  @csrf
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="">Order ID:</label>
+                        <input type="text" class="form-control" name="order_id" id="order_id" value="{{$order->order_id}}" readonly>
+                      </div>
+                      <div class="col-6">
+                        <label for="">Filling Station ID:</label>
+                        <input type="text" class="form-control" name="Fuel_Station_ID" id="Fuel_Station_ID" value="{{$order->Fuel_Station_ID}}" readonly>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <br>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="">Liters:</label>
+                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$order->liters_quantity}}" readonly>
+                      </div>
+                      <div class="col-6">
+                        <label for="">Fuel Type ID:</label>
+                        <input type="text" class="form-control" name="Fuel_Type_ID" id="Fuel_Type_ID" value="{{$order->Fuel_Type_ID}}" readonly>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <br>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="driver_id">Driver:</label>
+                        <select name="driver_id" id="driver_id" class="form-control" required>
+                          @foreach ($drivers as $driver)
+                              <option name="{{$driver->driver_id}}" id="{{$driver->driver_id}}" value="{{ $driver->driver_id }}">{{ $driver->first_name }}</option>
+                          @endforeach
+                      </select>
+                      <input type="hidden" name="ordered_date" value="{{$order->created_at}}">
+                      </div>
+                    </div>
+                    
+                    <br>
+                    <div class="row">
+                      <div class="d-grid gap-0 col-6 mx-auto">
+                       <br>
+                      </div>
+                      <div class="d-grid gap-0 col-6 mx-auto">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script>
+      $(document).ready(function() {
+        $('#decline').modal('show');
+      });
+  </script> 
+  @endif
+
+  @if ($message = Session::get('success'))
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-success">
+                            {{ $message }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+              $('#successModal').modal('show');
+              setTimeout(function() {
+                $('#successModal').modal('hide');
+              }, 2000);
+            });
+        </script> 
+    @endif
+
+    @if ($msg = Session::get('error'))
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger">
+                            {{ $msg }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+              $('#errorModal').modal('show');
+              setTimeout(function() {
+                $('#errorModal').modal('hide');
+              }, 2000);
+            });
+        </script>          
+    @endif
+
+    @if (count($errors)>0)
+        <div class="modal fade" id="valModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                <a href="#"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></a></button>
+                            @endforeach
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+              $('#valModal').modal('show');
+              setTimeout(function() {
+                $('#valModal').modal('hide');
+              }, 5000);
+            });
+        </script> 
+    @endif 
+    <!-- Latest compiled JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

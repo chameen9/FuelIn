@@ -90,6 +90,15 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/backinupdatestation', function () {
         return  route('fuelstations.index');
     });
+
+    //new
+    Route::delete('/head_office_dashboard/fuelorders/destroy/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'destroy'])->name('head_office_orders.destroy');
+    Route::get('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
+    Route::post('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
+    Route::get('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
+    Route::post('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
+    Route::post('/head_office_dashboard/fuelorders/update/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'update'])->name('head_office_orders.update');
+    Route::post('/head_office_dashboard/fuelorders/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'decline'])->name('head_office_orders.decline');
     //end sandeepa
 
 });
