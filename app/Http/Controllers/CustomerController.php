@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\CustomerVehicleFuelQuota;
 use App\Models\FuelQuota;
+use App\Models\User;
 use App\Models\UserModelCreate;
 
 use App\Models\UserType;
@@ -19,11 +20,15 @@ class CustomerController extends Controller
 
     public function dashboard()
     {
-        return view('customers.dashboard');
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
+        return view('customers.dashboard',compact('email','FirstName','LastName'));
     }
 
     public function customerFuelQuotas()
     {
+        
         $customer_id = Auth::user()->id;
         $customer = Customer::with('vehicles.vehicleType.fuelQuota')->find($customer_id);
     // Loop through each vehicle belonging to the customer
