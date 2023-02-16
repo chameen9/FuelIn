@@ -70,9 +70,10 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::put('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'update'])->name('fuelquotas.update');
     Route::delete('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'destroy'])->name('fuelquotas.destroy');
 
+
     //end ashen new
 
-    //sandeepa
+    //chameen sandeepa
     Route::get('/fuelstations', [App\Http\Controllers\FuelStationController::class, 'index'])->name('fuelstations.index');
     Route::get('/register_new_vehicle_type', [HeadOfficeDashboardController::class, 'registerNewVehicleType'])->name('register_new_vehicle_type');
     Route::get('/logout_admin', [App\Http\Controllers\HeadOfficeDashboardController::class, 'logout'])->name('logout_admin');
@@ -90,16 +91,16 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/backinupdatestation', function () {
         return  route('fuelstations.index');
     });
-
-    //new
-    Route::delete('/head_office_dashboard/fuelorders/destroy/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'destroy'])->name('head_office_orders.destroy');
-    Route::get('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
-    Route::post('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
-    Route::get('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
-    Route::post('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
-    Route::post('/head_office_dashboard/fuelorders/update/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'update'])->name('head_office_orders.update');
-    Route::post('/head_office_dashboard/fuelorders/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'decline'])->name('head_office_orders.decline');
-    //end sandeepa
+      //new chameen sandeepa
+      Route::delete('/head_office_dashboard/fuelorders/destroy/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'destroy'])->name('head_office_orders.destroy');
+      Route::get('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
+      Route::post('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
+      Route::get('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
+      Route::post('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
+      Route::post('/head_office_dashboard/fuelorders/update/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'update'])->name('head_office_orders.update');
+      Route::post('/head_office_dashboard/fuelorders/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'decline'])->name('head_office_orders.decline');
+      //end sandeepa
+    //end chameen sandeepa
 
 });
 
@@ -125,9 +126,12 @@ Route::group(['middleware' => ['auth', 'end_customer']],function () {
     Route::get('/vehicles/{id}/edit',[App\Http\Controllers\CustomerVehiclesController::class, 'edit'] )->name('customers.vehicles.edit');
     Route::patch('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'update'])->name('customers.vehicles.update');
     Route::delete('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'destroy'])->name('customers.vehicles.destroy');
+    Route::get('/fuel-quotas', [App\Http\Controllers\CustomerController::class, 'customerFuelQuotas'])->name('customers.fuel-quotas');
+
     
 });
 Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
+    //ashen
     Route::get('/orders',  [App\Http\Controllers\OrdersController::class, 'index'])->name('orders.index');
     Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'] )->name('orders.create');
     Route::post('/orders',  [App\Http\Controllers\OrdersController::class, 'store'] )->name('orders.store');
@@ -135,5 +139,11 @@ Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
     Route::get('/orders/{order}/edit', [App\Http\Controllers\OrdersController::class, 'edit'] )->name('orders.edit');
     Route::put('/orders/{order}',  [App\Http\Controllers\OrdersController::class, 'update'] )->name('orders.update');
     Route::delete('/orders/{order}', [App\Http\Controllers\OrdersController::class, 'destroy'])->name('orders.destroy'); 
-    
+    Route::get('/fuel-stocks', [App\Http\Controllers\FuelStockController::class, 'index'])->name('fuel-stocks.index');
+    Route::get('/fuel-stocks/create', [App\Http\Controllers\FuelStockController::class, 'create'])->name('fuel-stocks.create');
+    Route::post('/fuel-stocks', [App\Http\Controllers\FuelStockController::class, 'store'])->name('fuel-stocks.store');
+    Route::get('/fuel-stocks/{id}/edit', [App\Http\Controllers\FuelStockController::class, 'edit'])->name('fuel-stocks.edit');
+    Route::put('/fuel-stocks/{id}', [App\Http\Controllers\FuelStockController::class, 'update'])->name('fuel-stocks.update');
+    Route::delete('/fuel-stocks/{id}', [App\Http\Controllers\FuelStockController::class, 'destroy'])->name('fuel-stocks.destroy');
+    //end ashen
 });

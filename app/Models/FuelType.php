@@ -44,4 +44,6 @@ class FuelType extends Model
     {
         return $this->hasMany(Order::class, 'Fuel_Type_ID', 'Fuel_Type_ID');
     }
+   
+    
 }

@@ -15,6 +15,18 @@
                 </select>
             </div> -->
             <div class="form-group">
+    <label for="fuel_reset_day">Fuel Reset Day</label>
+    <select name="fuel_reset_day" id="fuel_reset_day" class="form-control">
+        <option value="Monday" @if($fuel_quota->fuel_reset_day === 'Monday') selected @endif>Monday</option>
+        <option value="Tuesday" @if($fuel_quota->fuel_reset_day === 'Tuesday') selected @endif>Tuesday</option>
+        <option value="Wednesday" @if($fuel_quota->fuel_reset_day === 'Wednesday') selected @endif>Wednesday</option>
+        <option value="Thursday" @if($fuel_quota->fuel_reset_day === 'Thursday') selected @endif>Thursday</option>
+        <option value="Friday" @if($fuel_quota->fuel_reset_day === 'Friday') selected @endif>Friday</option>
+        <option value="Saturday" @if($fuel_quota->fuel_reset_day === 'Saturday') selected @endif>Saturday</option>
+        <option value="Sunday" @if($fuel_quota->fuel_reset_day === 'Sunday') selected @endif>Sunday</option>
+    </select>
+</div>
+            <div class="form-group">
                 <label for="liters_amount">Liters Amount</label>
                 <input type="text" name="liters_amount" id="liters_amount" class="form-control" value="{{ $fuel_quota->liters_amount }}">
             </div>

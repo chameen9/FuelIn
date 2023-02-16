@@ -8,6 +8,7 @@ use App\Models\FuelRequest;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Driver;
+use App\Models\DeliveryStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -53,7 +54,7 @@ class HeadOfficeDashboardController extends Controller
         $order = Order::find($id);
         $drivers = Driver::all();
 
-        return redirect()->route('head_office.dashboard')->with(['order' => $order,'drivers'=>$drivers]);
+        return redirect()->route('head_office.dashboard')->with(['Decorder' => $order,'drivers'=>$drivers]);
 
     }
     public function update(Request $request, $id){
@@ -80,6 +81,26 @@ class HeadOfficeDashboardController extends Controller
         $delivery->driver_id = $request->input('driver_id');
         $delivery->order_id = $request->input('order_id');
         $delivery->save();
+
+        $deliveryID = Delivery::where([
+          ['filling_station_id',$request->input('Fuel_Station_ID')],
+          ['liters',$request->input('liters_quantity')],
+          ['Fuel_Type_ID',$request->input('Fuel_Type_ID')],
+          ['Fuel_Station_ID',$request->input('Fuel_Station_ID')],
+          ['ordered_date',$request->input('ordered_date')],
+          ['expected_filling_time',$request->input('ordered_date')],
+          ['actual_filling_time',$request->input('ordered_date')],
+          ['driver_id',$request->input('driver_id')],
+          ['order_id',$request->input('order_id')],
+          ])->value('id');
+
+
+        $deliveryStatus = new DeliveryStatus();
+        $deliveryStatus->delivery_id = $deliveryID;
+        $deliveryStatus->current_location = 'Colombo';
+        $deliveryStatus->progress_value = 10;
+        $deliveryStatus->status = 'In Transist';
+        $deliveryStatus->save();
 
         return redirect()->route('head_office.dashboard')->with('success', 'Order Approved !');
     }

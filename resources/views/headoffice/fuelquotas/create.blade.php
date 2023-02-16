@@ -12,6 +12,18 @@
                 </select>
             </div>
             <div class="form-group">
+        <label for="fuel_reset_day">Fuel Reset Day:</label>
+        <select name="fuel_reset_day" id="fuel_reset_day" class="form-control">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+        </select>
+    </div>
+            <div class="form-group">
                 <label for="liters_amount">Liters Amount</label>
                 <input type="text" class="form-control" id="liters_amount" name="liters_amount">
             </div>

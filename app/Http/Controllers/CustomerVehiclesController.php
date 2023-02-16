@@ -41,11 +41,19 @@ class CustomerVehiclesController extends Controller
         $user = Auth::user();
         //get user id
         $userId = $user->id;
-     
+    //   // Get the current datetime
+    //     $currentDatetime = date('Y-m-d H:i:s');
+
+    //     // Add 7 days to the current datetime
+    //     $futureDatetime = date('Y-m-d H:i:s', strtotime($currentDatetime . ' +7 days'));
+
+    //     // Store the future datetime in a variable
+    //     $futureDatetimeVariable = $futureDatetime;
         $vehicle = new Vehicle;
         $vehicle->registration_number = $request->registration_number;
         $vehicle->Customer_ID = $userId;
         $vehicle->Vehicle_Type_ID = $request->vehicle_type_id;
+        //$vehicle->fuel_reset_date = $futureDatetimeVariable;
         $vehicle->save();
 
         return redirect()->route('customers.vehicles.index');

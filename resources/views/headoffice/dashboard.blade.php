@@ -205,13 +205,6 @@
       </li><!-- End Driver Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/contact">
-            <i class="bi bi-send"></i>
-            <span>Contact</span>
-        </a>
-      </li><!-- End contact Nav -->
-      <li><br></li>
-      <li class="nav-item">
         <a class="nav-link collapsed" href="/head_office_dashboard/fuel_quotas">
             <i class="bi bi-card-checklist"></i>
             <span>Manage Fuel Quota</span>
@@ -384,24 +377,24 @@
   @endif
 
   <!--Decline modal-->
-  @if (Session::get('order'))
+  @if (Session::get('Decorder'))
   <div class="modal fade" id="decline" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
               <div class="modal-body">
                 <h3 style="text-align: center;">Confirm</h3>
                 <hr>
-                <form method="POST" action="{{ route('head_office_orders.decline', ['id' => $order->order_id]) }}">
+                <form method="POST" action="{{ route('head_office_orders.decline', ['id' => $Decorder->order_id]) }}">
                   @csrf
                   <div class="container">
                     <div class="row">
                       <div class="col-6">
                         <label for="">Order ID:</label>
-                        <input type="text" class="form-control" name="order_id" id="order_id" value="{{$order->order_id}}" readonly>
+                        <input type="text" class="form-control" name="order_id" id="order_id" value="{{$Decorder->order_id}}" readonly>
                       </div>
                       <div class="col-6">
                         <label for="">Filling Station ID:</label>
-                        <input type="text" class="form-control" name="Fuel_Station_ID" id="Fuel_Station_ID" value="{{$order->Fuel_Station_ID}}" readonly>
+                        <input type="text" class="form-control" name="Fuel_Station_ID" id="Fuel_Station_ID" value="{{$Decorder->Fuel_Station_ID}}" readonly>
                       </div>
                     </div>
                     <div class="row">
@@ -410,11 +403,11 @@
                     <div class="row">
                       <div class="col-6">
                         <label for="">Liters:</label>
-                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$order->liters_quantity}}" readonly>
+                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$Decorder->liters_quantity}}" readonly>
                       </div>
                       <div class="col-6">
                         <label for="">Fuel Type ID:</label>
-                        <input type="text" class="form-control" name="Fuel_Type_ID" id="Fuel_Type_ID" value="{{$order->Fuel_Type_ID}}" readonly>
+                        <input type="text" class="form-control" name="Fuel_Type_ID" id="Fuel_Type_ID" value="{{$Decorder->Fuel_Type_ID}}" readonly>
                       </div>
                     </div>
                     <div class="row">
