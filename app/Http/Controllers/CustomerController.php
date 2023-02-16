@@ -28,7 +28,9 @@ class CustomerController extends Controller
 
     public function customerFuelQuotas()
     {
-        
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $customer_id = Auth::user()->id;
         $customer = Customer::with('vehicles.vehicleType.fuelQuota')->find($customer_id);
     // Loop through each vehicle belonging to the customer
@@ -64,7 +66,7 @@ class CustomerController extends Controller
             }
  
     }
-       return view('customers.fuel-quotas', compact('customer'));
+       return view('customers.fuel-quotas', compact('customer','email','FirstName','LastName'));
     }
     
 //end after customer sigin
