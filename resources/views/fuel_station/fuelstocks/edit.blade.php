@@ -106,7 +106,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('customer_dashboard')}}">
+        <a class="nav-link collapsed" href="{{route('fuel_station_dashboard')}}">
             <i class="bi bi-grid"></i></i>
           <span>Dashboard</span>
         </a>
