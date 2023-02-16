@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2023 at 05:56 PM
+-- Generation Time: Feb 16, 2023 at 04:01 AM
 -- Server version: 8.0.32
 -- PHP Version: 8.2.0
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `customers` (
   `Customer_ID` int NOT NULL,
-  `contact_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `national_identity_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `contact_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `national_identity_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `updated_at` date DEFAULT NULL,
   `created_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -44,6 +44,29 @@ INSERT INTO `customers` (`Customer_ID`, `contact_number`, `national_identity_num
 (5, '234234234', '234234', 'ASDASDAS', '2023-02-13', '2023-02-13'),
 (6, '234234234', '234234', 'ASDASDAS', '2023-02-13', '2023-02-13'),
 (7, '0772350923', '199955510000', 'A2, Galle', '2023-02-13', '2023-02-13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_vehicle_fuel_quota`
+--
+
+CREATE TABLE `customer_vehicle_fuel_quota` (
+  `id` int NOT NULL,
+  `customer_id` int DEFAULT NULL,
+  `vehicle_id` int NOT NULL,
+  `fuel_quota_id` int NOT NULL,
+  `remaining_liters` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `updated_at` date DEFAULT NULL,
+  `created_at` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer_vehicle_fuel_quota`
+--
+
+INSERT INTO `customer_vehicle_fuel_quota` (`id`, `customer_id`, `vehicle_id`, `fuel_quota_id`, `remaining_liters`, `updated_at`, `created_at`) VALUES
+(1, 7, 10, 13, '8.00', '2023-02-15', '2023-02-15');
 
 -- --------------------------------------------------------
 
@@ -64,6 +87,13 @@ CREATE TABLE `deliveries` (
   `order_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `deliveries`
+--
+
+INSERT INTO `deliveries` (`id`, `filling_station_id`, `liters`, `Fuel_Type_ID`, `Fuel_Station_ID`, `ordered_date`, `expected_filling_time`, `actual_filling_time`, `driver_id`, `order_id`) VALUES
+(2, 4, 7867, 1, 4, '2023-02-14 12:29:31', '2023-02-14 12:29:31', '2023-02-14 12:29:31', 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -73,9 +103,9 @@ CREATE TABLE `deliveries` (
 CREATE TABLE `delivery_status` (
   `status_id` int NOT NULL,
   `delivery_id` int NOT NULL,
-  `current_location` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `current_location` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `progress_value` int DEFAULT NULL,
-  `status` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `status` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -83,7 +113,7 @@ CREATE TABLE `delivery_status` (
 --
 
 INSERT INTO `delivery_status` (`status_id`, `delivery_id`, `current_location`, `progress_value`, `status`) VALUES
-(1, 1, 'Panadura', 50, 'In Transist');
+(2, 2, 'Colombo', 10, 'In Transist');
 
 -- --------------------------------------------------------
 
@@ -93,11 +123,11 @@ INSERT INTO `delivery_status` (`status_id`, `delivery_id`, `current_location`, `
 
 CREATE TABLE `driver` (
   `driver_id` int NOT NULL,
-  `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `driver_license_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `phone_number` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `driver_license_number` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone_number` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `date_of_birth` date NOT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL
@@ -108,8 +138,8 @@ CREATE TABLE `driver` (
 --
 
 INSERT INTO `driver` (`driver_id`, `first_name`, `last_name`, `driver_license_number`, `phone_number`, `address`, `date_of_birth`, `created_at`, `updated_at`) VALUES
-(1, 'nje', 'asde', 'qwe', '234', 'asd', '2023-02-02', '2023-02-12', NULL),
-(2, 'Samantha', 'Sumane', '200131403957', '0714017271', 'Wanduramba, Galle', '2023-02-15', '2023-02-15', '2023-02-15');
+(2, 'Samantha', 'Sumane', '7126861827427', '0763745784', 'Wanduramba, Galle', '2001-01-01', '2023-02-16', '2023-02-16'),
+(3, 'Ranil', 'Sirisena', '252525252525', '0763745784', 'Unawatuna, Galle.', '1990-02-01', '2023-02-16', '2023-02-16');
 
 -- --------------------------------------------------------
 
@@ -123,7 +153,7 @@ CREATE TABLE `fuel_quota` (
   `liters_amount` int NOT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
-  `fuel_reset_day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Monday'
+  `fuel_reset_day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Monday'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -131,8 +161,7 @@ CREATE TABLE `fuel_quota` (
 --
 
 INSERT INTO `fuel_quota` (`Fuel_Quota_ID`, `Vehicle_Type_ID`, `liters_amount`, `created_at`, `updated_at`, `fuel_reset_day`) VALUES
-(13, 8, 10, '2023-02-15', '2023-02-15', 'Thursday'),
-(17, 11, 15, '2023-02-15', '2023-02-15', 'Monday');
+(13, 8, 8, '2023-02-15', '2023-02-15', 'Wednesday');
 
 -- --------------------------------------------------------
 
@@ -143,7 +172,7 @@ INSERT INTO `fuel_quota` (`Fuel_Quota_ID`, `Vehicle_Type_ID`, `liters_amount`, `
 CREATE TABLE `fuel_request` (
   `Fuel_Request_ID` int NOT NULL,
   `Customer_ID` int DEFAULT NULL,
-  `Vehicle_Registration_Number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Vehicle_Registration_Number` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Fuel_Type_ID` int DEFAULT NULL,
   `Requested_Liters` double DEFAULT NULL,
   `Scheduled_Filling_Date` date DEFAULT NULL,
@@ -159,8 +188,8 @@ CREATE TABLE `fuel_request` (
 
 CREATE TABLE `fuel_stations` (
   `Fuel_Station_ID` int NOT NULL,
-  `Fuel_Station_Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Fuel_Station_Location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Fuel_Station_Name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Fuel_Station_Location` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Scheduled_Delivery_Date` date DEFAULT NULL,
   `Scheduled_Delivery_Time` time DEFAULT NULL,
   `Population_density` int DEFAULT NULL,
@@ -204,13 +233,35 @@ CREATE TABLE `fuel_station_status` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fuel_stocks`
+--
+
+CREATE TABLE `fuel_stocks` (
+  `id` int NOT NULL,
+  `fuel_type_id` int NOT NULL,
+  `station_id` int NOT NULL,
+  `liters` double NOT NULL,
+  `updated_at` date DEFAULT NULL,
+  `created_at` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fuel_stocks`
+--
+
+INSERT INTO `fuel_stocks` (`id`, `fuel_type_id`, `station_id`, `liters`, `updated_at`, `created_at`) VALUES
+(2, 2, 4, 10000, '2023-02-15', '2023-02-15');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `fuel_type`
 --
 
 CREATE TABLE `fuel_type` (
   `Fuel_Type_ID` int NOT NULL,
-  `Type_Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Type_Name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -231,7 +282,7 @@ INSERT INTO `fuel_type` (`Fuel_Type_ID`, `Type_Name`, `Description`) VALUES
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -247,7 +298,7 @@ CREATE TABLE `orders` (
   `Fuel_Type_ID` int NOT NULL,
   `liters_quantity` int NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Approval_Status` enum('pending','approved','declined') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending',
+  `Approval_Status` enum('pending','approved','declined') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending',
   `Approval_Date` datetime DEFAULT NULL,
   `Approval_By` int DEFAULT NULL,
   `updated_at` date DEFAULT NULL
@@ -258,7 +309,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `Fuel_Station_ID`, `Fuel_Type_ID`, `liters_quantity`, `created_at`, `Approval_Status`, `Approval_Date`, `Approval_By`, `updated_at`) VALUES
-(2, 4, 1, 7867, '2023-02-14 12:29:31', 'pending', NULL, NULL, '2023-02-15');
+(2, 4, 1, 7867, '2023-02-14 12:29:31', 'approved', '2023-02-16 08:07:55', 2, '2023-02-16');
 
 -- --------------------------------------------------------
 
@@ -283,7 +334,7 @@ CREATE TABLE `payment` (
 
 CREATE TABLE `payment_status` (
   `Payment_Status_ID` int NOT NULL,
-  `Payment_Status` enum('PENDING','PAID','FAILED','CANCELLED') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Payment_Status` enum('PENDING','PAID','FAILED','CANCELLED') COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -310,10 +361,10 @@ CREATE TABLE `tokens` (
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `user_type_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -330,7 +381,8 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `user
 (5, 'ASDASDA', 'SDASDASD', 'ashAASDdsASDen@gmail.com', '$2y$10$g1b4CuZm.0vmMmTzMubzM.15dSOk1wV2zNwV2sRfM3QzltAUgnyhy', 3, '2023-02-13 05:16:03', '2023-02-13 05:16:03'),
 (6, 'ASDASDA', 'SDASDASD', 'ashAAasdSDdsASDen@gmail.com', '$2y$10$wVAzSbBkvIfY.88pBq0tJOccDk7ro5Eu2AKO/c.t7j6MTv7rqjn.O', 3, '2023-02-13 05:19:46', '2023-02-13 05:19:46'),
 (7, 'Ashen ishanka', 'Costha', 'ashenishanka@gmail.com', 'Ashen$321', 3, '2023-02-13 06:01:25', '2023-02-13 11:33:02'),
-(8, 'Samantha', 'Sumane', 'samanthasumane@fuelin.lk', '200131403957', 2, '2023-02-15 01:42:52', '2023-02-15 01:42:52');
+(8, 'Samantha', 'Sumane', 'samanthasumane@fuelin.lk', '7126861827427', 2, '2023-02-15 20:51:44', '2023-02-15 20:51:44'),
+(9, 'Ranil', 'Sirisena', 'ranilsirisena@fuelin.lk', '252525252525', 2, '2023-02-15 20:52:34', '2023-02-15 20:52:34');
 
 -- --------------------------------------------------------
 
@@ -340,7 +392,7 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `user
 
 CREATE TABLE `user_types` (
   `id` int NOT NULL,
-  `type` enum('end_customer','driver','petrol_station_manager','head_office_user') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `type` enum('end_customer','driver','petrol_station_manager','head_office_user') COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -363,7 +415,7 @@ INSERT INTO `user_types` (`id`, `type`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `vehicles` (
   `id` int NOT NULL,
-  `registration_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `registration_number` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Customer_ID` int DEFAULT NULL,
   `Vehicle_Type_ID` int DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
@@ -375,8 +427,7 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `registration_number`, `Customer_ID`, `Vehicle_Type_ID`, `updated_at`, `created_at`) VALUES
-(4, 'asdas', 7, 8, '2023-02-14', '2023-02-14'),
-(6, 'bjkbbjk', 7, 8, '2023-02-14', '2023-02-14');
+(10, 'CBL 0824', 7, 8, '2023-02-15', '2023-02-15');
 
 -- --------------------------------------------------------
 
@@ -386,8 +437,8 @@ INSERT INTO `vehicles` (`id`, `registration_number`, `Customer_ID`, `Vehicle_Typ
 
 CREATE TABLE `vehicle_type` (
   `Vehicle_Type_ID` int NOT NULL,
-  `Type_Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Type_Name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
   `created_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -397,8 +448,7 @@ CREATE TABLE `vehicle_type` (
 --
 
 INSERT INTO `vehicle_type` (`Vehicle_Type_ID`, `Type_Name`, `Description`, `updated_at`, `created_at`) VALUES
-(8, 'SUV', 'Suv vehicle type', '2023-02-09', '2023-02-09'),
-(11, 'Sedan', 'Sedan Vehicle', '2023-02-15', '2023-02-15');
+(8, 'SUV', 'Suv vehicle type', '2023-02-09', '2023-02-09');
 
 --
 -- Indexes for dumped tables
@@ -411,6 +461,15 @@ ALTER TABLE `customers`
   ADD KEY `Customer_ID` (`Customer_ID`);
 
 --
+-- Indexes for table `customer_vehicle_fuel_quota`
+--
+ALTER TABLE `customer_vehicle_fuel_quota`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `vehicle_id` (`vehicle_id`),
+  ADD KEY `customer id is` (`customer_id`),
+  ADD KEY `quota id` (`fuel_quota_id`);
+
+--
 -- Indexes for table `deliveries`
 --
 ALTER TABLE `deliveries`
@@ -419,6 +478,12 @@ ALTER TABLE `deliveries`
   ADD KEY `delivery has fuel type` (`Fuel_Type_ID`),
   ADD KEY `delivery will go to` (`filling_station_id`),
   ADD KEY `delivery_related_to` (`order_id`);
+
+--
+-- Indexes for table `delivery_status`
+--
+ALTER TABLE `delivery_status`
+  ADD PRIMARY KEY (`status_id`);
 
 --
 -- Indexes for table `driver`
@@ -461,6 +526,14 @@ ALTER TABLE `fuel_stations_stock`
 --
 ALTER TABLE `fuel_station_status`
   ADD PRIMARY KEY (`Fuel_Station_ID`);
+
+--
+-- Indexes for table `fuel_stocks`
+--
+ALTER TABLE `fuel_stocks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fuel_stocks_ibfk_1` (`station_id`),
+  ADD KEY `fuel_type_id` (`fuel_type_id`);
 
 --
 -- Indexes for table `fuel_type`
@@ -541,22 +614,34 @@ ALTER TABLE `vehicle_type`
 --
 
 --
+-- AUTO_INCREMENT for table `customer_vehicle_fuel_quota`
+--
+ALTER TABLE `customer_vehicle_fuel_quota`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `deliveries`
 --
 ALTER TABLE `deliveries`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `delivery_status`
+--
+ALTER TABLE `delivery_status`
+  MODIFY `status_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `driver_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `driver_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `fuel_quota`
 --
 ALTER TABLE `fuel_quota`
-  MODIFY `Fuel_Quota_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `Fuel_Quota_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `fuel_request`
@@ -571,6 +656,12 @@ ALTER TABLE `fuel_stations`
   MODIFY `Fuel_Station_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `fuel_stocks`
+--
+ALTER TABLE `fuel_stocks`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -580,7 +671,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -598,7 +689,7 @@ ALTER TABLE `payment_status`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_types`
@@ -610,13 +701,13 @@ ALTER TABLE `user_types`
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `vehicle_type`
 --
 ALTER TABLE `vehicle_type`
-  MODIFY `Vehicle_Type_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Vehicle_Type_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -627,6 +718,14 @@ ALTER TABLE `vehicle_type`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`Customer_ID`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `customer_vehicle_fuel_quota`
+--
+ALTER TABLE `customer_vehicle_fuel_quota`
+  ADD CONSTRAINT `customer id is` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`Customer_ID`),
+  ADD CONSTRAINT `quota id` FOREIGN KEY (`fuel_quota_id`) REFERENCES `fuel_quota` (`Fuel_Quota_ID`),
+  ADD CONSTRAINT `vehicle is` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`);
 
 --
 -- Constraints for table `deliveries`
@@ -662,6 +761,13 @@ ALTER TABLE `fuel_stations_stock`
 --
 ALTER TABLE `fuel_station_status`
   ADD CONSTRAINT `fuel_station_status_ibfk_1` FOREIGN KEY (`Fuel_Station_ID`) REFERENCES `driver` (`driver_id`);
+
+--
+-- Constraints for table `fuel_stocks`
+--
+ALTER TABLE `fuel_stocks`
+  ADD CONSTRAINT `fuel_stocks_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `fuel_stations` (`Fuel_Station_ID`),
+  ADD CONSTRAINT `fuel_stocks_ibfk_2` FOREIGN KEY (`fuel_type_id`) REFERENCES `fuel_type` (`Fuel_Type_ID`);
 
 --
 -- Constraints for table `orders`
