@@ -132,6 +132,7 @@ Route::group(['middleware' => ['auth', 'end_customer']],function () {
 });
 Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
     //ashen
+    Route::get('/fuelstationdashboard',  [App\Http\Controllers\OrdersController::class, 'dashboard'])->name('fuel_station_dashboard');
     Route::get('/orders',  [App\Http\Controllers\OrdersController::class, 'index'])->name('orders.index');
     Route::get('/orders/create', [App\Http\Controllers\OrdersController::class, 'create'] )->name('orders.create');
     Route::post('/orders',  [App\Http\Controllers\OrdersController::class, 'store'] )->name('orders.store');

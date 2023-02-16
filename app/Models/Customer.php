@@ -10,7 +10,7 @@ class Customer extends Model
     protected $table = 'customers';
     protected $primaryKey = 'Customer_ID';
     protected $fillable = [
-         'contact_number', 'national_identity_number', 'address'
+        'Customer_ID','contact_number', 'national_identity_number', 'address'
     ];
     public function vehicles()
 {

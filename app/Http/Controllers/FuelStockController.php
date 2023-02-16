@@ -6,23 +6,31 @@ use App\Models\FuelStation;
 use App\Models\FuelType;
 use Illuminate\Http\Request;
 use App\Models\FuelStock;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class FuelStockController extends Controller
 {
     public function index()
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $user_id = auth()->user()->id;
         $fuelStocks = FuelStock::whereHas('fuelStation', function($query) use($user_id) {
             $query->where('owner_id', $user_id);
         })->get();
-        return view('fuel_station.fuelstocks.index', compact('fuelStocks'));
+        return view('fuel_station.fuelstocks.index', compact('fuelStocks','email','FirstName','LastName'));
     }
     public function create()
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $user_id = auth()->user()->id;
         $fuelTypes = FuelType::all();
         $fuelStations = FuelStation::where('owner_id', $user_id)->get();
-        return view('fuel_station.fuelstocks.create', compact('fuelTypes', 'fuelStations'));
+        return view('fuel_station.fuelstocks.create', compact('fuelTypes', 'fuelStations','email','FirstName','LastName'));
     }
     
 
@@ -59,9 +67,18 @@ class FuelStockController extends Controller
     // }
     public function edit($id)
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $fuelStock = FuelStock::find($id);
         $fuelTypes = FuelType::all();
-        return view('fuel_station.fuelstocks.edit', ['fuelStock' => $fuelStock, 'fuelTypes' => $fuelTypes]);
+        return view('fuel_station.fuelstocks.edit', [
+            'fuelStock' => $fuelStock, 
+            'fuelTypes' => $fuelTypes,
+            'email' => $email,
+            'FirstName' => $FirstName,
+            'LastName' => $LastName,
+        ]);
     }
     
     public function update(Request $request, $id)

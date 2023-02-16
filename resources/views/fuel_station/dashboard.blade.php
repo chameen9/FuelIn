@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>FuelIn | Fuel Stocks</title>
+  <title>FuelIn | Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -105,8 +105,8 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('customer_dashboard')}}">
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('customer_dashboard')}}">
             <i class="bi bi-grid"></i></i>
           <span>Dashboard</span>
         </a>
@@ -120,7 +120,7 @@
       </li><!-- End Orders Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link " href="{{ route('fuel-stocks.index') }}">
+        <a class="nav-link collapsed" href="{{ route('fuel-stocks.index') }}">
             <i class="bi bi-fuel-pump"></i>
             <span>Fuel Stocks</span>
         </a>
@@ -133,12 +133,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-    <h1>Edit Stock</h1>
+      <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('fuel_station_dashboard')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{route('fuel-stocks.index')}}">Fuel Stocks</a></li>
-            <li class="breadcrumb-item active">Edit Stock</li>
+            <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -148,64 +147,28 @@
 
             <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
                 <div class="card" style="padding: 20px;">
+                    <h3 class="card-title">Orders<span> </span></h3>
+                    <hr>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('fuel-stocks.update', $fuelStock->id) }}">
-                            @csrf
-                            @method('PUT')
-                            <!-- 
-                            <div class="form-group row">
-                                <label for="fuel_type_id" class="col-md-4 col-form-label text-md-right">Fuel Type</label>
-
-                                <div class="col-md-6">
-                                    <select id="fuel_type_id" class="form-control @error('fuel_type_id') is-invalid @enderror" name="fuel_type_id" required>
-                                        @foreach($fuelTypes as $fuelType)
-                                            <option value="{{ $fuelType->id }}" @if($fuelStock->fuel_type_id === $fuelType->Fuel_Type_ID) selected @endif>{{ $fuelType->Type_Name }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('fuel_type_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div> -->
-
-                            <div class="form-group row">
-                                <label for="liters" class="col-md-4 col-form-label text-md-right">Liters</label>
-
-                                <div class="col-md-6">
-                                    <input id="liters" type="number" class="form-control @error('liters') is-invalid @enderror" name="liters" value="{{ old('liters', $fuelStock->liters) }}" required autocomplete="liters" autofocus>
-
-                                    @error('liters')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <br>
-                            <div class="form-group row mb-0">
-                                <div class="d-grid gap-0 col-4 mx-auto">
-                                    <a href="{{ route('fuel-stocks.index') }}" class="btn btn-secondary">Cancel</a>
-                                </div>
-                                <div class="d-grid gap-0 col-8 mx-auto">
-                                    <button type="submit" class="btn btn-primary">
-                                        Update Fuel Stock
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        <div class="d-grid gap-0 col-12 mx-auto">
+                            <a href="{{ route('orders.index') }}" class="btn btn-primary btn-lg">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-
-        <div class="row">
-
-            
-
+            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
+                <div class="card" style="padding: 20px;">
+                    <h3 class="card-title">Fuel Stocks<span> </span></h3>
+                    <hr>
+                    <div class="card-body">
+                        <div class="d-grid gap-0 col-12 mx-auto">
+                            <a href="{{ route('fuel-stocks.index') }}" class="btn btn-primary btn-lg">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
         </div>
 
     </section>
@@ -218,6 +181,7 @@
       &copy; Copyright <strong><span>FuelIn</span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
+
   
 
   @if ($message = Session::get('success'))

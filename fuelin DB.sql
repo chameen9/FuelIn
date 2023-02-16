@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2023 at 04:01 AM
+-- Generation Time: Feb 16, 2023 at 08:33 AM
 -- Server version: 8.0.32
 -- PHP Version: 8.2.0
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `customers` (
-  `Customer_ID` int NOT NULL,
+  `Customer_ID` int DEFAULT NULL,
   `contact_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `national_identity_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
@@ -87,13 +87,6 @@ CREATE TABLE `deliveries` (
   `order_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `deliveries`
---
-
-INSERT INTO `deliveries` (`id`, `filling_station_id`, `liters`, `Fuel_Type_ID`, `Fuel_Station_ID`, `ordered_date`, `expected_filling_time`, `actual_filling_time`, `driver_id`, `order_id`) VALUES
-(2, 4, 7867, 1, 4, '2023-02-14 12:29:31', '2023-02-14 12:29:31', '2023-02-14 12:29:31', 2, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -113,7 +106,7 @@ CREATE TABLE `delivery_status` (
 --
 
 INSERT INTO `delivery_status` (`status_id`, `delivery_id`, `current_location`, `progress_value`, `status`) VALUES
-(2, 2, 'Colombo', 10, 'In Transist');
+(1, 1, 'Panadura', 50, 'In Transist');
 
 -- --------------------------------------------------------
 
@@ -138,8 +131,7 @@ CREATE TABLE `driver` (
 --
 
 INSERT INTO `driver` (`driver_id`, `first_name`, `last_name`, `driver_license_number`, `phone_number`, `address`, `date_of_birth`, `created_at`, `updated_at`) VALUES
-(2, 'Samantha', 'Sumane', '7126861827427', '0763745784', 'Wanduramba, Galle', '2001-01-01', '2023-02-16', '2023-02-16'),
-(3, 'Ranil', 'Sirisena', '252525252525', '0763745784', 'Unawatuna, Galle.', '1990-02-01', '2023-02-16', '2023-02-16');
+(1, 'nje', 'asde', 'qwe', '234', 'asd', '2023-02-02', '2023-02-12', NULL);
 
 -- --------------------------------------------------------
 
@@ -250,7 +242,7 @@ CREATE TABLE `fuel_stocks` (
 --
 
 INSERT INTO `fuel_stocks` (`id`, `fuel_type_id`, `station_id`, `liters`, `updated_at`, `created_at`) VALUES
-(2, 2, 4, 10000, '2023-02-15', '2023-02-15');
+(2, 2, 4, 10000, '2023-02-16', '2023-02-15');
 
 -- --------------------------------------------------------
 
@@ -309,7 +301,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `Fuel_Station_ID`, `Fuel_Type_ID`, `liters_quantity`, `created_at`, `Approval_Status`, `Approval_Date`, `Approval_By`, `updated_at`) VALUES
-(2, 4, 1, 7867, '2023-02-14 12:29:31', 'approved', '2023-02-16 08:07:55', 2, '2023-02-16');
+(2, 4, 1, 7867, '2023-02-14 12:29:31', 'pending', NULL, NULL, '2023-02-14');
 
 -- --------------------------------------------------------
 
@@ -380,9 +372,7 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `user
 (4, 'manager', 'manager', 'manager@gmail.com', 'manager123', 4, '2023-02-10 06:47:43', '2023-02-10 06:47:43'),
 (5, 'ASDASDA', 'SDASDASD', 'ashAASDdsASDen@gmail.com', '$2y$10$g1b4CuZm.0vmMmTzMubzM.15dSOk1wV2zNwV2sRfM3QzltAUgnyhy', 3, '2023-02-13 05:16:03', '2023-02-13 05:16:03'),
 (6, 'ASDASDA', 'SDASDASD', 'ashAAasdSDdsASDen@gmail.com', '$2y$10$wVAzSbBkvIfY.88pBq0tJOccDk7ro5Eu2AKO/c.t7j6MTv7rqjn.O', 3, '2023-02-13 05:19:46', '2023-02-13 05:19:46'),
-(7, 'Ashen ishanka', 'Costha', 'ashenishanka@gmail.com', 'Ashen$321', 3, '2023-02-13 06:01:25', '2023-02-13 11:33:02'),
-(8, 'Samantha', 'Sumane', 'samanthasumane@fuelin.lk', '7126861827427', 2, '2023-02-15 20:51:44', '2023-02-15 20:51:44'),
-(9, 'Ranil', 'Sirisena', 'ranilsirisena@fuelin.lk', '252525252525', 2, '2023-02-15 20:52:34', '2023-02-15 20:52:34');
+(7, 'Ashen ishanka', 'Costha', 'ashenishanka@gmail.com', 'Ashen$321', 3, '2023-02-13 06:01:25', '2023-02-13 11:33:02');
 
 -- --------------------------------------------------------
 
@@ -478,12 +468,6 @@ ALTER TABLE `deliveries`
   ADD KEY `delivery has fuel type` (`Fuel_Type_ID`),
   ADD KEY `delivery will go to` (`filling_station_id`),
   ADD KEY `delivery_related_to` (`order_id`);
-
---
--- Indexes for table `delivery_status`
---
-ALTER TABLE `delivery_status`
-  ADD PRIMARY KEY (`status_id`);
 
 --
 -- Indexes for table `driver`
@@ -623,19 +607,13 @@ ALTER TABLE `customer_vehicle_fuel_quota`
 -- AUTO_INCREMENT for table `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `delivery_status`
---
-ALTER TABLE `delivery_status`
-  MODIFY `status_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `driver_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `driver_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `fuel_quota`
@@ -689,7 +667,7 @@ ALTER TABLE `payment_status`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user_types`
