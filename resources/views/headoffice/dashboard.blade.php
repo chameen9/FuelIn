@@ -243,10 +243,10 @@
                                       <th>Fuel Station</th>
                                       <th>Fuel Type</th>
                                       <th>Liters</th>
-                                      <th>Created At</th>
+                                      <th>Ordered At</th>
                                       <th>Status</th>
                                       <th>Approved Date</th>
-                                      <th>Approved By</th>
+                                      <th>Approved/Declined By</th>
                                       <th style="text-align: center;">Actions</th>
                                   </tr>
                               </thead>
@@ -255,7 +255,7 @@
                                   <tr>
                                       <th>{{ $order->order_id }}</th>
                                       <td>{{ $order->Fuel_Station_ID }}</td>
-                                      <td>{{ $order->Fuel_Type_ID }}</td>
+                                      <td>{{ $order->Fuel_Type_Name }}</td>
                                       <td>{{ $order->liters_quantity }}</td>
                                       <td>{{ $order->created_at }}</td>
                                       <td>
@@ -269,7 +269,7 @@
                                         
                                       </td>
                                       <td>{{ $order->Approval_Date }}</td>
-                                      <td>{{ $order->Approval_By }}</td>
+                                      <td>({{$order->Approval_By}}) {{ $order->Approval_By_Last_Name }}</td>
                                       <td style="text-align: center;">
                                         @if($order->Approval_Status == 'pending')
                                           <a href="{{ route('head_office_orders.edit', $order->order_id) }}" class="btn btn-sm btn-primary">Approve</a>
