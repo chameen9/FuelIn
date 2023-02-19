@@ -331,7 +331,10 @@
                     <div class="row">
                       <div class="col-6">
                         <label for="">Liters:</label>
-                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$order->liters_quantity}}" readonly>
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$order->liters_quantity}}" readonly>
+                          <span class="input-group-text" id="basic-addon1">L</span>
+                        </div>
                       </div>
                       <div class="col-6">
                         <label for="">Fuel Type ID:</label>
@@ -346,7 +349,7 @@
                         <label for="driver_id">Driver:</label>
                         <select name="driver_id" id="driver_id" class="form-control" required>
                           @foreach ($drivers as $driver)
-                              <option name="{{$driver->driver_id}}" id="{{$driver->driver_id}}" value="{{ $driver->driver_id }}">{{ $driver->first_name }}</option>
+                              <option name="{{$driver->driver_id}}" id="{{$driver->driver_id}}" value="{{ $driver->driver_id }}">{{ $driver->first_name }} {{ $driver->last_name }}</option>
                           @endforeach
                       </select>
                       <input type="hidden" name="ordered_date" value="{{$order->created_at}}">
@@ -400,7 +403,10 @@
                     <div class="row">
                       <div class="col-6">
                         <label for="">Liters:</label>
-                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$odr->liters_quantity}}" readonly>
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$odr->liters_quantity}}" readonly>
+                          <span class="input-group-text" id="basic-addon1">L</span>
+                        </div>
                       </div>
                       <div class="col-6">
                         <label for="">Fuel Type ID:</label>

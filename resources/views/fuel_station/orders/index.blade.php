@@ -215,7 +215,14 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="d-grid gap-0 col-12 mx-auto">
+                                      @if($order->Approval_Status == 'pending')
                                         <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                      @elseif($order->Approval_Status == 'approved')
+                                        <!-- <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm btn-disabled" disabled>Edit</a> -->
+                                      @else
+                                        <!-- <span class="badge badge-danger">{{ $order->Approval_Status }}</span> -->
+                                      @endif
+                                        <!-- <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm">Edit</a> -->
                                     </div>
                                 </div>
                                 <div class="col-6">
