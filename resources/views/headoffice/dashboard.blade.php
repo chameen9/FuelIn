@@ -273,7 +273,7 @@
                                       <td style="text-align: center;">
                                         @if($order->Approval_Status == 'pending')
                                           <a href="{{ route('head_office_orders.edit', $order->order_id) }}" class="btn btn-sm btn-primary">Approve</a>
-                                          <a href="{{ route('head_office_orders.edit.decline', $order->order_id) }}" class="btn btn-sm btn-warning">Decline</a>
+                                          <a href="{{ route('head_office_orders.decedit', $order->order_id) }}" class="btn btn-sm btn-warning">Decline</a>
                                         @else
                                           <form action="{{ route('head_office_orders.destroy', $order->order_id) }}" method="POST" style="display: inline-block;">
                                             @csrf
@@ -355,11 +355,8 @@
                     
                     <br>
                     <div class="row">
-                      <div class="d-grid gap-0 col-6 mx-auto">
-                       <br>
-                      </div>
-                      <div class="d-grid gap-0 col-6 mx-auto">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
+                      <div class="d-grid gap-0 col-12 mx-auto">
+                        <button type="submit" class="btn btn-primary">Approve</button>
                       </div>
                     </div>
                   </div>
@@ -377,24 +374,24 @@
   @endif
 
   <!--Decline modal-->
-  @if (Session::get('Decorder'))
+  @if ($odr = Session::get('Decorder'))
   <div class="modal fade" id="decline" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
               <div class="modal-body">
                 <h3 style="text-align: center;">Confirm</h3>
                 <hr>
-                <form method="POST" action="{{ route('head_office_orders.decline', ['id' => $Decorder->order_id]) }}">
+                <form method="POST" action="{{ route('head_office_orders.decline', ['id' => $odr->order_id]) }}">
                   @csrf
                   <div class="container">
                     <div class="row">
                       <div class="col-6">
                         <label for="">Order ID:</label>
-                        <input type="text" class="form-control" name="order_id" id="order_id" value="{{$Decorder->order_id}}" readonly>
+                        <input type="text" class="form-control" name="order_id" id="order_id" value="{{$odr->order_id}}" readonly>
                       </div>
                       <div class="col-6">
                         <label for="">Filling Station ID:</label>
-                        <input type="text" class="form-control" name="Fuel_Station_ID" id="Fuel_Station_ID" value="{{$Decorder->Fuel_Station_ID}}" readonly>
+                        <input type="text" class="form-control" name="Fuel_Station_ID" id="Fuel_Station_ID" value="{{$odr->Fuel_Station_ID}}" readonly>
                       </div>
                     </div>
                     <div class="row">
@@ -403,11 +400,11 @@
                     <div class="row">
                       <div class="col-6">
                         <label for="">Liters:</label>
-                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$Decorder->liters_quantity}}" readonly>
+                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$odr->liters_quantity}}" readonly>
                       </div>
                       <div class="col-6">
                         <label for="">Fuel Type ID:</label>
-                        <input type="text" class="form-control" name="Fuel_Type_ID" id="Fuel_Type_ID" value="{{$Decorder->Fuel_Type_ID}}" readonly>
+                        <input type="text" class="form-control" name="Fuel_Type_ID" id="Fuel_Type_ID" value="{{$odr->Fuel_Type_ID}}" readonly>
                       </div>
                     </div>
                     <div class="row">
@@ -415,23 +412,20 @@
                     </div>
                     <div class="row">
                       <div class="col-6">
-                        <label for="driver_id">Driver:</label>
+                        <!-- <label for="driver_id">Driver:</label>
                         <select name="driver_id" id="driver_id" class="form-control" required>
                           @foreach ($drivers as $driver)
                               <option name="{{$driver->driver_id}}" id="{{$driver->driver_id}}" value="{{ $driver->driver_id }}">{{ $driver->first_name }}</option>
                           @endforeach
-                      </select>
+                      </select> -->
                       <input type="hidden" name="ordered_date" value="{{$order->created_at}}">
                       </div>
                     </div>
                     
                     <br>
                     <div class="row">
-                      <div class="d-grid gap-0 col-6 mx-auto">
-                       <br>
-                      </div>
-                      <div class="d-grid gap-0 col-6 mx-auto">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
+                      <div class="d-grid gap-0 col-12 mx-auto">
+                        <button type="submit" class="btn btn-danger">Decline</button>
                       </div>
                     </div>
                   </div>

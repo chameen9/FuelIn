@@ -51,10 +51,10 @@ class HeadOfficeDashboardController extends Controller
 
     }
     public function editDecline($id){
-        $order = Order::find($id);
+        $Decorder = Order::find($id);
         $drivers = Driver::all();
 
-        return redirect()->route('head_office.dashboard')->with(['Decorder' => $order,'drivers'=>$drivers]);
+        return redirect()->route('head_office.dashboard')->with(['Decorder' => $Decorder,'drivers'=>$drivers]);
 
     }
     public function update(Request $request, $id){
