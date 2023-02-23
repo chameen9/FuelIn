@@ -250,6 +250,7 @@
                                      <th>Scheduled Delivery Time</th>
                                      <th>Population</th>
                                      <th>Action</th>
+                                     <th>Manager account</th>
                                   </tr>
                                </thead>
                                <tbody>
@@ -274,6 +275,10 @@
                                         <a type="button" href="{{url('/station/'.$fuelstation->Fuel_Station_ID.'/viewupdate')}}" class="btn btn-success btn-sm" title="Update"><i class="bi bi-arrow-repeat"></i></a>
                                         <a type="button" href="{{url('/station/delete/'.$fuelstation->Fuel_Station_ID.'')}}" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></a>
                                       </div>
+                                     </td>
+                                     <td>
+                                     <a type="button" href="{{url('/station/'.$fuelstation->Fuel_Station_ID.'/ownerupdate')}}" class="btn btn-success btn-add" title="Manager"><i class="bi bi-person-lines-fill"></i></a>
+                                      
                                      </td>
                                   </tr>
                                   @endforeach

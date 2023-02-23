@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StationRequest;
 
 class OrdersController extends Controller
 {
@@ -48,6 +50,16 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         Order::create($request->all());
+        
+
+
+        $details = [
+            'title'=>'New order has been recived.'
+        ];
+        $reciverEmail = 'sandeepa.chameen@gmail.com';
+        Mail::to($reciverEmail)->send(new StationRequest($details));
+
+
         return redirect()->route('orders.index');
     }
 
@@ -58,18 +70,18 @@ class OrdersController extends Controller
 
     public function edit(Order $order)
     {
-        return view('fuel_station.orders.edit', compact('order'));
+        return view('orders.edit', compact('order'));
     }
 
     public function update(Request $request, Order $order)
     {
         $order->update($request->all());
-        return redirect()->route('orders.index')-with('success','Order has been updated successfully.');
+        return redirect()->route('orders.index');
     }
 
     public function destroy(Order $order)
     {
         $order->delete();
-        return redirect()->route('orders.index')-with('success','Order has been deleted successfully.');
+        return redirect()->route('orders.index');
     }
 }

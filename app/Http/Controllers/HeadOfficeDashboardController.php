@@ -24,11 +24,7 @@ class HeadOfficeDashboardController extends Controller
      */
     public function index()
     {
-        //$orders = Order::orderBy('Approval_Status','ASC')->get();   //used a join
-        $orders = Order::join('fuel_type','fuel_type.Fuel_Type_ID','=','orders.Fuel_Type_ID')
-            ->join('users','users.id','=','orders.Approval_By')
-            ->select('orders.*','fuel_type.Type_Name as Fuel_Type_Name','users.last_name as Approval_By_Last_Name')
-            ->orderBy('Approval_Status','ASC')->get();
+        $orders = Order::orderBy('Approval_Status','ASC')->get();   //use a join
         $email = Auth::user()->email;
         $FirstName = User::where('email',$email)->value('first_name');
         $LastName = User::where('email',$email)->value('last_name');
@@ -55,10 +51,10 @@ class HeadOfficeDashboardController extends Controller
 
     }
     public function editDecline($id){
-        $Decorder = Order::find($id);
+        $order = Order::find($id);
         $drivers = Driver::all();
 
-        return redirect()->route('head_office.dashboard')->with(['Decorder' => $Decorder,'drivers'=>$drivers]);
+        return redirect()->route('head_office.dashboard')->with(['Decorder' => $order,'drivers'=>$drivers]);
 
     }
     public function update(Request $request, $id){

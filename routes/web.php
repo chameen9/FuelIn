@@ -69,8 +69,11 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/head_office_dashboard/fuelquotas/{id}/edit', [App\Http\Controllers\FuelQuotaController::class, 'edit'])->name('fuelquotas.edit');
     Route::put('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'update'])->name('fuelquotas.update');
     Route::delete('/head_office_dashboard/fuelquotas/{id}', [App\Http\Controllers\FuelQuotaController::class, 'destroy'])->name('fuelquotas.destroy');
+    Route::get('/station/{id}/ownerupdate', [App\Http\Controllers\FuelStationController::class,'showOwnerUpdateForm'])->name('fuelstation.ownerupdate');
+    Route::post('/station/{id}/ownerupdate', [App\Http\Controllers\FuelStationController::class, 'showOwnerUpdateForm'])->name('fuelstation.ownerupdate');
+    Route::post('/station/{id}/updatemanager', [App\Http\Controllers\FuelStationController::class, 'updateManager'])->name('fuelstation.confirmUpdate');
 
-
+ 
     //end ashen new
 
     //chameen sandeepa
@@ -95,8 +98,8 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
       Route::delete('/head_office_dashboard/fuelorders/destroy/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'destroy'])->name('head_office_orders.destroy');
       Route::get('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
       Route::post('/head_office_dashboard/fuelorders/edit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'edit'])->name('head_office_orders.edit');
-      Route::get('/head_office_dashboard/fuelorders/decedit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.decedit');
-      Route::post('/head_office_dashboard/fuelorders/decedit/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.decedit');
+      Route::get('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
+      Route::post('/head_office_dashboard/fuelorders/edit/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'editDecline'])->name('head_office_orders.edit.decline');
       Route::post('/head_office_dashboard/fuelorders/update/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'update'])->name('head_office_orders.update');
       Route::post('/head_office_dashboard/fuelorders/decline/{id}', [App\Http\Controllers\HeadOfficeDashboardController::class, 'decline'])->name('head_office_orders.decline');
       //end sandeepa
@@ -126,8 +129,13 @@ Route::group(['middleware' => ['auth', 'end_customer']],function () {
     Route::get('/vehicles/{id}/edit',[App\Http\Controllers\CustomerVehiclesController::class, 'edit'] )->name('customers.vehicles.edit');
     Route::patch('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'update'])->name('customers.vehicles.update');
     Route::delete('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'destroy'])->name('customers.vehicles.destroy');
+ //ashen
     Route::get('/fuel-quotas', [App\Http\Controllers\CustomerController::class, 'customerFuelQuotas'])->name('customers.fuel-quotas');
+    Route::post('/customer/request-fuel', [App\Http\Controllers\RequestFuelController::class, 'processFuelRequest'])->name('customer.request-fuel');
+    Route::get('/customer/request-fuel', [App\Http\Controllers\RequestFuelController::class, 'showFuelRequestForm'])->name('customer.show-fuel-request-form');
+    Route::get('/my-fuel-requests', [App\Http\Controllers\FuelRequestsViewCustomerController::class, 'index'])->name('customers.fuel-quotas-requests');
 
+//ashen
     
 });
 Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
@@ -146,5 +154,12 @@ Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
     Route::get('/fuel-stocks/{id}/edit', [App\Http\Controllers\FuelStockController::class, 'edit'])->name('fuel-stocks.edit');
     Route::put('/fuel-stocks/{id}', [App\Http\Controllers\FuelStockController::class, 'update'])->name('fuel-stocks.update');
     Route::delete('/fuel-stocks/{id}', [App\Http\Controllers\FuelStockController::class, 'destroy'])->name('fuel-stocks.destroy');
+    Route::get('/customer_fuel_requests', [App\Http\Controllers\CustomerMadeFuelRequestsController::class, 'index'])->name('fuel_requests.index');
+    Route::post('/customer_fuel_requests/{id}/approve', [App\Http\Controllers\CustomerMadeFuelRequestsController::class, 'approve'])->name('fuel-requests.approve');
+    Route::post('/customer_fuel_requests/{id}/decline', [App\Http\Controllers\CustomerMadeFuelRequestsController::class, 'decline'])->name('fuel-requests.decline');
+    Route::post('/tokens/view/{request_id}', [App\Http\Controllers\TokenController::class, 'index'])->name('tokens.view');
+    Route::post('/tokens/view/{request_id}/create', [App\Http\Controllers\TokenController::class, 'create'])->name('tokens.create');
+   
+   
     //end ashen
 });

@@ -8,8 +8,8 @@ class FuelRequest extends Model
 {
     public $timestamps = FALSE;
     protected $table = 'Fuel_Request';
-
+    protected $primaryKey = 'Fuel_Request_ID';
     protected $fillable = [
-        'request_id', 'vehicle_registration_number', 'requested_fuel_amount', 'scheduled_delivery_time', 'delivery_status','fuel_reset_day'
+        'Customer_ID', 'Vehicle_Registration_Number','Fuel_Type_ID','Requested_Liters', 'Scheduled_Filling_Date','Scheduled_Filling_Time', 'Tolerance_Hours','Fuel_Station_ID','status'
     ];
 }

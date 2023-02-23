@@ -141,7 +141,12 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('customers.fuel-quotas-requests') }}">
+            <i class="bi bi-fuel-pump"></i>
+            <span>Fuel Token Requests</span>
+        </a>
+      </li>
     <section class="section dashboard">
 
         <div class="row">

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>FuelIn | Dashboard</title>
+  <title>FuelIn | Orders</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -105,34 +105,26 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('customer_dashboard')}}">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{route('fuel_station_dashboard')}}">
             <i class="bi bi-grid"></i></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('customers.vehicles.index') }}">
-            <i class="bi bi-truck"></i>
-            <span>My Vehicles</span>
+        <a class="nav-link " href="{{ route('orders.index') }}">
+            <i class="bi bi-card-checklist"></i>
+            <span>Orders</span>
         </a>
-      </li><!-- End Manage My Vehicles Nav -->
+      </li><!-- End Orders Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('customers.fuel-quotas') }}">
+        <a class="nav-link collapsed" href="{{ route('fuel-stocks.index') }}">
             <i class="bi bi-fuel-pump"></i>
-            <span>Fuel Quota</span>
+            <span>Fuel Stocks</span>
         </a>
-      </li>
-      <li><br></li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('customers.fuel-quotas-requests') }}">
-            <i class="bi bi-fuel-pump"></i>
-            <span>Fuel Token Requests</span>
-        </a>
-      </li>
-      <!-- End View Available Fuel Quotas Nav -->
+      </li><!-- End View Available Fuel Quotas Nav -->
 
     </ul>
 
@@ -141,11 +133,12 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+    <h1>New Orders</h1>
       <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{route('customer_dashboard')}}">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item"><a href="{{route('fuel_station_dashboard')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{route('orders.index')}}">Orders</a></li>
+            <li class="breadcrumb-item active">New Order</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -155,39 +148,52 @@
 
             <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
                 <div class="card" style="padding: 20px;">
-                    <h3 class="card-title">My Vehicles<span> </span></h3>
-                    <hr>
                     <div class="card-body">
                         <div class="d-grid gap-0 col-12 mx-auto">
-                            <a href="{{ route('customers.vehicles.index') }}" class="btn btn-primary btn-lg">Manage</a>
+                          <br>
+                        <form action="{{ route('orders.store') }}" method="POST">
+                          @csrf
+                          <div class="form-group">
+                            <label for="Fuel_Station_ID">Fuel Station:</label>
+                            <select name="Fuel_Station_ID" id="Fuel_Station_ID" class="form-control" required>
+                              <option value="">Select Fuel Station</option>
+                              @foreach ($fuelStations as $fuelStation)
+                                <option value="{{ $fuelStation->Fuel_Station_ID }}">{{ $fuelStation->Fuel_Station_Name }}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          <br>
+                          <div class="form-group">
+                            <label for="Fuel_Type_ID">Fuel Type:</label>
+                            <select name="Fuel_Type_ID" id="Fuel_Type_ID" class="form-control" required>
+                              <option value="">Select Fuel Type</option>
+                              @foreach ($fuelTypes as $fuelType)
+                                <option value="{{ $fuelType->Fuel_Type_ID }}">{{ $fuelType->Type_Name }}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          <br>
+                          <div class="form-group">
+                            <label for="liters_quantity">Liters Quantity:</label>
+                            <input type="number" name="liters_quantity" id="liters_quantity" class="form-control" placeholder="Enter liters quantity" required min="1" max="10000">
+                          </div>
+                          <br>
+                          <div class="d-grid gap-0 col-12 mx-auto">
+                            <button type="submit" class="btn btn-primary">Create Order</button>
+                          </div>
+                        </form>
+                            
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
-                <div class="card" style="padding: 20px;">
-                    <h3 class="card-title">Fuel Quota<span> </span></h3>
-                    <hr>
-                    <div class="card-body">
-                        <div class="d-grid gap-0 col-12 mx-auto">
-                            <a href="{{ route('customers.fuel-quotas') }}" class="btn btn-primary btn-lg">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+
+        <div class="row">
+
             
-            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
-                <div class="card" style="padding: 20px;">
-                    <h3 class="card-title">Fuel Token Requests<span> </span></h3>
-                    <hr>
-                    <div class="card-body">
-                        <div class="d-grid gap-0 col-12 mx-auto">
-                            <a href="{{ route('customers.fuel-quotas-requests') }}" class="btn btn-primary btn-lg">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
     </section>
@@ -200,79 +206,6 @@
       &copy; Copyright <strong><span>FuelIn</span></strong>. All Rights Reserved
     </div>
   </footer><!-- End Footer -->
-
-  <!--Confirm modal-->
-  @if (Session::get('order'))
-  <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-              <div class="modal-body">
-                <h3 style="text-align: center;">Confirm</h3>
-                <hr>
-                <form method="POST" action="{{ route('head_office_orders.update', ['id' => $order->order_id]) }}">
-                  @csrf
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-6">
-                        <label for="">Order ID:</label>
-                        <input type="text" class="form-control" name="order_id" id="order_id" value="{{$order->order_id}}" readonly>
-                      </div>
-                      <div class="col-6">
-                        <label for="">Filling Station ID:</label>
-                        <input type="text" class="form-control" name="Fuel_Station_ID" id="Fuel_Station_ID" value="{{$order->Fuel_Station_ID}}" readonly>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <br>
-                    </div>
-                    <div class="row">
-                      <div class="col-6">
-                        <label for="">Liters:</label>
-                        <input type="text" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$order->liters_quantity}}" readonly>
-                      </div>
-                      <div class="col-6">
-                        <label for="">Fuel Type ID:</label>
-                        <input type="text" class="form-control" name="Fuel_Type_ID" id="Fuel_Type_ID" value="{{$order->Fuel_Type_ID}}" readonly>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <br>
-                    </div>
-                    <div class="row">
-                      <div class="col-6">
-                        <label for="driver_id">Driver:</label>
-                        <select name="driver_id" id="driver_id" class="form-control" required>
-                          @foreach ($drivers as $driver)
-                              <option name="{{$driver->driver_id}}" id="{{$driver->driver_id}}" value="{{ $driver->driver_id }}">{{ $driver->first_name }}</option>
-                          @endforeach
-                      </select>
-                      <input type="hidden" name="ordered_date" value="{{$order->created_at}}">
-                      </div>
-                    </div>
-                    
-                    <br>
-                    <div class="row">
-                      <div class="d-grid gap-0 col-6 mx-auto">
-                       <br>
-                      </div>
-                      <div class="d-grid gap-0 col-6 mx-auto">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-          </div>
-      </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script>
-      $(document).ready(function() {
-        $('#confirm').modal('show');
-      });
-  </script> 
-  @endif
-
   
 
   @if ($message = Session::get('success'))
