@@ -8,8 +8,6 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\StationRequest;
 
 class OrdersController extends Controller
 {
@@ -50,16 +48,6 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         Order::create($request->all());
-        
-
-
-        $details = [
-            'title'=>'New order has been recived.'
-        ];
-        $reciverEmail = 'sandeepa.chameen@gmail.com';
-        Mail::to($reciverEmail)->send(new StationRequest($details));
-
-
         return redirect()->route('orders.index');
     }
 

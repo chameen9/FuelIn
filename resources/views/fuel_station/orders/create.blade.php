@@ -125,6 +125,13 @@
             <span>Fuel Stocks</span>
         </a>
       </li><!-- End View Available Fuel Quotas Nav -->
+      <li><br></li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('fuel_requests.index') }}">
+            <i class="bi bi-qr-code"></i>
+            <span>Fuel Tokens</span>
+        </a>
+      </li><!-- End Fuel tokens Nav -->
 
     </ul>
 
@@ -175,7 +182,7 @@
                           <br>
                           <div class="form-group">
                             <label for="liters_quantity">Liters Quantity:</label>
-                            <input type="number" name="liters_quantity" id="liters_quantity" class="form-control" placeholder="Enter liters quantity" required min="1" max="10000">
+                            <input type="text" name="liters_quantity" id="liters_quantity" class="form-control" placeholder="Enter liters quantity" required>
                           </div>
                           <br>
                           <div class="d-grid gap-0 col-12 mx-auto">

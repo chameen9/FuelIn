@@ -125,6 +125,13 @@
             <span>Fuel Stocks</span>
         </a>
       </li><!-- End View Available Fuel Quotas Nav -->
+      <li><br></li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('fuel_requests.index') }}">
+            <i class="bi bi-qr-code"></i>
+            <span>Fuel Tokens</span>
+        </a>
+      </li><!-- End Fuel tokens Nav -->
 
     </ul>
 

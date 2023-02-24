@@ -158,8 +158,10 @@ Route::group(['middleware' => ['auth', 'petrol_station_manager']],function () {
     Route::post('/customer_fuel_requests/{id}/approve', [App\Http\Controllers\CustomerMadeFuelRequestsController::class, 'approve'])->name('fuel-requests.approve');
     Route::post('/customer_fuel_requests/{id}/decline', [App\Http\Controllers\CustomerMadeFuelRequestsController::class, 'decline'])->name('fuel-requests.decline');
     Route::post('/tokens/view/{request_id}', [App\Http\Controllers\TokenController::class, 'index'])->name('tokens.view');
-    Route::post('/tokens/view/{request_id}/create', [App\Http\Controllers\TokenController::class, 'create'])->name('tokens.create');
+    Route::get('/tokens/view/create', [App\Http\Controllers\TokenController::class, 'create'])->name('tokens.create');
+    Route::post('/tokens/submit', [App\Http\Controllers\TokenController::class, 'store'])->name('tokens.store');
    
-   
+    Route::post('/tokens/new/save', [App\Http\Controllers\TokenController::class, 'save'])->name('tokens.save');
+
     //end ashen
 });

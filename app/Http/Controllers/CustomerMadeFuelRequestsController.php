@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FuelRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerMadeFuelRequestsController extends Controller
 {
@@ -17,6 +19,9 @@ class CustomerMadeFuelRequestsController extends Controller
     }
     public function index()
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         //$customer_id = Auth::id();
         $fuelRequests = FuelRequest::select('fuel_request.*', 'fuel_type.Type_Name', 'fuel_stations.Fuel_Station_Name')
         ->join('fuel_type', 'fuel_request.Fuel_Type_ID', '=', 'fuel_type.Fuel_Type_ID')
@@ -24,7 +29,7 @@ class CustomerMadeFuelRequestsController extends Controller
        
         ->get();
       //  $fuelRequests = FuelRequest::where('Customer_ID', $customer_id)->get();
-        return view('fuel_station.customer-request', compact('fuelRequests'));
+        return view('fuel_station.customer-request', compact('fuelRequests','email','FirstName','LastName'));
     }
     public function decline(Request $request, $id)
     {
