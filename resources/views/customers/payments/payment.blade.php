@@ -27,10 +27,6 @@
   <!-- Template Main CSS File -->
   <link href="/css/style.css" rel="stylesheet">
 
-    <style>
-        
-    </style>
-
 </head>
 
 <body>
@@ -178,8 +174,11 @@
                                 <input type="text" class="form-control" id="card_expiry" name="card_expiry" required placeholder="MM/YY">
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="cvc">CVV: <i class="bi bi-info-circle" title="The CVV (Card Verification Value) is a 3-digit security code on the back of your card."></i> </label>
+                                <label for="cvc">CVV: 
+                                    <i class="bi bi-info-circle" title="The CVV (Card Verification Value) is a 3-digit security code on the back of your card."></i> 
+                                </label>
                                 <input type="text" class="form-control" id="cvc" name="cvc" required placeholder="000">
+                                
                             </div>
                         </div>
                         <br>
