@@ -8,6 +8,9 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StationRequest;
+use DB;
 
 class OrdersController extends Controller
 {
@@ -48,6 +51,20 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         Order::create($request->all());
+        $StationID = $request->input('Fuel_Station_ID');
+        $FuelStationName = DB::Table('fuel_stations')->where('Fuel_Station_ID',$request->input('Fuel_Station_ID'))->value('Fuel_Station_Name');
+        $FuelTypeName = DB::Table('fuel_type')->where('Fuel_Type_ID',$request->input('Fuel_Type_ID'))->value('Type_Name');
+        $details = [
+            'Title'=>'New order has been received.',
+            'FuelStation'=>$FuelStationName,
+            'FuelType'=>$FuelTypeName,
+            'Liters'=>$request->input('liters_quantity'),
+        ];
+        $users = DB::table('users')->where('user_type_id', 1)->get();
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new StationRequest($details));
+        }
+
         return redirect()->route('orders.index');
     }
 

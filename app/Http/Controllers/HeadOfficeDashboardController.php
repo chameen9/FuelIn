@@ -9,10 +9,13 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Driver;
 use App\Models\DeliveryStatus;
+use App\Mail\ApprovedOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use DB;
 
 
 class HeadOfficeDashboardController extends Controller
@@ -92,8 +95,19 @@ class HeadOfficeDashboardController extends Controller
           ['actual_filling_time',$request->input('ordered_date')],
           ['driver_id',$request->input('driver_id')],
           ['order_id',$request->input('order_id')],
-          ])->value('id');
+        ])->value('id');
 
+        $OwnerId = DB::Table('fuel_stations')->where('Fuel_Station_ID',$request->input('Fuel_Station_ID'))->value('owner_id');
+        $reciveremail = DB::table('users')-where('id',$OwnerId)->value('email');
+        $FuelType = DB::Table('fuel_type')->where('Fuel_Type_ID',$request->input('Fuel_Type_ID'))->value('Type_Name');
+        $details = [
+            'title'=>'Your order has been approved !',
+            'OrderId'=>$request->input('order_id'),
+            'FuelType'=>$FuelType,
+            'Liters'=>$request->input('liters_quantity'),
+            'ExpectedFillingTime'=>$request->input('ordered_date'),
+        ];
+        Mail::to($reciveremail)->send(new ApprovedOrder($details));
 
         $deliveryStatus = new DeliveryStatus();
         $deliveryStatus->delivery_id = $deliveryID;
