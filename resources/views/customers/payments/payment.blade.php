@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>FuelIn | Fuel Stocks</title>
+  <title>FuelIn | Payment Invoice</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -27,14 +27,9 @@
   <!-- Template Main CSS File -->
   <link href="/css/style.css" rel="stylesheet">
 
-  <style>
-    hr {
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      border: 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.5);
-    }
-  </style>
+    <style>
+        
+    </style>
 
 </head>
 
@@ -106,25 +101,32 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('fuel_station_dashboard')}}">
+        <a class="nav-link collapsed" href="{{route('customer_dashboard')}}">
             <i class="bi bi-grid"></i></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('orders.index') }}">
-            <i class="bi bi-card-checklist"></i>
-            <span>Orders</span>
+        <a class="nav-link collapsed" href="{{ route('customers.vehicles.index') }}">
+            <i class="bi bi-truck"></i>
+            <span>My Vehicles</span>
         </a>
-      </li><!-- End Orders Nav -->
+      </li><!-- End Manage My Vehicles Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link " href="{{ route('fuel-stocks.index') }}">
+        <a class="nav-link collapsed" href="{{ route('customers.fuel-quotas') }}">
             <i class="bi bi-fuel-pump"></i>
-            <span>Fuel Stocks</span>
+            <span>Fuel Quota</span>
         </a>
       </li><!-- End View Available Fuel Quotas Nav -->
+      <li><br></li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('customers.fuel-quotas-requests') }}">
+            <i class="bi bi-qr-code-scan"></i>
+            <span>Fuel Token Requests</span>
+        </a>
+      </li>
 
     </ul>
 
@@ -133,101 +135,74 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Fuel Stocks</h1>
+      <h1>Payment Invoice</h1>
       <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{route('fuel_station_dashboard')}}">Home</a></li>
-            <li class="breadcrumb-item active">Fuel Stocks</li>
+            <li class="breadcrumb-item"><a href="{{route('customer_dashboard')}}">Home</a></li>
+            <li class="breadcrumb-item active">Payment Invoice</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
+    
     <section class="section dashboard">
+        
         <div class="row">
-
-            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
-                <div class="card" style="padding: 20px;">
-                    <div class="card-body">
-                        <div class="d-grid gap-0 col-12 mx-auto">
-                            <br>
-                            <a href="{{ route('fuel-stocks.create') }}" class="btn btn-primary btn-rounded float-right">
-                                <i class="fa fa-plus"></i> Add New Fuel Stock
-                            </a>
-                        </div>
+          <div class="col-12 col-sm-8 col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2 class="text-center">Payment Invoice</h2>
                     </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            @foreach ($fuelStocks as $fuelStock)
-              <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
-                  <div class="card" style="padding: 20px;">
-                      <h3 class="card-title"># {{ $fuelStock->id }}<span> | Stock</span></h3>
-                      <div class="card-body">
+                    <hr>
+                    <form method="POST" action="{{ route('payments.store') }}">
+                        @csrf
+                        <p class="text-left">Payment Amount</p>
+                        <h3>Rs. {{$price}}</h3>
+                        <input class="form-control" type="hidden" id="fuel_request_id" value="{{$request->Fuel_Request_ID}}" name="fuel_request_id" required>
+                        <input type="hidden" readonly="true" class="form-control" value="{{$price}}" id="amount" name="amount" required>
+                        <br>
                         <div class="row">
-                          <div class="col-6">
-                            Fuel Type :
-                          </div>
-                          <div class="col-6">
-                            {{ $fuelStock->fuelType->Type_Name }}
-                          </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="holder_name">Card Holder Name:</label>
+                                <input type="text" class="form-control" id="holder_name" name="holder_name"  required placeholder="Your Name">
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="card_number">Card Number:</label>
+                                <input type="text" class="form-control" id="card_number" name="card_number" placeholder="0000 0000 0000 0000" required>
+                            </div>
                         </div>
                         <br>
                         <div class="row">
-                          <div class="col-6">
-                            Fuel Station :
-                          </div>
-                          <div class="col-6">
-                            {{ $fuelStock->fuelStation->Fuel_Station_Name }}
-                          </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="card_expiry">Card Expiry:</label>
+                                <input type="text" class="form-control" id="card_expiry" name="card_expiry" required placeholder="MM/YY">
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="cvc">CVV: <i class="bi bi-info-circle" title="The CVV (Card Verification Value) is a 3-digit security code on the back of your card."></i> </label>
+                                <input type="text" class="form-control" id="cvc" name="cvc" required placeholder="000">
+                            </div>
                         </div>
                         <br>
                         <div class="row">
-                          <div class="col-6">
-                            Liters :
-                          </div>
-                          <div class="col-6">
-                            @if(300 >= $fuelStock->liters)
-                                <span class="badge badge-danger">{{ $fuelStock->liters }}</span>
-                            @elseif($fuelStock->liters > 301 && 500 >= $fuelStock->liters)
-                                <span class="badge badge-warning">{{ $fuelStock->liters }}</span>
-                            @elseif($fuelStock->liters > 501 && 750 >= $fuelStock->liters)
-                                <span class="badge badge-info">{{ $fuelStock->liters }}</span>
-                            @elseif(751 >= $fuelStock->liters)
-                                <span class="badge badge-success">{{ $fuelStock->liters }}</span>
-                            @else
-                                <span class="badge badge-success">{{ $fuelStock->liters }}</span>
-                            @endif
-                          </div>
+                            <div class="col-12">
+                                <p class="text-muted" style="font-size: 13px;">* We never share your card details.</p>
+                            </div>
                         </div>
                         <br>
-
-                        <form action="{{ route('fuel-stocks.destroy', $fuelStock->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="d-grid gap-0 col-12 mx-auto">
-                                        <a href="{{ route('fuel-stocks.edit', $fuelStock->id) }}" class="btn btn-primary">Edit</a>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="d-grid gap-0 col-12 mx-auto">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </div>
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-6">
+                                <div class="d-grid gap-0 col-12 mx-auto">
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i>  Pay Now</button>
                                 </div>
                             </div>
-                        </form>
-                      </div>
-                  </div>
+                            <div class="col-3"></div>
+                        </div>
+                        
+                    </form>
                 </div>
-
-              
-            @endforeach
-
+            </div>
+          </div>
         </div>
 
     </section>
@@ -241,7 +216,7 @@
     </div>
   </footer><!-- End Footer -->
 
- 
+  
 
   @if ($message = Session::get('success'))
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
@@ -350,3 +325,4 @@
 </body>
 
 </html>
+

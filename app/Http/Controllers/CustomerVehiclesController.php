@@ -51,9 +51,6 @@ class CustomerVehiclesController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'registration_number'=>['unique:vehicles'],
-        ]);
         $user = Auth::user();
         //get user id
         $userId = $user->id;
@@ -72,7 +69,7 @@ class CustomerVehiclesController extends Controller
         //$vehicle->fuel_reset_date = $futureDatetimeVariable;
         $vehicle->save();
 
-        return redirect()->route('customers.vehicles.index')->with('success','Succefully added vehicle');
+        return redirect()->route('customers.vehicles.index');
     }
 
     public function edit($id)

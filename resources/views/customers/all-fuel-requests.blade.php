@@ -166,39 +166,55 @@
           <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card" style="padding: 20px;">
               <div class="card-body">
-                <table class="table table-responsive table-striped table-hover">
-                  <thead>
-                    <tr>
-                      <th>Fuel Request ID</th>
-                      <!-- <th>Customer ID</th> -->
-                      <th>Vehicle Registration Number</th>
-                      <th>Fuel Type</th>
-                      <th>Requested Liters</th>
-                      <th>Scheduled Filling Date</th>
-                      <th>Scheduled Filling Time</th>
-                      <th>Tolerance Hours</th>
-                      <th>Status</th>
-                      <th>Fuel Station</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($fuelRequests as $request)
+                <div class="table-responsive">
+                  <table class="table table-responsive table-striped table-hover">
+                    <thead>
                       <tr>
-                        <td>{{ $request->Fuel_Request_ID }}</td>
-                        <!-- <td>{{ $request->Customer_ID }}</td> -->
-                        <td>{{ $request->Vehicle_Registration_Number }}</td>
-                        <td>{{ $request->Type_Name }}</td>
-      
-                        <td>{{ $request->Requested_Liters }}</td>
-                        <td>{{ $request->Scheduled_Filling_Date }}</td>
-                        <td>{{ $request->Scheduled_Filling_Time }}</td>
-                        <td>{{ $request->Tolerance_Hours }}</td>
-                        <td>{{ $request->status }}</td>
-                        <td>{{ $request->Fuel_Station_Name	 }}</td>
+                        <th>Fuel Request ID</th>
+                        <!-- <th>Customer ID</th> -->
+                        <th>Vehicle Registration Number</th>
+                        <th>Fuel Type</th>
+                        <th>Requested Liters</th>
+                        <th>Scheduled Filling Date</th>
+                        <th>Scheduled Filling Time</th>
+                        <th>Tolerance Hours</th>
+                        <th>Status</th>
+                        <th>Fuel Station</th>
+                        <th>Payment</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      @foreach ($fuelRequests as $request)
+                        <tr>
+                          <td>{{ $request->Fuel_Request_ID }}</td>
+                          <!-- <td>{{ $request->Customer_ID }}</td> -->
+                          <td>{{ $request->Vehicle_Registration_Number }}</td>
+                          <td>{{ $request->Type_Name }}</td>
+        
+                          <td>{{ $request->Requested_Liters }}</td>
+                          <td>{{ $request->Scheduled_Filling_Date }}</td>
+                          <td>{{ $request->Scheduled_Filling_Time }}</td>
+                          <td>{{ $request->Tolerance_Hours }}</td>
+                          <td>{{ $request->status }}</td>
+                          <td>{{ $request->Fuel_Station_Name	 }}</td>
+                      
+                          <td>
+                          @if ($request->payment_status_id == 2)
+                            <span class="badge text-bg-success">Paid</span>
+                            
+                          @elseif ($request->payment_button)
+                            <form action="{{ route('payments.show') }}" method="POST">
+                              @csrf
+                              <input type="hidden" name="Fuel_Request_ID" id="Fuel_Request_ID" value="{{ $request->Fuel_Request_ID}}">
+                              <input type="submit" class="btn btn-primary btn-sm" value="Pay Now"/>
+                            </form>
+                          @endif 
+                        </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -324,3 +340,4 @@
 </body>
 
 </html>
+

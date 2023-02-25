@@ -26,6 +26,16 @@ Route::group(['middleware' => ['auth', 'head_office_auth']], function() {
     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
 
     //ashen new
+
+    Route::get('/fuelprices', [App\Http\Controllers\FuelPriceController::class, 'index'])->name('fuelprices.index');
+    Route::get('/fuelprices/create', [App\Http\Controllers\FuelPriceController::class, 'create'])->name('fuelprices.create');
+    Route::post('/fuelprices', [App\Http\Controllers\FuelPriceController::class, 'store'])->name('fuelprices.store');
+    Route::get('/fuelprices/{fuelPrice}/edit', [App\Http\Controllers\FuelPriceController::class, 'edit'])->name('fuelprices.edit');
+    Route::put('/fuelprices', [App\Http\Controllers\FuelPriceController::class, 'update'])->name('fuelprices.update');
+    Route::delete('/fuelprices/{fuelPrice}', [App\Http\Controllers\FuelPriceController::class, 'destroy'])->name('fuelprices.destroy');
+
+   //oute::resource('fuelprices', 'App\Http\Controllers\FuelPriceController');
+
     Route::get('/head_office_dashboard', [App\Http\Controllers\HeadOfficeDashboardController::class, 'index'])->name('head_office.dashboard');
     Route::get('/head_office_dashboard/vehicles/create', [VehicleController::class, 'create'])->name('head_office.vehicles.create');
     Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
@@ -130,6 +140,9 @@ Route::group(['middleware' => ['auth', 'end_customer']],function () {
     Route::patch('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'update'])->name('customers.vehicles.update');
     Route::delete('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'destroy'])->name('customers.vehicles.destroy');
  //ashen
+    Route::post('/payments', [App\Http\Controllers\PaymentController::class,'store'])->name('payments.store');
+    Route::post('/payments/pay', [App\Http\Controllers\PaymentController::class,'show'])->name('payments.show');
+
     Route::get('/fuel-quotas', [App\Http\Controllers\CustomerController::class, 'customerFuelQuotas'])->name('customers.fuel-quotas');
     Route::post('/customer/request-fuel', [App\Http\Controllers\RequestFuelController::class, 'processFuelRequest'])->name('customer.request-fuel');
     Route::get('/customer/request-fuel', [App\Http\Controllers\RequestFuelController::class, 'showFuelRequestForm'])->name('customer.show-fuel-request-form');

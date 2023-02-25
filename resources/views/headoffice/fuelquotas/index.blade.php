@@ -205,9 +205,9 @@
       </li><!-- End Driver Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/contact">
-            <i class="bi bi-send"></i>
-            <span>Contact</span>
+        <a class="nav-link collapsed" href="/fuelprices">
+            <i class="bi bi-currency-dollar"></i>
+            <span>Fuel Prices</span>
         </a>
       </li><!-- End contact Nav -->
       <li><br></li>
