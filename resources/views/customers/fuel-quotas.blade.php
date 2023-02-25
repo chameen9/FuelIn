@@ -125,6 +125,13 @@
             <span>Fuel Quota</span>
         </a>
       </li><!-- End View Available Fuel Quotas Nav -->
+      <li><br></li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('customers.fuel-quotas-requests') }}">
+            <i class="bi bi-qr-code-scan"></i>
+            <span>Fuel Token Requests</span>
+        </a>
+      </li>
 
     </ul>
 
@@ -141,12 +148,7 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('customers.fuel-quotas-requests') }}">
-            <i class="bi bi-fuel-pump"></i>
-            <span>Fuel Token Requests</span>
-        </a>
-      </li>
+
     <section class="section dashboard">
 
         <div class="row">

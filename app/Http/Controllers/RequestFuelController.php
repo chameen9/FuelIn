@@ -12,16 +12,27 @@ use App\Models\FuelType;
 use App\Models\FuelStock;
 use App\Models\FuelRequestToken;
 use App\Models\Vehicle;
+use App\Models\User;
 class RequestFuelController extends Controller
 {
     public function showFuelRequestForm()
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $fuelTypes = FuelType::all();
         $user = Auth::user();
         $fuelStations = FuelStation::all();
         $vehicles = Vehicle::where('Customer_ID', $user->id)->get();
         
-        return view('customers.request-fuel', ['fuelTypes' => $fuelTypes, 'vehicles' => $vehicles, 'fuelStations' => $fuelStations]);
+        return view('customers.request-fuel', [
+            'fuelTypes' => $fuelTypes, 
+            'vehicles' => $vehicles, 
+            'fuelStations' => $fuelStations,
+            'email' => $email,
+            'FirstName' => $FirstName,
+            'LastName' => $LastName,
+        ]);
     }
     public function processFuelRequest(Request $request)
     {
