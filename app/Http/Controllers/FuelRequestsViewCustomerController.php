@@ -27,6 +27,7 @@ class FuelRequestsViewCustomerController extends Controller
             if (!empty($token->Payment_Status_ID) && $token->Payment_Status_ID == 2) {
               $request->payment_status_id = 2;
               $request->payment_button = false;
+              $request->token_id = $token->Token_ID;
              } 
             if (!$token || in_array($token->Payment_Status_ID, [1, 3])) {
               

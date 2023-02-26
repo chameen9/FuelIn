@@ -131,6 +131,7 @@ Route::get('/signup', [App\Http\Controllers\CustomerController::class, 'create']
 Route::post('/signup',[App\Http\Controllers\CustomerController::class, 'store'])->name('customers.store');
 
 Route::group(['middleware' => ['auth', 'end_customer']],function () {
+    Route::post('qrcode',[App\Http\Controllers\QRCodeController::class,'homeView'])->name('qrcode.view');
     Route::get('/dashboard', [App\Http\Controllers\CustomerController::class, 'dashboard'])->name('customer_dashboard');
     Route::get('/dashboard/vehicles', [App\Http\Controllers\CustomerVehiclesController::class, 'index'])->name('customers.vehicles.index');
     // Route::get('/vehicles', 'CustomerVehiclesController@index')->name('customers.vehicles.index');
@@ -141,7 +142,7 @@ Route::group(['middleware' => ['auth', 'end_customer']],function () {
     Route::delete('/customers/vehicles/{id}', [App\Http\Controllers\CustomerVehiclesController::class, 'destroy'])->name('customers.vehicles.destroy');
  //ashen
     Route::post('/payments', [App\Http\Controllers\PaymentController::class,'store'])->name('payments.store');
-    Route::post('/paymentspay', [App\Http\Controllers\PaymentController::class,'show'])->name('payments.show');
+    Route::post('/payments/pay', [App\Http\Controllers\PaymentController::class,'show'])->name('payments.show');
 
     Route::get('/fuel-quotas', [App\Http\Controllers\CustomerController::class, 'customerFuelQuotas'])->name('customers.fuel-quotas');
     Route::post('/customer/request-fuel', [App\Http\Controllers\RequestFuelController::class, 'processFuelRequest'])->name('customer.request-fuel');

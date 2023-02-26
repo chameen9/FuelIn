@@ -98,7 +98,7 @@ class HeadOfficeDashboardController extends Controller
         ])->value('id');
 
         $OwnerId = DB::Table('fuel_stations')->where('Fuel_Station_ID',$request->input('Fuel_Station_ID'))->value('owner_id');
-        $reciveremail = DB::table('users')-where('id',$OwnerId)->value('email');
+        $reciveremail = DB::table('users')->where('id',$OwnerId)->value('email');
         $FuelType = DB::Table('fuel_type')->where('Fuel_Type_ID',$request->input('Fuel_Type_ID'))->value('Type_Name');
         $details = [
             'title'=>'Your order has been approved !',

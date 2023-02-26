@@ -378,6 +378,7 @@
 
   <!--Decline modal-->
   @if (Session::get('Decorder'))
+  <input type="hidden" name="test" value="{{$Decorder = Session::get('Decorder') }}">
   <div class="modal fade" id="decline" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">

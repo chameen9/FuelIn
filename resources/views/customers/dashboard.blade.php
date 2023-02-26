@@ -128,7 +128,7 @@
       <li><br></li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('customers.fuel-quotas-requests') }}">
-            <i class="bi bi-fuel-pump"></i>
+            <i class="bi bi-qr-code-scan"></i>
             <span>Fuel Token Requests</span>
         </a>
       </li>
