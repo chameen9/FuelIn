@@ -51,6 +51,9 @@ class CustomerVehiclesController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'registration_number'=>['unique:vehicles'],
+        ]);
         $user = Auth::user();
         //get user id
         $userId = $user->id;
