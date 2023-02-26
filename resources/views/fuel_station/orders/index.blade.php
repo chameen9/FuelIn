@@ -221,9 +221,15 @@
                             @method('DELETE')
                             <div class="row">
                                 <div class="col-6">
+                                  @if($order->Approval_Status == 'pending')
                                     <div class="d-grid gap-0 col-12 mx-auto">
                                         <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-primary btn-sm">Edit</a>
                                     </div>
+                                  @elseif($order->Approval_Status == 'approved')
+                                    
+                                  @else
+
+                                  @endif
                                 </div>
                                 <div class="col-6">
                                     <div class="d-grid gap-0 col-12 mx-auto">
@@ -252,7 +258,49 @@
     </div>
   </footer><!-- End Footer -->
 
- 
+ <!--Update Fuel qouta modal-->
+ @if (Session::get('uptodateOrder'))
+      <div class="modal fade" id="updateOrder" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="successModalLabel">Update Fuel Order</h5>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="{{ route('orders.update', ['order' => $order]) }}">
+                      @csrf
+                      @method('PUT')
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="">Fuel Type</label>
+                          <input type="text" class="form-control" name="Fuel_Type" id="Fuel_Type" value="{{$order->fuelType->Type_Name}}" disabled>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="">Requested Liters</label>
+                          <input type="number" class="form-control" name="liters_quantity" id="liters_quantity" value="{{$order->liters_quantity}}" required>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-12">
+                          <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>
+          $(document).ready(function() {
+            $('#updateOrder').modal('show');
+          });
+      </script> 
+  @endif
 
   @if ($message = Session::get('success'))
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">

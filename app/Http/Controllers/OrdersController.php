@@ -75,18 +75,20 @@ class OrdersController extends Controller
 
     public function edit(Order $order)
     {
-        return view('orders.edit', compact('order'));
+        return redirect()->route('orders.index')->with([
+            'uptodateOrder'=>$order
+        ]);
     }
 
     public function update(Request $request, Order $order)
     {
         $order->update($request->all());
-        return redirect()->route('orders.index');
+        return redirect()->route('orders.index')->with('success','Order Updated !');
     }
 
     public function destroy(Order $order)
     {
         $order->delete();
-        return redirect()->route('orders.index');
+        return redirect()->route('orders.index')->with('success','Order Deleted !');
     }
 }
