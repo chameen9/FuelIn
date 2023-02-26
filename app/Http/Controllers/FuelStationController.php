@@ -75,6 +75,9 @@ class FuelStationController extends Controller
 //ashen start
     public function showOwnerUpdateForm($fuel_station_id,Request $request)
     {
+        $UserEmail = Auth::user()->email;
+        $UserFirstName = User::where('email',$UserEmail)->value('first_name');
+        $UserLastName = User::where('email',$UserEmail)->value('last_name');
         // get the fuel station by id
         $fuelstation = FuelStation::find($fuel_station_id);
     
@@ -101,7 +104,7 @@ class FuelStationController extends Controller
                         ->orWhere('email', 'like', '%'.$search.'%');
         })->paginate(10);
         // return the view with fuel station and existing users data
-        return view('headoffice.fuelstations.ownerupdate', compact('fuel_station_id', 'users','fuelstation','search','firstName','lastName','email'));
+        return view('headoffice.fuelstations.ownerupdate', compact('fuel_station_id', 'users','fuelstation','search','firstName','lastName','email','UserFirstName','UserLastName','UserEmail'));
     }
     public function updateManager($fuel_station_id,Request $request)
     {

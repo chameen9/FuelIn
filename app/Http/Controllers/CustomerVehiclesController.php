@@ -72,7 +72,7 @@ class CustomerVehiclesController extends Controller
         //$vehicle->fuel_reset_date = $futureDatetimeVariable;
         $vehicle->save();
 
-        return redirect()->route('customers.vehicles.index');
+        return redirect()->route('customers.vehicles.index')->with('success','Vehicle Added Successfully !');
     }
 
     public function edit($id)

@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FuelType;
 use App\Models\FuelPrice;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class FuelPriceController extends Controller
 {
     public function index()
     {
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $fuelTypes = FuelType::all();
         $fuelPrices = FuelPrice::all();
-        return view('headoffice.prices.index', compact('fuelTypes', 'fuelPrices'));
+        return view('headoffice.prices.index', compact('fuelTypes', 'fuelPrices','email','FirstName','LastName'));
     }
 
     public function create()
@@ -39,7 +44,11 @@ class FuelPriceController extends Controller
     public function edit(FuelPrice $fuelPrice)
     {
         $fuelTypes = FuelType::all();
-        return view('headoffice.prices.edit', compact('fuelTypes', 'fuelPrice'));
+        return redirect()->route('fuelprices.index')->with([
+            'fuelTypes'=>$fuelTypes,
+            'fuelPrice'=>$fuelPrice,
+        ]);
+        //return view('headoffice.prices.edit', compact('fuelTypes', 'fuelPrice'));
     }
 
     public function update(Request $request, FuelPrice $fuelPrice)

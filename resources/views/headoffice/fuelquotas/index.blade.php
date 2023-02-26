@@ -205,13 +205,6 @@
       </li><!-- End Driver Nav -->
       <li><br></li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/fuelprices">
-            <i class="bi bi-currency-dollar"></i>
-            <span>Fuel Prices</span>
-        </a>
-      </li><!-- End contact Nav -->
-      <li><br></li>
-      <li class="nav-item">
         <a class="nav-link" href="/head_office_dashboard/fuel_quotas">
             <i class="bi bi-card-checklist"></i>
             <span>Manage Fuel Quota</span>
@@ -242,9 +235,20 @@
                     <h3 class="card-title">Fuel Quotas<span> </span></h3>
                     <hr>
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aaa">
-                            Add new Fuel Quota
-                         </button>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aaa">
+                                Add new Fuel Quota
+                            </button>
+                            <a href="/fuelprices" class="btn btn-info">
+                              <i class="bi bi-currency-dollar"></i>
+                              Fuel Prices
+                            </a>
+                          </div>
+                        </div>
+
+                        
                       
                          <div class="table-responsive" style="margin:8px">
                             <table class="table mt-3">
