@@ -125,6 +125,13 @@
             <span>Fuel Stocks</span>
         </a>
       </li><!-- End View Available Fuel Quotas Nav -->
+      <li><br></li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('fuel_requests.index') }}">
+            <i class="bi bi-qr-code"></i>
+            <span>Fuel Tokens</span>
+        </a>
+      </li><!-- End Fuel tokens Nav -->
 
     </ul>
 
@@ -164,6 +171,18 @@
                     <div class="card-body">
                         <div class="d-grid gap-0 col-12 mx-auto">
                             <a href="{{ route('fuel-stocks.index') }}" class="btn btn-primary btn-lg">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
+                <div class="card" style="padding: 20px;">
+                    <h3 class="card-title">Fuel Tokens<span> </span></h3>
+                    <hr>
+                    <div class="card-body">
+                        <div class="d-grid gap-0 col-12 mx-auto">
+                            <a href="{{ route('fuel_requests.index') }}" class="btn btn-primary btn-lg">View</a>
                         </div>
                     </div>
                 </div>

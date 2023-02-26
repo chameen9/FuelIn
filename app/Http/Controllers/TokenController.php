@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\FuelRequest;
 use App\Models\FuelType;
 use App\Models\Tokens;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class TokenController extends Controller
@@ -17,9 +19,11 @@ class TokenController extends Controller
      */
     public function index(Request $request)
     {
-        
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $tokens = Tokens::all();
-        return view('fuel_station.tokens.index', compact('tokens','request'));
+        return view('fuel_station.tokens.index', compact('tokens','request','email','FirstName','LastName'));
     }
 
     /**
@@ -47,11 +51,21 @@ class TokenController extends Controller
     public function store(Request $request)
     {
         //return $request->Fuel_Request_ID;
+        $email = Auth::user()->email;
+        $FirstName = User::where('email',$email)->value('first_name');
+        $LastName = User::where('email',$email)->value('last_name');
         $fuel_request_id = $request->Fuel_Request_ID;
         $fuelRequest = FuelRequest::where('Fuel_Request_ID', $fuel_request_id)->first();
         $fuelTypes = FuelType::all();
         //return $fuel_request_id;
-       return view('fuel_station.tokens.create', ['fuelRequest' => $fuelRequest,'request'=>$request,'fuelTypes'=>$fuelTypes]);
+        return view('fuel_station.tokens.create', [
+            'fuelRequest' => $fuelRequest,
+            'request'=>$request,
+            'fuelTypes'=>$fuelTypes,
+            'email'=>$email,
+            'FirstName'=>$FirstName,
+            'LastName'=>$LastName,
+        ]);
 
        
         // $token = new Token;
