@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Driver;
 use App\Models\DeliveryStatus;
 use App\Mail\ApprovedOrder;
+use App\Mail\CustomerMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -108,6 +109,19 @@ class HeadOfficeDashboardController extends Controller
             'ExpectedFillingTime'=>$request->input('ordered_date'),
         ];
         Mail::to($reciveremail)->send(new ApprovedOrder($details));
+
+        $FuelStationID = $request->input('Fuel_Station_ID');
+        $customerIDS = DB::Table('fuel_request')->where('Fuel_Station_ID',$FuelStationID)->value('Customer_ID');
+        $users = DB::Table('users')->where('id',$customerIDS)->get();
+        $details = [
+            'Title'=>'Fuel has been reached.',
+            'FuelStation'=>$request->input('Fuel_Station_ID'),
+            'FuelType'=>$request->input('Fuel_Type_ID'),
+        ];
+        
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new CustomerMail($details));
+        }
 
         $deliveryStatus = new DeliveryStatus();
         $deliveryStatus->delivery_id = $deliveryID;
