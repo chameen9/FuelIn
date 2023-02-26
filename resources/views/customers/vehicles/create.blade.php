@@ -344,13 +344,13 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                      <div class="alert alert-warning">
                         @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                <a href="#"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></a></button>
-                            @endforeach
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          
+                            <li>{{ $error }}</li>
+                          
+                        @endforeach
+                      </div>
                     </div>
                 </div>
             </div>
